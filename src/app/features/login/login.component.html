@@ -1,0 +1,92 @@
+<div class="flex bg-linearBG2 w-[100vw] h-[100vh] justify-center items-center flex-col relative"
+    (keyup.enter)="login()">
+    <div
+        class="absolute top-10 right-10 rounded-[50%] size-[25px] text-[12px] cursor-pointer border-[#1C274C] border bg-[#FFF] flex justify-center items-center">
+        <span *ngIf="language==='vi'" (click)="changeLanguage('en')" class="select-none">VN</span>
+        <span *ngIf="language==='en'" (click)="changeLanguage('vi')" class="select-none">EN</span>
+    </div>
+    <div class="flex h-full w-full">
+        <div class="w-[40%] h-full flex items-center justify-center">
+            <img class="w-[400px] h-[400px] object-cover rounded-[50%] shadow-2xl"  src="../../../assets/img/Hanu.jpeg"/>
+        </div>
+        <div class="grid flex-1 lg:w-[700px] grid-cols-1">
+            <div class="flex justify-center items-center flex-col">
+                <div
+                    class="bg-white shadow-2xl lg:w-[700px] border-[3px] border-[rgba(131,_166,_211,_0.64)] rounded-[20px] flex flex-col justify-center items-center p-5 py-10">
+                    <form [formGroup]="formLogin" class="flex flex-col gap-7 w-[80%]">
+                        <div class="w-full text-center">
+                            <div class="w-full [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)] uppercase text-center text-primary text-[30px] font-semibold">
+                                {{'Login.login'|translate}}
+                            </div>
+                            <div class="w-full text-center text-[#888] text-[16px] font-normal">
+                                {{'Login.text'|translate}}
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="userName" class="w-52">{{'Login.username'|translate}}</label>
+                            <mat-form-field class="custom-input" appearance="outline">
+                                <input formControlName="userName" name="userName" matInput
+                                    placeholder="{{'Login.userNamePlaceholder'|translate}}" />
+                                <mat-error>{{'Login.noEmty'|translate}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex flex-col relative">
+                            <label for="password" class="w-52">{{'Login.password'|translate}}</label>
+                            <mat-form-field class="custom-input relative" appearance="outline">
+                                <input formControlName="password" name="password" matInput type="password"
+                                    autocomplete="off" id="inputPass" placeholder="*********" />
+                                <i *ngIf="hide" class="fas fa-eye absolute right-0 top-[50%] translate-y-[-50%]"
+                                    (click)="showPass($event)"></i>
+                                <i *ngIf="!hide" class="fa-solid fa-eye-slash absolute right-0 top-[50%] translate-y-[-50%]"
+                                    (click)="showPass($event)"></i>
+                                <mat-error>{{'Login.noEmty'|translate}}</mat-error>
+                            </mat-form-field>
+                            <a (click)="handleOpenPopUpForgotPassWord()"
+                                class="absolute right-0 bottom-0">{{'Login.forgotPass'|translate}}</a>
+    
+                        </div>
+                    </form>
+                    <div class="flex gap-5 justify-center">
+    
+                        <button nz-button nzType="primary" [nzLoading]="isLoading"
+                            class="bg-primary text-white w-[120px] rounded-[5px] h-[30px] hover:opacity-50 hover:bg-primary hover:border-none"
+                            (click)="login()">{{'Login.login'|translate}}</button>
+                    </div>
+                    <div class="flex flex-col gap-y-5 mt-4 text-[16px] font-[500] text-[#1C274C]">
+                        <div class="flex flex-col gap-2 items-center">
+                            <span>{{'Login.loginWith'|translate}}</span>
+                            <div class="flex gap-2">
+                                <a><img src="../../../assets/img/googleLogo.svg" class="size-[20px] object-cover" /></a>
+                                <a *ngIf="!loggedIn" (click)="signInWithFB()"><img src="../../../assets/img/faceBookLogo.svg" class="size-[20px] object-cover" /></a>
+                                <!-- <a (click)="loginWithTrueAccount()"><img src="../../../assets/img/logoNoText.png"
+                                        class="size-[22.5px] object-cover" /></a> -->
+                            </div>
+                        </div>
+                        <!-- <a (click)="handleOpenPopUpRegister()">{{'Login.registerAccount'|translate}}</a> -->
+    
+                    </div>
+                </div>
+    
+            </div>
+    
+        </div>
+    </div>
+
+
+</div>
+<app-register *ngIf="isVisibleRegister" [isVisiblePopUpRegister]="isVisibleRegister"
+    (isVisiblePopUpOpen)="handleShowRegisterPopUp($event)"></app-register>
+
+<app-forgot-pass-word *ngIf="isVisibleForgotPassWord" [isVisiblePopUpForgotPassWord]="isVisibleForgotPassWord"
+    (isVisiblePopUpOpen)="handleShowForgotPassWordPopUp($event)"></app-forgot-pass-word>
+
+<app-pop-up-check-email *ngIf="isVisibleCheckEmail" [isVisiblePopUpCheckEmail]="isVisibleCheckEmail"
+(isVisiblePopUpOpen)="handleShowCheckEmail($event)"></app-pop-up-check-email>
+
+<app-pop-up-check-phone *ngIf="isVisibleCheckPhone" [isVisiblePopUpCheckPhone]="isVisibleCheckPhone"
+(isVisiblePopUpOpen)="handleShowCheckPhone($event)"></app-pop-up-check-phone>
+
+<app-pop-up-insert-otp *ngIf="isVisibleInsertOTP" [isVisiblePopUpInsertOTP]="isVisibleInsertOTP"
+    (isVisiblePopUpOpen)="handleShowInsertOTPPopUp($event)"></app-pop-up-insert-otp>
+<app-pop-up-change-pass *ngIf="isVisibleChangePass" [isVisiblePopUpChangePass]="isVisibleChangePass"
+    (isVisiblePopUpOpen)="handleShowChangePassPopUp($event)"></app-pop-up-change-pass>

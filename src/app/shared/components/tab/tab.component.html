@@ -1,0 +1,31 @@
+<!-- <div style="width: 150px; height:35px; margin:auto; position: relative;" #wrap [class.rounded-tr-md]="index===length-1"
+    class="flex text-center items-center">
+    <span class="w-[150px] overflow-hidden">{{title}}</span>
+    <div *ngIf="index!==0"
+        style="transform: rotate(90deg); width: 35px; height: 30px; position: absolute; top: 6%; left: -21%" #svg1>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill-opacity="1"
+                d="M0,160L60,138.7C120,117,240,75,360,80C480,85,600,139,720,176C840,213,960,235,1080,213.3C1200,192,1320,128,1380,96L1440,64L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z">
+            </path>
+        </svg>
+    </div>
+
+    <div *ngIf="index!==length-1"
+        style="transform: rotate(-90deg); width: 35px; height: 30px; position: absolute; top: 7%; right: -21%" #svg2>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill-opacity="1"
+                d="M0,160L60,138.7C120,117,240,75,360,80C480,85,600,139,720,176C840,213,960,235,1080,213.3C1200,192,1320,128,1380,96L1440,64L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z">
+            </path>
+        </svg>
+    </div>
+    <div *ngIf="index===length-1" class="w-[1px] border border-black h-[33px]"></div>
+</div> -->
+
+
+<div class=" w-[150px] h-[35px] relative" [class.bg-[#D8D8D8]]="active===index" [class.bg-white]="active!==index">
+    <div class="w-[150px] h-[35px] flex items-center justify-center  bg-[#D8D8D8] absolute top-0 left-0 right-0 bottom-0 "
+        [class.bg-white]="active===index" #tab>
+        <span>{{title}}</span>
+        <i class="fa-regular fa-circle-xmark absolute right-[10px]" [class.text-red-500]="active===index"></i>
+    </div>
+</div>

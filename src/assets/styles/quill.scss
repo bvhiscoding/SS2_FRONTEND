@@ -1,0 +1,161 @@
+// =================== ngx-quill ========================
+.ql-toolbar.ql-snow + .ql-container.ql-snow {
+  min-height: 250px !important;
+}
+.eventFeature {
+  .ql-toolbar.ql-snow + .ql-container.ql-snow {
+    height: 145px !important;
+  }
+}
+
+.eventFeature {
+  .ng-valid.ng-touched.ng-dirty,
+  .ng-pristine.ng-valid.ng-touched,
+  .ng-untouched.ng-valid.ng-dirty,
+  .ng-untouched.ng-pristine.ng-valid {
+    display: inline-block;
+    height: 100% !important;
+    width: 100% !important;
+  }
+}
+.ql-toolbar.ql-snow {
+  border-radius: 2px 2px 0 0 !important;
+}
+.ql-container {
+  border-radius: 0 0 2px 2px;
+}
+quill-editor {
+  border: none !important;
+}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item::before,
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value]::before {
+  content: attr(data-value) !important;
+}
+.ql-snow .ql-picker-options .ql-picker-item {
+  // font-family: #{attr(data-value)};
+  // &::before {
+  //   content: attr(data-value) !important;
+  // }
+
+  //hide picker text
+}
+// -------- ql size -------
+$font-size: 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 48, 56, 72;
+@each $size in $font-size {
+  .ql-size-#{$size}px {
+    font-size: $size + px !important;
+  }
+}
+// --------end ql size -------
+// ---- ql font ----
+.ql-font-TimesNewRoman {
+  font-family: Georgia, 'Times New Roman', serif;
+}
+.ql-font-CourierNew {
+  font-family: 'Courier New', Courier, monospace;
+}
+.ql-font-Caveat {
+  font-family: 'Caveat', cursive;
+}
+.ql-font-GreatVibes {
+  font-family: 'Great Vibes', cursive;
+}
+.ql-font-DancingScript {
+  font-family: 'Dancing Script', cursive;
+}
+.ql-font-PlayBall {
+  font-family: 'Playball', cursive;
+}
+.ql-font-Montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+.ql-font-BonaNova {
+  font-family: 'Bona Nova', serif;
+}
+.ql-font-Inter {
+  font-family: 'Inter', sans-serif;
+}
+.ql-font-Mali {
+  font-family: 'Mali', cursive;
+}
+.ql-font-Raleway {
+  font-family: 'Raleway', sans-serif;
+}
+.ql-font-Charm {
+  font-family: 'Charm', cursive;
+}
+.ql-font-Itim {
+  font-family: 'Itim', cursive;
+}
+// ----- end ql font -------
+
+// --------- custom toolbars ---------
+.ql-snow .ql-picker:not(.ql-color-picker):not(.ql-icon-picker) svg {
+  display: none;
+}
+
+.ql-snow .ql-picker.ql-font {
+  width: fit-content !important;
+}
+
+.ql-snow .ql-picker.ql-size {
+  width: fit-content !important;
+}
+
+.ql-toolbar.ql-snow .ql-formats {
+  border: 1px solid #e5e7eb;
+  border-radius: 2px;
+  margin-top: 3px;
+}
+.ql-snow.ql-toolbar button:hover,
+.ql-snow .ql-toolbar button:hover,
+.ql-snow.ql-toolbar button:focus,
+.ql-snow .ql-toolbar button:focus,
+.ql-snow.ql-toolbar button.ql-active,
+.ql-snow .ql-toolbar button.ql-active,
+.ql-snow.ql-toolbar .ql-picker-label:hover,
+.ql-snow .ql-toolbar .ql-picker-label:hover,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active,
+.ql-snow.ql-toolbar .ql-picker-item:hover,
+.ql-snow .ql-toolbar .ql-picker-item:hover,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected {
+  color: #0eaf8f !important;
+  font-weight: 500;
+}
+.ql-snow.ql-toolbar button:hover .ql-stroke,
+.ql-snow .ql-toolbar button:hover .ql-stroke,
+.ql-snow.ql-toolbar button:focus .ql-stroke,
+.ql-snow .ql-toolbar button:focus .ql-stroke,
+.ql-snow.ql-toolbar button.ql-active .ql-stroke,
+.ql-snow .ql-toolbar button.ql-active .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke,
+.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke,
+.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
+.ql-snow.ql-toolbar button:hover .ql-stroke-miter,
+.ql-snow .ql-toolbar button:hover .ql-stroke-miter,
+.ql-snow.ql-toolbar button:focus .ql-stroke-miter,
+.ql-snow .ql-toolbar button:focus .ql-stroke-miter,
+.ql-snow.ql-toolbar button.ql-active .ql-stroke-miter,
+.ql-snow .ql-toolbar button.ql-active .ql-stroke-miter,
+.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
+.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
+.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
+.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter {
+  stroke: #0eaf8f !important;
+}
+// --------- end custom toolbars ---------
+// =================== end - ngx-quill ========================

@@ -1,0 +1,31 @@
+<nz-modal [(nzVisible)]="isVisiblePopUpChangeEmail" nzCentered [nzContent]="modalContent" [nzFooter]="modalFooter"
+    (nzOnCancel)="handleCancel()">
+    <ng-template #modalContent>
+        <div class="pt-5 flex flex-col gap-5">
+            <span class='text-[18px] font-medium text-primary'>
+                Nhập email mới của bạn
+            </span>
+            <form [formGroup]="form" class="flex relative">
+                <mat-form-field class="custom-input col-span-2  w-full" appearance="outline">
+                    <input class="!w-[85%] inputName" matInput formControlName="email" placeholder="Nhập địa chỉ email mới của bạn!" />
+                    <mat-error class="text-red-600" *ngIf="form.get('email')?.errors?.['required']">
+                        Email is required
+                    </mat-error>
+                    <mat-error class="text-red-600" *ngIf="form.get('email')?.errors?.['email']">
+                      Invalid email format
+                    </mat-error>
+                </mat-form-field>
+            </form>
+        </div>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="flex justify-center">
+            <button nz-button nzType="primary"
+                class="!bg-primary text-white border-none  rounded-lg hover:opacity-60 hover:bg-primary  hover:text-white"
+                (click)="handleOK()" [nzLoading]="isConfirmLoading">{{'Button.confirm'| translate }}</button>
+        </div>
+    </ng-template>
+</nz-modal>
+
+

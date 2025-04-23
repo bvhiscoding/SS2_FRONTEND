@@ -1,0 +1,27 @@
+.selected-page {
+  width: 36px;
+  height: 36px;
+  border-radius: 50px;
+  background-color: rgba(255, 255, 255, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.selected {
+  width: 25px;
+  height: 25px;
+  border-radius: 20px;
+  background-color: rgba(217, 217, 217, 0.8);
+}
+
+.pg {
+  width: 25px;
+  height: 25px;
+  border-radius: 20px;
+}
+
+.pageScroll {
+  transition: left 0.3s;
+  left: var(--updateLeft);
+}

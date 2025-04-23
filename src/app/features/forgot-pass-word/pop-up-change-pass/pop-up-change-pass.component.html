@@ -1,0 +1,65 @@
+<nz-modal [(nzVisible)]="isVisiblePopUpChangePass" nzCentered [nzContent]="modalContent" [nzFooter]="modalFooter"
+    (nzOnCancel)="handleCancel()">
+    <!-- <ng-template #modalTitle>
+        <div class="text-center text-primary font-semibold text-[40px]">
+            <span>{{'Menu.unit'|translate}}</span>
+        </div>
+    </ng-template> -->
+
+    <ng-template #modalContent>
+        <div class="text-center text-primary font-semibold text-[20px] uppercase">
+            <span>{{'PopUpChangePassword.newPassword'|translate}}</span>
+        </div>
+
+        <div class="flex flex-col gap-2   h-fit lg:px-[30px] lg:pb-2 overflow-auto">
+            <form [formGroup]="form"
+                class="grid grid-cols-2 gap-2 lg:!w-[450px]  h-fit lg:px-[30px] lg:pb-2 overflow-auto">
+                <div class="col-span-2 flex flex-col">
+                    <span>{{'PopUpChangePassword.newPassword'|translate}}<span class="text-red-500">*</span></span>
+                    <mat-form-field class="custom-input col-span-2 relative" appearance="outline">
+                        <input matInput formControlName="password" (change)="updateValidateRepass($event)"
+                            id="inputPassChangePassword" type="password" autocomplete="off" />
+                        <i *ngIf="hidePass" class="fas fa-eye absolute right-0 top-[50%] translate-y-[-50%]"
+                            (click)="showPass($event)"></i>
+                        <i *ngIf="!hidePass" class="fa-solid fa-eye-slash absolute right-0 top-[50%] translate-y-[-50%]"
+                            (click)="showPass($event)"></i>
+                        <mat-error
+                            *ngIf="form.get('password')?.errors?.['required']&& (form.get('password')?.dirty || form.get('password')?.touched)"
+                            class="text-red-600">
+                            {{'PopUpRegister.noEmty'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-span-2 flex flex-col">
+                    <span>{{'PopUpChangePassword.rePass'|translate}}<span class="text-red-500">*</span></span>
+                    <mat-form-field class="custom-input col-span-2" appearance="outline">
+                        <input matInput formControlName="rePass" id="inputRePassChangePassword" type="password"
+                            autocomplete="off" />
+                        <i *ngIf="hideRePass" class="fas fa-eye absolute right-0 top-[50%] translate-y-[-50%]"
+                            (click)="showRePass($event)"></i>
+                        <i *ngIf="!hideRePass"
+                            class="fa-solid fa-eye-slash absolute right-0 top-[50%] translate-y-[-50%]"
+                            (click)="showRePass($event)"></i>
+                        <mat-error
+                            *ngIf="form.get('rePass')?.errors?.['required']&& (form.get('rePass')?.dirty || form.get('rePass')?.touched)"
+                            class="text-red-600">
+                            {{'PopUpRegister.noEmty'|translate}}
+                        </mat-error>
+                        <mat-error *ngIf="form.get('rePass')?.errors?.['rePassCheck']" class="text-red-600">
+                            {{'PopUpRegister.notMatch'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="flex justify-center">
+            <button nz-button nzType="primary"
+                class="!bg-primary text-white border-none  rounded-lg hover:opacity-60 hover:bg-primary  hover:text-white"
+                (click)="handleOk()" [nzLoading]="isConfirmLoading">{{'Button.confirm'| translate }}</button>
+        </div>
+    </ng-template>
+</nz-modal>

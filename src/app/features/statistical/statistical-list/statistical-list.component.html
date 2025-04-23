@@ -1,0 +1,137 @@
+<div class=" bg-bgGray w-full py-10 px-5">
+    <div class="mb-8 flex justify-between items-center">
+        <h3 class="uppercase text-primary text-[22px] font-semibold">Thống kê</h3>
+    </div>
+    <div class="w-full flex justify-between gap-4 bg-white shadow-shadow-timeword p-4 rounded-lg">
+        <div class="flex flex-col flex-1 gap-3">
+            <div class="w-full font-medium text-start text-primary text-[18px]">Các cuộc bầu cử mới nhất</div>
+            <div *ngFor="let array of slectionArray , let i2 = index" class="w-full border-b border-[#ccc]">
+                <div (click)="selectVote(array.id)" class="w-full p-2 flex justify-between items-center rounded-lg cursor-pointer hover:bg-green-300">
+                    <div class="flex flex-col gap-2 justify-between items-start h-full">
+                        <div class="font-medium text-[16px]">{{array.voteName}}</div>
+                        <div class="font-normal text-[12px] text-[#888]">
+                            <span>Thời gian bắt đầu: {{array.startDate | date: 'dd/MM/yyyy'}}</span>
+                            <span> / </span>
+                            <span>Thời gian kết thúc: {{array.expiredDate | date: 'dd/MM/yyyy'}}</span>
+                        </div>
+                    </div>
+                    <div class="rounded-xl px-2 py-1 shadow-shadow-timeword text-white"
+                    [ngClass]="{'bg-green-500': array.status === '1', 'bg-red-500': array.status === '2', 'bg-orange-400': array.status === '0'}"
+                    >
+                        {{array.status === '1' ? 'Đang diễn ra' : array.status === '2' ? 'Đã kết thúc' : array.status === '0' ? 'Chưa bắt đầu' : ''}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex-1 flex flex-col">
+            <!-- <app-chart-columns></app-chart-columns> -->
+            <div class="w-full flex justify-between gap-2 pl-4">
+                <div class="font-medium text-primary text-[18px]">Biểu đồ thống kê: </div>
+                <div class="flex gap-2">
+                    <i (click)="handleChangeChart('columns')"  
+                        [ngClass]="chartType === 'columns' ? 'text-myRed' : 'text-primary'"
+                        class="fa-solid fa-chart-simple text-[20px] cursor-pointer hover:scale-105"></i>
+                    <i (click)="handleChangeChart('circle')"  
+                        [ngClass]="chartType === 'circle' ? 'text-myRed' : 'text-primary'"
+                        class="fa-solid fa-chart-pie text-[20px] cursor-pointer hover:scale-105"></i>
+                </div>
+            </div>
+            <div *ngIf="chartType === 'columns'">
+                <app-chart-columns [listDetailVote]="listDetailVote"></app-chart-columns>
+            </div>
+            <div *ngIf="chartType === 'circle'" class="w-full h-full flex justify-center">
+                <app-chart-circle [listDetailVote]="listDetailVote"></app-chart-circle>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex gap-6 mt-8">
+        <!-- Users -->
+        <div  *ngIf="!canActive" class="w-[40%] max-h-[590px] bg-white rounded-lg shadow-shadow-timeword p-4">
+            <div class="w-full font-medium text-start text-primary text-[18px]">Lịch sử các cuộc bầu cử đã tham gia</div>
+            <div>
+                <div [style.height]="'450px'"
+                class="mt-[27px] w-full min-w-full overflow-x-auto overflow-y-auto">
+                    <table class="text-[13px] font-normal w-full relative">
+                        <thead class="bg-primary *:py-4 *:text-center *:text-white font-medium sticky top-0 ">
+                            <th class="flex justify-start px-2">Tên cuộc bầu cử</th>
+                            <th class="">Chức vụ</th>
+                            <th class="">Vai trò</th>
+                            <th class="">Thao tác</th>
+                        </thead>
+                        <div class="w-full" *ngIf="isLoading; else data">
+                          <div class="flex items-center justify-center absolute mt-[100px] !w-[100%]">
+                            <nz-spin class="inline-block w-full text-center" nzSize="large" ></nz-spin>
+                          </div>
+                        </div>  
+                        <div class="!w-full flex justify-center absolute" *ngIf="slectionArray.length == 0">
+                          <div class="flex flex-col items-center justify-center mt-[50px] !w-[100%]">
+                            <span nz-icon nzType="exclamation-circle" nzTheme="outline" class="text-[20px]"></span>
+                            <div class="text-textColor font-[500] text-[14px] mt-[10px]">Danh sách trống</div>
+                          </div>
+                        </div>  
+                        <ng-template #data>
+                          <tbody> 
+                            <tr class="*:py-4 *:text-center border-b border-myBorder px-2" *ngFor="let item of slectionArray; let index = index">
+                              <td class="flex justify-start px-2 font-medium">
+                                {{item?.voteName}}
+                              </td>             
+                              <td >
+                                {{item?.positionName}}
+                              </td>
+                              <td [ngClass]="{'text-green-500': item?.roleUser === 'Voter', 'text-red-500': item?.roleUser === 'Candidate'}"
+                              class="font-medium"
+                              >
+                                {{item?.roleUser === 'Voter' ? 'Cử tri' : item?.roleUser === 'Candidate' ? 'Ứng viên' : ''}}
+                              </td>
+                              <td (click)="infoVote(item?.id, item?.roleUser)" class="cursor-pointer">
+                                <i class="fa-solid fa-circle-info text-yellow-500 text-[14px] hover:scale-105"></i>
+                              </td>
+                            </tr>
+                          </tbody> 
+                        </ng-template>                   
+                       
+                    </table>
+                </div>
+                <div class="float-right w-fit pb-6">
+                    <app-pagi [totalCount]="totalCount" [page]="currentPage" [pageSize]="itemsPerPage"
+                      (PageEvent)="changePage($event)" (PageSizeEvent)="changePageSize($event)"></app-pagi>
+                  </div>
+            </div>
+        </div>
+        <!-- Admin -->
+        <div *ngIf="canActive" class="w-[40%] flex flex-col gap-6">
+          <div class="w-full flex h-[100px] bg-white rounded-lg shadow-shadow-timeword">
+            <div class="h-full w-[100px] flex items-center justify-center bg-[#30cded] rounded-tl-lg rounded-bl-lg">
+              <i class="fa-solid fa-users text-white font-semibold text-[26px]"></i>
+            </div>
+            <div class="h-full flex-1 flex flex-col items-start justify-start p-4 rounded-lg">
+              <div class="text-[20px] font-normal">Người dùng</div>
+              <div class="text-[20px] font-semibold">{{totalUser}} <span [routerLink]="['/user-management/list']" class="text-[12px] font-normal text-red-500 cursor-pointer">(Chi tiết)</span></div>
+            </div>
+          </div>
+          <div class="w-full flex h-[100px] bg-white rounded-lg shadow-shadow-timeword">
+            <div class="h-full w-[100px] flex items-center justify-center bg-green-500 rounded-tl-lg rounded-bl-lg">
+              <i class="fa-solid fa-book-open-reader text-white font-semibold text-[26px]"></i>
+            </div>
+            <div class="h-full flex-1 flex flex-col items-start justify-start p-4 rounded-lg">
+              <div class="text-[20px] font-normal">Chức vụ</div>
+              <div class="text-[20px] font-semibold">{{totalPosition}} <span [routerLink]="['/level-management/list']" class="text-[12px] font-normal text-red-500 cursor-pointer">(Chi tiết)</span></div>
+            </div>
+          </div>
+          <div class="w-full flex h-[100px] bg-white rounded-lg shadow-shadow-timeword">
+            <div class="h-full w-[100px] flex items-center justify-center bg-yellow-500 rounded-tl-lg rounded-bl-lg">
+              <i class="fa-solid fa-sitemap text-white font-semibold text-[26px]"></i>
+            </div>
+            <div class="h-full flex-1 flex flex-col items-start justify-start p-4 rounded-lg">
+              <div class="text-[20px] font-normal">Cuộc bầu cử</div>
+              <div class="text-[20px] font-semibold">{{totalListVote}} <span [routerLink]="['/slection-management/list']" class="text-[12px] font-normal text-red-500 cursor-pointer">(Chi tiết)</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="w-[60%] min-h-[200px] flex flex-col gap-4 bg-white rounded-lg shadow-shadow-timeword p-4">
+            <div class="w-full font-medium text-start text-primary text-[18px]">Lịch bầu cử</div>
+            <app-sheducer [slectionArray]="slectionArray"></app-sheducer>
+        </div>
+    </div>
+</div>

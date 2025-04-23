@@ -1,0 +1,33 @@
+::ng-deep .ant-btn-primary {
+  background-color: #0eaf8f;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #898989;
+}
+
+::ng-deep .ant-modal-content {
+  border-radius: 20px;
+  width: fit-content;
+}
+::ng-deep .ant-modal {
+  width: fit-content !important;
+}
+.icon {
+  height: fit-content;
+}

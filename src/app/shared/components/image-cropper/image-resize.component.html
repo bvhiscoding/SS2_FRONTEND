@@ -1,0 +1,33 @@
+<div
+  class="border-2 max-w-md flex items-center flex-col justify-center border-blue-button/50 border-solid"
+>
+  <image-cropper
+    style="width: 100%"
+    [imageChangedEvent]="imageChangedEvent"
+    [maintainAspectRatio]="!data.dynamicAspect"
+    [aspectRatio]="data.aspectRatio"
+    [format]="'png'"
+    [resizeToWidth]="data.width ? data.width : 1024"
+    [resizeToHeight]="data.height ? data.height : 1024"
+    [cropperMinWidth]="128"
+    [containWithinAspectRatio]="false"
+    [style.display]="showCropper ? null : 'none'"
+    [onlyScaleDown]="true"
+    [roundCropper]="!!data.roundedCropper"
+    (imageCropped)="imageCropped($event)"
+    [canvasRotation]="canvasRotation"
+    [transform]="transform"
+    [alignImage]="'left'"
+    (imageLoaded)="imageLoaded()"
+    (cropperReady)="cropperReady()"
+    (loadImageFailed)="loadImageFailed()"
+  ></image-cropper>
+  <button
+    (click)="saveAndCloseModal()"
+    class="w-full"
+    nz-button
+    nzType="primary"
+  >
+    <span class="font-semibold">Lưu</span>
+  </button>
+</div>

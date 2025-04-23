@@ -1,0 +1,77 @@
+@tailwind components;
+
+.ant-layout-footer {
+  padding: 0px !important;
+}
+
+.ant-checkbox-inner {
+  border-radius: 0px !important;
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: #01579b !important;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold !important;
+  // :hover {
+  //   color: white;
+  // }
+}
+.ant-btn {
+  border-radius: 8px;
+  &.ant-btn-primary {
+    background-color: #01579b !important;
+    border-radius: 8px;
+    color: white;
+  }
+  &:hover {
+    opacity: 0.75;
+  }
+}
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border: 1px solid #01579b4d;
+  border-radius: 20px;
+}
+
+//.ant-menu:not(.ant-menu-horizontal) .ant-menu-item {
+//  border-top-left-radius: 30px;
+//  border-bottom-left-radius: 30px;
+//}
+
+.ant-menu-inline .ant-menu-selected::after,
+.ant-menu-inline .ant-menu-item-selected::after {
+  display: none !important;
+}
+
+// .ant-menu-inline.ant-menu-root .ant-menu-item,
+// .ant-menu-inline.ant-menu-root .ant-menu-submenu-title {
+//   margin-left: 35px !important;
+//   width: 165px !important;
+// }
+.ant-breadcrumb > nz-breadcrumb-item:last-child {
+  color: #0eaf8f;
+}
+.ant-breadcrumb-separator > span {
+  transform: translateY(-20%);
+}
+
+// .ant-menu-sub.ant-menu-inline {
+//   background-color: transparent;
+// }
+.ant-menu.ant-menu-inline.ant-menu-sub.ng-trigger.ng-trigger-collapseMotion.ng-star-inserted,
+ul.border-none.ant-menu.ant-menu-root.ant-menu-light.ant-menu-inline,
+.ant-menu.ant-menu-inline.ant-menu-sub.ng-trigger.ng-trigger-collapseMotion.ng-star-inserted {
+  background-color: transparent;
+  @apply text-textColor;
+}
+.ant-checkbox-wrapper,
+span.ant-progress-text.ng-star-inserted {
+  @apply text-textColor;
+}
+.ant-menu-title-content {
+  @apply flex items-center;
+}
+
+.ant-modal-content {
+  border-radius: 12px !important;
+}

@@ -1,0 +1,73 @@
+<div class="outer-wrapper flex flex-col" #outerWrapper>
+  <div class="title mb-4" *ngIf="title">
+    <span class="text-primary font-medium text-xl">{{ title }}</span>
+  </div>
+  <div class="table-wrapper flex-auto">
+    <table>
+      <thead class="h-10">
+        <ng-container *ngTemplateOutlet="
+            headers || defaultHeaderTemplate;
+            context: { $implicit: data }
+          "></ng-container>
+      </thead>
+      <tbody class="w-full overflow-y-auto overflow-x-hidden">
+        <ng-container *ngIf="loaded  ; else loadingTmpl">
+          <ng-container *ngIf="data?.length || listproduct; else blankTmpl">
+            <tr class="h-14 text-sm" *ngFor=" let row of data; index as i">
+              <ng-container *ngIf="row.edit || row.edit == undefined">
+                <ng-container *ngTemplateOutlet="
+                    rows || defaultRowTemplate;
+                    context: { $implicit: row, index: i }
+                  ">
+                </ng-container>
+              </ng-container>
+              <ng-container *ngIf="row.edit == false ">
+                <ng-container *ngTemplateOutlet="
+                    create || defaultRowTemplate;
+                    context: { $implicit: row, index: i }
+                  ">
+                </ng-container>
+              </ng-container>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </tbody>
+      <tfoot *ngIf=sum>
+        <ng-container *ngTemplateOutlet="sums">
+
+        </ng-container>
+
+      </tfoot>
+    </table>
+  </div>
+  <ng-container *ngIf="total">
+    <div class="flex items-center flex-row-reverse justify-between mt-4">
+      <app-share-pagination [pageIndex]="pageIndex" [pageSize]="pageSize" [total]="total"
+        (pageIndexChange)="pageIndexChange.emit($event)"
+        (pageSizeChange)="pageSizeChange.emit($event)"></app-share-pagination>
+      <span *ngIf="countSelected">Đã chọn: {{countSelected}}</span>
+    </div>
+  </ng-container>
+</div>
+<ng-template #defaultHeaderTemplate let-data>
+  <th *ngFor="let header of data[0] | keyvalue">{{ header.key }}</th>
+</ng-template>
+<ng-template #defaultRowTemplate let-row>
+  <td *ngFor="let item of row | keyvalue">{{ item.value }}</td>
+</ng-template>
+<ng-template #loadingTmpl>
+  <tr class="w-full relative h-0">
+    <div class="flex items-center justify-center h-14 absolute h-0 top-12 inset-x-0">
+      <nz-spin nzSize="large"></nz-spin>
+    </div>
+  </tr>
+</ng-template>
+<ng-template #blankTmpl>
+  <tr class="w-full relative h-0">
+    <div class="flex items-center justify-center flex-col h-14 absolute h-0 top-12 inset-x-0">
+      <span nz-icon nzType="exclamation-circle" class="!text-2xl" nzTheme="outline"></span>
+
+      <span class="text-lg">Không có dữ liệu</span>
+    </div>
+  </tr>
+</ng-template>

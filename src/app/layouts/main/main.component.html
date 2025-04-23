@@ -1,0 +1,114 @@
+<nz-layout class="min-h-full">
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [class.hidden]="isCollapsed" [class.lg:block]="isCollapsed"
+    [nzWidth]="width" nzTheme="light" [nzTrigger]="null" [nzReverseArrow]="isReverseArrow"
+    class="!fixed px-4 left-0  z-10 !h-screen overflow-y-auto !overflow-x-hidden bg-primaryBG border-r-2 border-solid text-textColor shadow-[2px_0px_7px_0px_rgba(1,87,155,0.30)]">
+    <div class="relative">
+      <div [routerLink]="['/']" routerLinkActive="router-link-active"
+        class="cursor-pointer logo mb-8 mt-8  m-auto flex flex-col h-10 items-center justify-center  rounded-md">
+        <div class="text-[20px] flex flex-col justify-center gap-3 items-center">
+          <img src="../../../assets/img/Hanu.jpeg" alt="logo" class="w-[50px] h-[50px] rounded-[50%]">
+          <span>{{userName}}</span>
+        </div>
+      </div>
+      <div
+        class="absolute top-0 right-0 rounded-[50%] size-[25px] text-[12px] cursor-pointer border-[#1C274C] border bg-[#FFF] flex justify-center items-center">
+        <span *ngIf="language==='vi'" (click)="changeLanguage('en')" class="select-none">VN</span>
+        <span *ngIf="language==='en'" (click)="changeLanguage('vi')" class="select-none">EN</span>
+      </div>
+    </div>
+    <div
+      class="absolute z-50 bottom-0 left-0 right-0 flex justify-center p-3 gap-2 items-center bg-[#DAF4FF] logoutBTN cursor-pointer "
+      (click)="handleLogout()">
+      <span nz-icon nzType="logoutIcon:antd" class="icon" nzTheme="outline"></span>
+      <span class="select-none">Đăng xuất</span>
+    </div>
+    <!-- Admin -->
+    <div *ngIf="canActive">
+      <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" class="border-none">
+        <li nz-menu-item [routerLink]="['/', 'statistical']" nzMatchRouter class="menu-item">
+          <i class="fa-solid fa-chart-simple"></i>
+          <span class="ml-3">Thống kê</span>
+        </li>
+        <li nz-menu-item [routerLink]="['/', 'user-management']" nzMatchRouter class="menu-item">
+          <i class="fa-solid fa-users"></i>
+          <span class="ml-3">{{'Menu.userManagement'| translate }}</span>
+        </li>
+        <li nz-menu-item [routerLink]="['/', 'slection-ticket']" nzMatchRouter class="menu-item">
+          <i class="fa-solid fa-check-to-slot"></i>
+          <span class="ml-3">Tiến hành bầu cử</span>
+        </li>
+        <li nz-menu-item [routerLink]="['/', 'slection-follow']" nzMatchRouter class="menu-item">
+          <!-- <i class="fa-solid fa-person-chalkboard"></i> -->
+          <i class="fa-solid fa-magnifying-glass-chart"></i>
+          <span class="ml-3">Theo dõi bầu cử</span>
+        </li>
+        <li nz-menu-item [routerLink]="['/', 'slection-management']" nzMatchRouter class="menu-item">
+          <i class="fa-solid fa-sitemap"></i>
+          <span class="ml-3">Quản lý cuộc bầu cử</span>
+        </li>
+        <li nz-menu-item [routerLink]="['/', 'level-management']" nzMatchRouter class="menu-item">
+          <i class="fa-solid fa-book-open-reader"></i>
+          <span class="ml-3">Quản lý chức vụ</span>
+        </li>
+        <!-- <li nz-menu-item [routerLink]="['/', 'notify']" nzMatchRouter class="menu-item">
+          <i class="fa-regular fa-bell"></i>
+          <span class="ml-3">Thông báo</span>
+        </li> -->
+        <ul nz-submenu nzTitle="{{'Menu.setting'| translate }}" nzIcon="setting" class="menu-item">
+          <li nz-menu-item [routerLink]="['/', 'user-infor',userInfor.sub]" nzMatchRouter>
+            <i class="fa-regular fa-circle-user"></i>
+            <span class="ml-3">{{'Menu.userInfor'| translate }}</span>
+          </li>
+          <li nz-menu-item [routerLink]="['/', 'setting']" nzMatchRouter class="menu-item">
+            <i class="fa-solid fa-bullhorn"></i>
+            <span class="ml-3">Cài đặt hệ thống</span>
+          </li>
+        </ul>
+      </ul>
+    </div>
+
+    <!-- Users -->
+    <div *ngIf="!canActive">
+      <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" class="border-none">
+        <li nz-menu-item [routerLink]="['/', 'statistical']" nzMatchRouter class="menu-item">
+          <i class="fa-solid fa-chart-simple"></i>
+          <span class="ml-3">Thống kê</span>
+        </li>
+        <li nz-menu-item [routerLink]="['/', 'slection-ticket']" nzMatchRouter class="menu-item">
+          <i class="fa-solid fa-check-to-slot"></i>
+          <span class="ml-3">Tiến hành bầu cử</span>
+        </li>
+        <li nz-menu-item [routerLink]="['/', 'slection-follow']" nzMatchRouter class="menu-item">
+          <i class="fa-solid fa-magnifying-glass-chart"></i>
+          <span class="ml-3">Theo dõi bầu cử</span>
+        </li>
+        <!-- <li nz-menu-item [routerLink]="['/', 'notify']" nzMatchRouter class="menu-item">
+          <i class="fa-regular fa-bell"></i>
+          <span class="ml-3">Thông báo</span>
+        </li> -->
+        <ul nz-submenu nzTitle="{{'Menu.setting'| translate }}" nzIcon="setting" class="menu-item">
+          <li nz-menu-item [routerLink]="['/', 'user-infor',userInfor.sub]" nzMatchRouter>
+            <i class="fa-regular fa-circle-user"></i>
+            <span class="ml-3">{{'Menu.userInfor'| translate }}</span>
+          </li>
+          <li nz-menu-item [routerLink]="['/', 'setting']" nzMatchRouter class="menu-item">
+            <i class="fa-solid fa-bullhorn"></i>
+            <span class="ml-3">Cài đặt hệ thống</span>
+          </li>
+        </ul>
+      </ul>
+    </div>
+  </nz-sider>
+  <nz-layout class="bg-white" [ngClass]="{ 'ml-[280px]': !isCollapsed, 'lg:ml-[80px]': isCollapsed }">
+    <nz-content>
+      <div class=" border-t border-solid border-primary px-1 h-full" [class.hidden]="!isCollapsed"
+        [class.lg:block]="!isCollapsed">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
+
+<app-change-password *ngIf="isVisiblePopUpChangePassword"
+[isVisiblePopUpChangePassword]="isVisiblePopUpChangePassword"
+(visiblePopUpChangePassword)="handelVisiblePopUpChangePassword($event)"></app-change-password>

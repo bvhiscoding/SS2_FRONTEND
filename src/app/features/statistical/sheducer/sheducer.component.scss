@@ -1,0 +1,19 @@
+::ng-deep .fc-daygrid-day-frame {
+  position: relative; /* Đảm bảo rằng phần tử này có thể chứa các phần tử con */
+}
+
+::ng-deep .fc-daygrid-day-events {
+  max-height: 100px; /* Giới hạn chiều cao của phần sự kiện trong ô */
+  overflow-y: auto; /* Thêm thanh cuộn dọc nếu sự kiện quá nhiều */
+}
+
+::ng-deep .fc-event-title {
+  white-space: nowrap; /* Ngăn ngừa xuống dòng trong title */
+  overflow: hidden; /* Ẩn phần title bị tràn */
+  text-overflow: ellipsis; /* Thêm dấu "..." cho các title dài */
+}
+
+::ng-deep .fc-daygrid-day-frame .fc-daygrid-day-events {
+  overflow-x: auto; /* Thêm thanh cuộn ngang nếu title quá dài */
+  white-space: nowrap;
+}

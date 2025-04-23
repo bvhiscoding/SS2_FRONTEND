@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+// :host ::ng-deep {
+//   .ant-menu-item-selected {
+//     background-color: #0EAF8F !important;
+//     color: white;
+
+//     :hover {
+//       color: white;
+//     }
+//   }
+// }
+.menu-item {
+  font-size: 14px;
+}
+.icon {
+  height: fit-content;
+}
+.logoutBTN {
+  &:hover {
+    span {
+      color: red;
+    }
+  }
+}
+
+::ng-deep.ant-layout-sider-children {
+  padding-bottom: 50px;
+  overflow-y: auto;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

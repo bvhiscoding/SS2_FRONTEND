@@ -1,0 +1,34 @@
+@tailwind components;
+
+:host ::ng-deep th {
+  @apply sticky bg-white top-0 text-left z-10 border-b-4 px-2 font-semibold;
+}
+table {
+  @apply border-separate border-spacing-0  shadow-sm min-w-full;
+}
+thead {
+  @apply bg-white;
+}
+.table-wrapper {
+  @apply border-solid border-2 shadow-md;
+  overflow-y: auto;
+  border-radius: 12px;
+}
+
+:host ::ng-deep td {
+  @apply border-b border-solid px-2;
+}
+
+.outer-wrapper {
+  @apply max-w-fit min-w-full;
+  flex-flow: column;
+}
+
+.title,
+.pagination {
+  flex: 0 1 auto;
+}
+
+.table-wrapper {
+  flex: 1 1 auto;
+}

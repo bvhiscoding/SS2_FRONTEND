@@ -1,0 +1,10 @@
+@use "@angular/material" as mat;
+.custom-input {
+  @include mat.form-field-density(-5);
+  height: 62px;
+  // font-size: 28px!important;
+}
+.custom-textarea {
+  @include mat.form-field-density(-5);
+  min-height: 38px;
+}

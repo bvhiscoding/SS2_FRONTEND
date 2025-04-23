@@ -1,0 +1,205 @@
+{
+  "Menu": {
+    "unit": "Đơn vị",
+    "task": "Công việc",
+    "info": "Channel Information",
+    "name": "Names",
+    "email": "Email",
+    "Mobile": "Mobile",
+    "subscribe": "Subscribe Now",
+    "setting": "Điều chỉnh",
+    "individual": "Cá nhân",
+    "otherTasks": "Công việc khác",
+    "home": "Trang chủ",
+    "organization": "Tổ chức",
+    "tenant": "Tổ chức",
+    "userInfor": "Thông tin cá nhân",
+    "userManagement": "Quản lý người dùng"
+  },
+  "UnitItem": {
+    "unfinished": "Chưa hoàn thành",
+    "seeMore": "Xem thêm"
+  },
+  "PopupAddEditTenant": {
+    "tenantName": "Tên tổ chức",
+    "description": "Mô tả"
+  },
+  "PopUpAddEditUnit": {
+    "unitName": "Tên dự án",
+    "startDate": "Ngày bắt đầu",
+    "endDate": "Ngày kết thúc",
+    "status": "Trạng thái",
+    "manager": "Quản lý",
+    "member": "Thành viên",
+    "description": "Mô tả",
+    "noEmty": "Không bỏ trống trường này",
+    "enterDescription": "Nhập mô tả",
+    "listUnitTask": "Danh sách unit phụ"
+  },
+  "Button": {
+    "save": "Lưu",
+    "cancel": "Huỷ bỏ",
+    "addTaskForUnit": "Thêm công việc cho đơn vị",
+    "addSubUnitForUnit": "Thêm đơn vị con cho đơn vị",
+    "edit": "Chỉnh sửa",
+    "delete": "Xoá",
+    "add": "Thêm mới",
+    "createQuickTask": "Tạo nhanh công việc",
+    "no": "Không",
+    "yes": "Có",
+    "addMember": "Thêm thành viên",
+    "close": "Đóng",
+    "register": "Đăng ký",
+    "confirm": "Xác nhận"
+  },
+  "PopUpAddEditTask": {
+    "taskName": "Tên công việc",
+    "startDate": "Ngày bắt đầu",
+    "endDate": "Ngày kết thúc",
+    "status": "Trạng thái",
+    "manager": "Quản lý",
+    "member": "Thành viên",
+    "description": "Mô tả",
+    "noEmty": "Không bỏ trống trường này",
+    "enterDescription": "Nhập mô tả",
+    "priorityLevel": "Mức độ ưu tiên",
+    "priorityHigh": "Cao",
+    "priorityMedium": "Vừa",
+    "priorityLow": "Thấp",
+    "deadline": "Hạn chót",
+    "TaskInfor": "Thông tin công việc",
+    "enterTaskInfor": "Nhập thông tin công việc",
+    "listSubTask": "Danh sách task phụ"
+  },
+  "PopUpEditTaskHistory": {
+    "editTaskHistory": "Lịch sử chỉnh sửa"
+  },
+  "PopUpAddEditObject": {
+    "object": "Đối tượng",
+    "target": "Mục tiêu",
+    "startDate": "Ngày bắt đầu",
+    "endDate": "Ngày kết thúc",
+    "status": "Trạng thái",
+    "manager": "Quản lý",
+    "member": "Thành viên",
+    "description": "Mô tả",
+    "noEmty": "Không bỏ trống trường này",
+    "enterDescription": "Nhập mô tả",
+    "priorityLevel": "Mức độ ưu tiên",
+    "priorityHigh": "Cao",
+    "priorityMedium": "Vừa",
+    "priorityLow": "Thấp",
+    "deadline": "Hạn chót"
+  },
+  "PopUpAddEditKeyResult": {
+    "keyResult": "Kết quả then chốt",
+    "scale": "Thang đo",
+    "startDate": "Ngày bắt đầu",
+    "endDate": "Ngày kết thúc",
+    "status": "Trạng thái",
+    "manager": "Quản lý",
+    "member": "Thành viên",
+    "description": "Mô tả",
+    "noEmty": "Không bỏ trống trường này",
+    "enterDescription": "Nhập mô tả",
+    "priorityLevel": "Mức độ ưu tiên",
+    "priorityHigh": "Cao",
+    "priorityMedium": "Vừa",
+    "priorityLow": "Thấp",
+    "deadline": "Hạn chót"
+  },
+  "PopUpRegister": {
+    "register": "Đăng ký",
+    "username": "Tên đăng nhập",
+    "fullName": "Họ tên",
+    "phoneNumber": "Số điện thoại",
+    "password": "Mật khẩu",
+    "rePass": "Nhập lại mật khẩu",
+    "noEmty": "Không bỏ trống trường này",
+    "notMatch": "Mật khẩu không khớp",
+    "wrongPhoneNumber": "Sai số điện thoại",
+    "wrongEmail": "Sai email",
+    "requiredPassword": "Mật khẩu phải có ít nhất một chữ hoa, một chữ thường,số, ký tự đặc biệt và dài ít nhất 8 ký tự"
+  },
+  "PopUpForgotPassword": {
+    "forgotPassword": "Quên mật khẩu",
+    "reciveOTP": "Nhận mã OTP qua",
+    "phoneNumber": "Số điện thoại"
+  },
+  "PopUpInsertOTP": {
+    "insertOTP": "Nhập mã OTP",
+    "Haventreceivedthecode": "Chưa nhận được mã?",
+    "resend": "Gửi lại"
+  },
+  "PopUpChangePassword": {
+    "oldPassword": "Mật khẩu cũ",
+    "newPassword": "Mật khẩu mới",
+    "rePass": "Nhập lại mật khẩu"
+  },
+  "PopUpChangeGroup": {
+    "editGroup": "Chỉnh sửa nhóm"
+  },
+  "Login": {
+    "username": "Tên đăng nhập",
+    "text": "Vui lòng đăng nhập để truy cập hệ thống!",
+    "password": "Mật khẩu",
+    "forgotPass": "Quên mật khẩu?",
+    "login": "Đăng nhập",
+    "loginWith": "Đăng nhập với",
+    "registerAccount": "Đăng ký tài khoản",
+    "noEmty": "Không bỏ trống trường này",
+    "userNamePlaceholder": "Nhập User Name/Email/Số điện thoại"
+  },
+  "Management": {
+    "userList": "Danh sách người dùng",
+    "addNew": "Thêm mới tài khoản",
+    "password": "Mật khẩu",
+    "passwordConfirm": "Nhập lại mật khẩu"
+  },
+  "Toast": {
+    "createSuccess": "Tạo mới thành công",
+    "updateSuccess": "Sửa thành công",
+    "Error": "Lỗi",
+    "deleteSuccess": "Xóa thành công",
+    "DueDate": "DueDate phải >= ngày hiện tại",
+    "AlerEmail": "Bạn không thể xác minh tài khoản thông qua email nếu bỏ trống",
+    "AlerPhoneNumber": "Bạn không thể xác minh tài khoản thông qua số điện thoại nếu bỏ trống",
+    "notify": "Thông báo",
+    "confirmDelete": "Xác nhận xóa",
+    "registerSuccess": "Đăng ký thành công",
+    "wrongUserNameOrpassword": "Sai tên đăng nhập hoặc mật khẩu",
+    "TokenExpired": "Hết phiên đăng nhập, hãy thử lại"
+  },
+  "item": {
+    "yourTask": "Công việc của bạn",
+    "no": "Không"
+  },
+  "modal": {
+    "doYouWantCreateSubUnit": "Bạn có muốn tạo subunit không?"
+  },
+  "settingOrgnizationPopUp": {
+    "settingOrgnization": "Chỉnh sửa tổ chức"
+  },
+  "userInforPage": {
+    "accountInfor": "Thông tin tài khoản",
+    "personalInformation": "Thông tin cá nhân",
+    "statusBlock": "Khoá",
+    "statusActive": "Hoạt động",
+    "status": "Trạng thái",
+    "activeDate": "Ngày kích hoạt",
+    "changePassword": "Đổi mật khẩu",
+    "deleteAccount": "Xóa tài khoản",
+    "fullName": "Họ và tên",
+    "dateOfBirth": "Ngày sinh",
+    "phoneNumber": "Số điện thoại",
+    "address": "Địa chỉ"
+  },
+  "inputAler": {
+    "required": "Không bỏ trống",
+    "wrongPhoneNumber": "Sai số điện thoại",
+    "wrongEmail": "Sai email"
+  },
+  "profile": {
+    "doNotLeaveEmpty": "Không bỏ trống trường này!"
+  }
+}

@@ -1,0 +1,48 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { MainComponent } from './main.component';
+import { TranslateModule } from '@ngx-translate/core';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: MainComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'statistical',
+        pathMatch: 'full',
+      },
+      {
+        path: 'statistical',
+        loadChildren: () =>
+          import('../../features/statistical/statistical.routing.module').then(
+            (m) => m.StatisticalRoutingModule,
+          ),
+      },
+      // Other routes removed for clarity
+      {
+        path: 'user-infor/:id',
+        loadChildren: () =>
+          import('../../features/my-info/my-info.routing.module').then(
+            (m) => m.ManagementRoutingModule,
+          ),
+        // Remove any canActivate guards for development
+      },
+      {
+        path: 'setting',
+        loadChildren: () =>
+          import('../../features/setting/setting.routing.module').then(
+            (m) => m.SettingRoutingModule,
+          ),
+        // Remove any canActivate guards for development
+      },
+    ],
+  },
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes), TranslateModule],
+  exports: [RouterModule],
+})
+export class MainRoutingModule {}

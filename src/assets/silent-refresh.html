@@ -1,0 +1,18 @@
+<!-- src/assets/silent-refresh.html -->
+<html>
+
+<head>
+    <script>
+        // Notify the parent window about the result of the silent refresh
+        var result = window.location.hash;
+        if (window.opener) {
+            window.opener.postMessage(result, window.location.origin);
+        }
+    </script>
+</head>
+
+<body>
+    <p>Loading...</p>
+</body>
+
+</html>

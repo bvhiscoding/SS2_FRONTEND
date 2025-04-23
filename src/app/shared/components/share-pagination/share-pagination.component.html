@@ -1,0 +1,6 @@
+<div class="flex space-x-2 items-center">
+  <span>Tổng số {{ total }} kết quả</span>
+  <nz-pagination [nzPageIndex]="pageIndex" [nzTotal]="total" nzShowSizeChanger [nzPageSize]="pageSize"
+    (nzPageSizeChange)="setPageSize($event)" (nzPageIndexChange)="pageIndexChange.emit($event)" [nzSize]="'small'"
+    [nzPageSizeOptions]="[10,30,50,100]"></nz-pagination>
+</div>

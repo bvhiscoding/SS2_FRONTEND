@@ -1,0 +1,60 @@
+<div class="w-screen h-full fixed  z-50 top-0 left-0">
+    <div class="relative w-full h-full   flex justify-center">
+        <div class="absolute z-1  w-full h-full top-0 left-0 bg-[rgba(0,0,0,0.4)]  " (click)="close()">
+
+        </div>
+        <div class="bg-white px-2 py-5 w-fit min-w-[500px] h-fit flex flex-col z-15 absolute top-[10%]">
+            <div class="title mb-4 flex justify-center justify-between items-center">
+                <button nz-button nzType="primary" class= "ml-2" (click)="search()">Tìm kiếm</button>
+                <form [formGroup]="form">
+                    <mat-form-field class="custom-input p-[2px]" appearance="outline">
+                        
+                        <input matInput  *ngIf="!consiment" placeholder="Tìm kiếm tên sản phẩm Loại sản phẩm" formControlName="search"  (keyup.enter)="search()" />
+                        <input matInput  *ngIf="consiment" placeholder="Tìm kiếm số lô" formControlName="search"  (keyup.enter)="search()" />
+
+                    </mat-form-field>
+                </form>
+      
+               
+                    <a *ngIf="addnew" [routerLink]="['/product/add']" target="_blank"
+                    class="bg-primary text-xs text-white  p-[12px] w-fit">Thêm mới
+                </a>
+            
+    
+            </div>
+            <app-share-table [loaded]="!load" [data]="listProduct" [maxHeight]="'calc(100vh - 250px)'" [total]="total"
+                [pageIndex]="pageIndex" [pageSize]="pageSize"    (pageIndexChange)="changePage($event)" (pageSizeChange)="changePageSize($event)">
+                <ng-template #headers>
+                    <th scope="col">#</th>
+                    <ng-container  *ngIf="!consiment ||listProduct.length ==0 ">
+                        <th scope="col">Mã SP</th>
+                        <th scope="col">Tên SP</th>
+                        <th scope="col">Loại SP</th>
+                    </ng-container>
+                    <ng-container  *ngIf="consiment">
+                        <th scope="col">Số lô</th>
+                        <th scope="col">Hạn sử dụng</th>
+                        <th scope="col">Số lượng tồn</th>
+                    </ng-container>
+                </ng-template>
+                <ng-template #rows let-row let-index="index">
+                    <td (click)="slectProduct(row.id)">{{ index + 1 }}</td>
+                    <ng-container  *ngIf="!consiment ||listProduct.length ==0">
+                        <td (click)="slectProduct(row.id)">{{ row.productCode }}</td>
+                        <td (click)="slectProduct(row.id)">{{ row.productParentName }}</td>
+                        <td (click)="slectProduct(row.id)">{{ row.productName }}</td>
+                    </ng-container>
+                    <ng-container  *ngIf="consiment">
+                        <td (click)="slectProduct(row.id)">{{ row.consignment }}</td>
+                        <td (click)="slectProduct(row.id)">{{ row.expiry| date: "dd-mm-yyyy" }}</td>
+                        <td (click)="slectProduct(row.id)">{{ row.quantity }}</td>
+                    </ng-container>
+
+                </ng-template>
+            </app-share-table>
+        </div>
+    </div>
+
+
+
+</div>

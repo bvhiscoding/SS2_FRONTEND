@@ -1,0 +1,26 @@
+<nz-modal [(nzVisible)]="isVisiblePopUpInsertOTP" nzCentered [nzContent]="modalContent" [nzFooter]="modalFooter"
+    (nzOnCancel)="handleCancel()">
+
+    <ng-template #modalContent>
+        <div class="text-center text-primary font-semibold text-[20px] uppercase">
+            <span>{{'PopUpInsertOTP.insertOTP'|translate}}</span>
+        </div>
+
+        <div class="flex flex-col gap-2   h-fit lg:px-[30px] lg:pb-2 overflow-auto">
+            <span>{{'PopUpForgotPassword.reciveOTP'|translate}}</span>
+            <div class="flex gap-4">
+                <ng-otp-input #ngOtpInput [config]="otpConfig"></ng-otp-input>
+            </div>
+            <span>{{'PopUpInsertOTP.Haventreceivedthecode'|translate}}
+                <a class="text-primary">{{'PopUpInsertOTP.resend'|translate}}</a></span>
+        </div>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="flex justify-center">
+            <button nz-button nzType="primary"
+                class="!bg-primary text-white border-none  rounded-lg hover:opacity-60 hover:bg-primary  hover:text-white"
+                (click)="handleOk()" [nzLoading]="isConfirmLoading">{{'Button.confirm'| translate }}</button>
+        </div>
+    </ng-template>
+</nz-modal>

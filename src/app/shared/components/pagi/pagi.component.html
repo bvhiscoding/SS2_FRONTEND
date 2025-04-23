@@ -1,0 +1,37 @@
+<div class="w-max flex items-center">
+    <div class="flex flex-1 items-center justify-center">
+      <input [(ngModel)]="pageSize" type="number" (change)="ChangePageSize(pageSize)"
+        class="border border-solid focus:outline-[#005fbf97] w-[70px] h-[35px] px-3 rounded-[6px]">
+      <div class="min-w-max ml-3">Tổng số {{totalCount}} kết quả</div>
+    </div>
+    <div class="flex flex-1 w-max justify-evenly items-center self-center ml-3" *ngIf="letPage">
+      <div (click)="ChangePage(1, pageScroll)"
+        class="w-[25px] h-[25px] flex rounded-full justify-center items-center overflow-hidden hover:bg-gray-300">
+        <span nz-icon nzType="double-left" nzTheme="outline" lass="text-[12px]"></span>
+      </div>
+      <div (click)="ChangePage(page - 1, pageScroll)"
+        class="w-[25px] h-[25px] flex cursor-pointer rounded-full justify-center items-center overflow-hidden hover:bg-gray-300 mr-2">
+        <span nz-icon nzType="left" nzTheme="outline" class="text-[12px]"></span>
+      </div>
+      <div class="flex max-w-[125px] overflow-x-hidden relative" [style.width]="pageScroll.offsetWidth+'px'"
+        [style.height]="pageScroll.offsetHeight+'px'">
+        <div class="flex w-max absolute" #pageScroll [style.--updateLeft]="-offsetLeft+'px'"
+          [style.left]="-offsetLeft+'px'">
+          <button (click)="ChangePage(pg, pageScroll)"
+            class="min-w-[25px] h-[25px] flex rounded-full text-[14px] justify-center items-center overflow-hidden hover:bg-gray-300"
+            [ngClass]="{'bg-gray-300': pg === page}" *ngFor="let pg of pageArr">
+            {{pg}}
+          </button>
+        </div>
+      </div>
+      <div (click)="ChangePage(page + 1, pageScroll)"
+        class="w-[25px] h-[25px] flex cursor-pointer rounded-full justify-center items-center overflow-hidden hover:bg-gray-300 ml-2">
+        <span nz-icon nzType="right" nzTheme="outline" class="text-[12px]"></span>
+      </div>
+      <div (click)="ChangePage(pageArr[pageArr.length - 1], pageScroll)"
+        class="w-[25px] h-[25px] flex rounded-full justify-center items-center overflow-hidden hover:bg-gray-300">
+        <span nz-icon nzType="double-right" nzTheme="outline" class="text-[12px]"></span>
+      </div>
+  
+    </div>
+  </div>
