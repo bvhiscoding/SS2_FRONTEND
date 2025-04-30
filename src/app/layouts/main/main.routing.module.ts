@@ -29,7 +29,6 @@ const routes: Routes = [
           ),
           canActivate: [RolesGuard],
       },
-      // Other routes removed for clarity
       {
         path: 'user-infor/:id',
         loadChildren: () =>
