@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { RolesGuard } from '../../core/guards/roles.guard';
 
 const routes: Routes = [
   {
@@ -19,6 +20,14 @@ const routes: Routes = [
           import('../../features/statistical/statistical.routing.module').then(
             (m) => m.StatisticalRoutingModule,
           ),
+      },
+      {
+        path: 'user-management',
+        loadChildren: () =>
+          import('../../features/management/management.routing.module').then(
+            (m) => m.ManagementRoutingModule,
+          ),
+          canActivate: [RolesGuard],
       },
       // Other routes removed for clarity
       {
