@@ -1,0 +1,89 @@
+<div class="border-b-2 p-10 border-solid border-[#D8D8D8] relative">
+  <ng-container >
+    <form [formGroup]="form" class="grid grid-cols-3 items-center gap-x-4 gap-y-3">
+      <mat-form-field class="custom-input" appearance="outline">
+        <mat-label>Họ tên</mat-label>
+        <input formControlName="fullName" matInput />
+      </mat-form-field>
+      <mat-form-field class="custom-input" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input formControlName="email" matInput />
+      </mat-form-field>
+      <mat-form-field class="custom-input" appearance="outline">
+        <mat-label>Số điện thoại</mat-label>
+        <input formControlName="cellPhone" matInput />
+      </mat-form-field>
+      <mat-form-field class="custom-input" appearance="outline">
+        <mat-label>Trạng thái tài khoản</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let status of listStatus" [value]="status.value">
+            {{ status.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="custom-input" appearance="outline">
+        <mat-label>Quyền người dùng</mat-label>
+        <mat-select formControlName="roles">
+          <mat-option *ngFor="let role of listRoles" [value]="role.value">
+            {{ role.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="custom-input flex w-full gap-3 items-start">
+        <button (click)="handleCancel()"
+          class="bg-[#EDEDED] w-full h-10 px-4 rounded text-[#000]"
+          >Huỷ bỏ
+        </button>
+        <button (click)="handleSearch()"
+        class="bg-primary w-full h-10 px-4 hover:bg-[#10c39f] rounded text-white"
+          >Tìm kiếm
+        </button>
+      </div>
+    </form>
+  </ng-container>
+
+</div>
+
+<div class="h-[100vh] w-full p-10">
+    <div class="mb-8 flex justify-between items-center">
+        <h3 class="uppercase text-primary text-[18px] font-medium">{{'Management.userList'| translate }}</h3>
+        <div (click)="handelOpenPopUpAddManagement()" class="px-[12px] py-[8px] rounded-[6px] border border-primary text-primary cursor-pointer hover:bg-primary hover:text-[#fff]" >Thêm mới người dùng</div>
+    </div>
+    <app-share-table [pageIndex]="params.page" [pageSize]="params.pageSize" [loaded]="!isLoading" [data]="listUserManagements" [total]="totalCount"
+      [maxHeight]="'calc(100vh - 150px)'" (pageIndexChange)="changePage($event)"
+      (pageSizeChange)="changePageSize($event)">
+      <ng-template #headers>
+        <th scope="col" class="font-semibold !text-center">STT</th>
+        <th scope="col" class="!text-start">Họ và tên</th>
+        <th scope="col" class="!text-start">Tên đăng nhập</th>
+        <th scope="col" class="!text-start">Email</th>
+        <th scope="col" class="!text-start">Số điện thoại</th>
+        <th scope="col" class="!text-start">Ngày sinh</th>
+        <th scope="col" class="!text-start">Địa chỉ</th>
+        <th scope="col" class="!text-start">Trạng thái</th>
+        <th scope="col" class="!text-center">Thao tác</th>
+      </ng-template>
+      <ng-template #rows let-row let-index="index">
+        <td class="!text-center">{{ index + 1 + (params.page - 1) * params.pageSize }}</td>
+        <td (click)="handleDetail(row?.id)" class="hover:cursor-pointer hover:text-green-500 hover:scale-105" scope="col" >{{ row.fullname }}</td>
+        <td class="hover:cursor-pointer hover:text-green-500 hover:scale-105" scope="col" >{{ row.userName }}</td>
+        <td scope="col" >{{ row.email }}</td>
+        <td scope="col" >{{ row.cellPhone }}</td>
+        <td scope="col" >{{ row.birthday | date: 'dd/MM/yyyy' }}</td>
+        <td scope="col" >{{ row.address }}</td>
+        <td scope="col" [ngClass]="{'text-green-500': row.status === 'Active', 'text-red-600': row.status === 'Disable'}">
+          {{row.status === 'Active' ? 'Hoạt động' : 'Vô hiệu hoá'}}
+        </td>
+        <td (click)="openDisablePopup(row?.id, row?.userName, row?.status)" scope="col" class="!text-center cursor-pointer">
+          <i *ngIf="row.status === 'Active'" class="fa-solid fa-user-xmark text-myRed"></i>
+          <i *ngIf="row.status === 'Disable'" class="fa-solid fa-user-check text-green-500"></i>
+        </td>
+      </ng-template>
+    </app-share-table>
+</div>
+
+<app-management-add *ngIf="isVisiblePopUpAddManagement" [mode]="mode" [idManagement]="idManagement"
+[isVisiblePopUpAddManagement]="isVisiblePopUpAddManagement"
+(visiblePopUpAddManagement)="handelVisiblePopUpAddManagement($event)"></app-management-add>
+
+<app-account-disable [isVisible]="isVisible" [nameManagement]="nameManagement" [idManagement]="idManagement" (changeVisibleDelete)="handleChangeVisible($event)"></app-account-disable>
