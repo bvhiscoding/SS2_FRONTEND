@@ -1,0 +1,179 @@
+<nz-modal nzWidth="900px" [(nzVisible)]="isVisiblePopUpAddManagement" nzCentered [nzContent]="modalContent"
+    [nzFooter]="null" (nzOnCancel)="handleCancel()">
+
+    <ng-template #modalContent>
+        <div class="text-start border-b border-primary pb-2 text-primary font-medium text-[22px]">
+            <span>{{edit ? 'Thông tin người dùng' : 'Thêm mới người dùng'}}</span>
+        </div>
+
+        <div class="flex flex-col mt-5 gap-2 h-fit w-full pb-2 overflow-auto">
+            <form [formGroup]="form"
+                class="flex flex-col gap-1 w-full h-fit pb-2 overflow-auto">
+                <div class="flex flex-col w-full flex-1">
+                    <span class="font-medium">Họ và tên<span class="text-red-500">*</span></span>
+                    <mat-form-field class="custom-input " appearance="outline">
+                        <input matInput formControlName="fullName" />
+                        <mat-error
+                            *ngIf="form.get('fullName')?.errors?.['required']&& (form.get('fullName')?.dirty || form.get('fullName')?.touched)"
+                            class="text-red-600">
+                            {{'PopUpRegister.noEmty'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="flex w-full flex-1 gap-3">
+                    <div class="flex flex-col w-full flex-1">
+                      <span class="font-medium">Ảnh đại diện</span>
+                      <div class="h-[200px] border-dashed border-2 rounded-lg border-[#000] flex items-center justify-center">
+                        <img *ngIf="avatarUrl" [src]="avatarUrl" alt="Ảnh đại diện" class="h-full w-full object-cover" />
+                        <span *ngIf="!avatarUrl" class="text-gray-400">Chưa có ảnh</span>
+                      </div>
+                      <input type="file" (change)="handleFileChange($event, 'avatar')" class="mt-2" [disabled]="edit"/>
+                    </div>
+                    <div class="flex flex-col w-full flex-1">
+                      <span class="font-medium">Căn cước công dân</span>
+                      <div class="h-[200px] border-dashed border-2 rounded-lg border-[#000] flex items-center justify-center">
+                        <img *ngIf="identityCardUrl" [src]="identityCardUrl" alt="Ảnh căn cước" class="h-full w-full object-cover" />
+                        <span *ngIf="!identityCardUrl" class="text-gray-400">Chưa có ảnh</span>
+                      </div>
+                      <input type="file" (change)="handleFileChange($event, 'identityCard')" class="mt-2" [disabled]="edit"/>
+                    </div>
+                </div>  
+                <div class="flex w-full flex-1 gap-3 mt-3">
+                    <div class="flex flex-col flex-1">
+                        <span class="font-medium">Số căn cước công dân<span class="text-red-500">*</span></span>
+                        <mat-form-field class="custom-input " appearance="outline">
+                            <input matInput formControlName="identityCardNumber" />
+                            <mat-error
+                                *ngIf="form.get('identityCardNumber')?.errors?.['required']&& (form.get('identityCardNumber')?.dirty || form.get('identityCardNumber')?.touched)"
+                                class="text-red-600">
+                                {{'PopUpRegister.noEmty'|translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class=" flex flex-col flex-1">
+                        <span class="font-medium">Ngày cấp<span class="text-red-500">*</span></span>
+                        <mat-form-field class="custom-input " appearance="outline">
+                            <input formControlName="identityCardDate" matInput [matDatepicker]="picker2" />
+                            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                            <mat-datepicker #picker2></mat-datepicker>
+                            <mat-error
+                                *ngIf="form.get('identityCardDate')?.errors?.['required']&& (form.get('identityCardDate')?.dirty || form.get('identityCardDate')?.touched)"
+                                class="text-red-600">
+                                {{'PopUpRegister.noEmty'|translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="flex flex-col w-full flex-1">
+                    <span class="font-medium">Nơi cấp<span class="text-red-500">*</span></span>
+                    <mat-form-field class="custom-input " appearance="outline">
+                        <input matInput formControlName="identityCardPlace" />
+                        <mat-error
+                            *ngIf="form.get('identityCardPlace')?.errors?.['required']&& (form.get('identityCardPlace')?.dirty || form.get('identityCardPlace')?.touched)"
+                            class="text-red-600">
+                            {{'PopUpRegister.noEmty'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="flex gap-3 w-full">
+                    <div class="flex flex-col flex-1">
+                        <span class="font-medium">Tên đăng nhập<span class="text-red-500">*</span></span>
+                        <mat-form-field class="custom-input " appearance="outline">
+                            <input matInput formControlName="username" />
+                            <mat-error
+                                *ngIf="form.get('username')?.errors?.['required']&& (form.get('username')?.dirty || form.get('username')?.touched)"
+                                class="text-red-600">
+                                {{'PopUpRegister.noEmty'|translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="flex flex-col flex-1">
+                        <span class="font-medium">Email<span
+                                class="text-red-500 text-[8px] cursor-pointer translate-y-[-5px] px-1 ml-1 inline-block border border-red-500"
+                                (click)="showAlerEmail()">i</span></span>
+                        <div class="flex relative">
+                            <mat-form-field class="custom-input   w-full" appearance="outline">
+                                <input class="!w-[85%]" matInput formControlName="email" />
+                                <mat-error
+                                    *ngIf="form.get('email')?.errors?.['email']&& (form.get('email')?.dirty || form.get('email')?.touched)"
+                                    class="text-red-600">
+                                    {{'PopUpRegister.wrongEmail'|translate}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col w-full flex-1">
+                    <span class="font-medium">Địa chỉ thường trú<span class="text-red-500">*</span></span>
+                    <mat-form-field class="custom-input " appearance="outline">
+                        <input matInput formControlName="address" />
+                        <mat-error
+                            *ngIf="form.get('address')?.errors?.['required']&& (form.get('address')?.dirty || form.get('address')?.touched)"
+                            class="text-red-600">
+                            {{'PopUpRegister.noEmty'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="flex gap-3 w-full">
+                    <div class="flex flex-col flex-1">
+                        <span class="font-medium">Ngày sinh<span class="text-red-500">*</span></span>
+                        <mat-form-field class="custom-input " appearance="outline">
+                            <input formControlName="birthday" matInput [matDatepicker]="picker1" />
+                            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                            <mat-error
+                                *ngIf="form.get('birthday')?.errors?.['required']&& (form.get('birthday')?.dirty || form.get('birthday')?.touched)"
+                                class="text-red-600">
+                                {{'PopUpRegister.noEmty'|translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="flex flex-col flex-1">
+                        <span class="font-medium">{{'PopUpRegister.phoneNumber'|translate}}<span
+                                class="text-red-500 text-[8px] cursor-pointer translate-y-[-5px] px-1 ml-1 inline-block border border-red-500"
+                                (click)="showAlerPhoneNumber()">i</span></span>
+                        <mat-form-field class="custom-input " appearance="outline">
+                            <input matInput formControlName="cellPhone" maxlength="10" />
+                            <mat-error *ngIf="form.get('cellPhone')?.errors?.['phoneNumberCheck']" class="text-red-600">
+                                {{'PopUpRegister.wrongPhoneNumber'|translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="flex flex-col flex-1">
+                        <span class="font-medium">Giới tính<span class="text-red-500">*</span></span>
+                        <mat-form-field class="custom-input " appearance="outline">
+                            <mat-select formControlName="gender">
+                                <mat-option *ngFor="let gender of listGender" [value]="gender.value">
+                                  {{ gender.label }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error
+                                *ngIf="form.get('gender')?.errors?.['required']&& (form.get('gender')?.dirty || form.get('gender')?.touched)"
+                                class="text-red-600">
+                                {{'PopUpRegister.noEmty'|translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="flex flex-col w-full">
+                    <span class="font-medium">Quyền người dùng</span>
+                    <mat-form-field class="custom-input " appearance="outline">
+                        <mat-select formControlName="isAdmin">
+                            <mat-option *ngFor="let role of listRoles" [value]="role.value">
+                              {{ role.label }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+        <div class="flex gap-3 justify-center">
+            <button *ngIf="!edit" nz-button nzType="primary"
+                class="!bg-primary w-[120px] border-none rounded-lg hover:opacity-60 hover:bg-primary text-white hover:text-black"
+                (click)="handleOk()">Thêm mới</button>
+            <button nz-button
+                class="!bg-[#969696] font-medium w-[120px] border-none rounded-lg hover:opacity-60 text-white"
+                (click)="handleCancel()">Huỷ bỏ</button>
+        </div>
+    </ng-template>
+</nz-modal>
