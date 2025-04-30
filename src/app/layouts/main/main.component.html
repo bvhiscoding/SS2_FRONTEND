@@ -29,8 +29,11 @@
           <i class="fa-solid fa-chart-simple"></i>
           <span class="ml-3">Thống kê</span>
         </li>
-
-
+        
+        <li nz-menu-item [routerLink]="['/', 'user-management']" nzMatchRouter class="menu-item">
+          <i class="fa-solid fa-users"></i>
+          <span class="ml-3">{{'Menu.userManagement'| translate }}</span>
+        </li>
         <li nz-menu-item [routerLink]="['/', 'slection-ticket']" nzMatchRouter class="menu-item">
           <i class="fa-solid fa-check-to-slot"></i>
           <span class="ml-3">Tiến hành bầu cử</span>
