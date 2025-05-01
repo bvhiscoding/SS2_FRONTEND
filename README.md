@@ -65,8 +65,6 @@ Benefits of This Blockchain Implementation
 
 ![Screenshot 2025-05-01 104008](https://github.com/user-attachments/assets/05ec1d08-da1e-45a8-ac0f-69ac01f895fa)
 
----Work In Progress---
-
 ## Functions
 (The following list is unsorted)
 - Login
@@ -87,3 +85,5 @@ Login Function UI
 
 Personal Info UI
 ![Personal_info](https://github.com/user-attachments/assets/e18e73a4-af8d-4b2f-b01e-f70f11f86745)
+
+**---Work In Progress---**
