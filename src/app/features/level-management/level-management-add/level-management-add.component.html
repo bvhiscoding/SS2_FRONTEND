@@ -1,0 +1,67 @@
+<nz-modal nzWidth="650px" [(nzVisible)]="isVisiblePopUpAddLevelManagement" nzCentered [nzContent]="modalContent"
+    [nzFooter]="null" (nzOnCancel)="handleCancel()">
+
+    <ng-template #modalContent>
+        <div class="text-start border-b border-primary pb-2 text-primary font-medium text-[22px]">
+            <span>{{edit ? 'Chỉnh sửa chức vụ' : 'Thêm chức vụ mới'}}</span>
+        </div>
+
+        <div class="flex flex-col mt-5 gap-2 h-fit w-full pb-2 overflow-auto">
+            <form [formGroup]="form"
+                class="flex flex-col w-full h-fit gap-2 pb-2 overflow-auto">
+                <div class="flex flex-col w-full flex-1">
+                    <span class="font-medium">Tên chức vụ<span class="text-red-500">*</span></span>
+                    <mat-form-field class="custom-input " appearance="outline">
+                        <input matInput formControlName="levelName" />
+                        <mat-error
+                            *ngIf="form.get('levelName')?.errors?.['required']&& (form.get('levelName')?.dirty || form.get('levelName')?.touched)"
+                            class="text-red-600">
+                            {{'PopUpRegister.noEmty'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col w-full flex-1 mb-20">
+                    <span class="font-medium">Mô tả</span>
+                    <mat-form-field class="custom-input " appearance="outline">
+                        <textarea matInput formControlName="description" rows="5"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col w-full flex-1">
+                    <span class="font-medium">Trạng thái<span class="text-red-500">*</span></span>
+                    <mat-form-field class="custom-input " appearance="outline">
+                        <mat-select formControlName="status">
+                            <mat-option *ngFor="let status of listStatus" [value]="status.value">
+                              {{ status.label }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="form.get('status')?.errors?.['required']&& (form.get('status')?.dirty || form.get('status')?.touched)"
+                            class="text-red-600">
+                            {{'PopUpRegister.noEmty'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+        <!-- <div class="flex gap-3 justify-center">
+            <button nz-button nzType="primary"
+                class="!bg-primary w-[120px] border-none rounded-lg hover:opacity-60 hover:bg-primary text-white hover:text-black"
+                (click)="handleOk()">Thêm mới</button>
+            <button nz-button
+                class="!bg-[#969696] font-medium w-[120px] border-none rounded-lg hover:opacity-60 text-white"
+                (click)="handleCancel()">Huỷ bỏ</button>
+        </div> -->
+        <div class="flex gap-3 justify-center">
+            <button *ngIf="!edit" nz-button nzType="primary"
+                class="!bg-primary w-[120px] border-none rounded-lg hover:opacity-60 hover:bg-primary text-white hover:text-black"
+                (click)="handleOk()">Thêm mới</button>
+            <button *ngIf="edit" nz-button nzType="primary"
+                class="!bg-primary w-[120px] border-none rounded-lg hover:opacity-60 hover:bg-primary text-white hover:text-black"
+                (click)="handleEdit()">Chỉnh sửa</button>
+            <button nz-button
+                class="!bg-[#969696] font-medium w-[120px] border-none rounded-lg hover:opacity-60 text-white"
+                (click)="handleCancel()">Huỷ bỏ</button>
+        </div>
+    </ng-template>
+</nz-modal>
+
