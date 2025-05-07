@@ -1,0 +1,53 @@
+<div class=" bg-bgGray w-full p-10">
+    <div class="mb-8 flex justify-between items-center">
+        <h3 class="uppercase text-primary text-[18px] font-medium">QUẢN LÝ CHỨC VỤ</h3>
+    </div>
+    <div class="flex bg-white py-6 px-5 items-center justify-start rounded-lg shadow-shadow-timeword gap-6 mb-10">
+        <div class="font-medium">Tìm kiếm</div>
+        <div class="relative w-[350px] h-[44px]">
+            <input class="w-full px-3 py-1 h-[44px] rounded-lg border-[#ccc] border-solid border-[2px] outline-none" placeholder="Tìm kiếm tên chức vụ"
+            [(ngModel)]="searchQuery"
+            >
+            <i
+            class="fa-solid fa-magnifying-glass absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer hover:text-primary p-1"></i>
+          </div>
+    </div>
+    <div class="bg-white py-6 px-5 rounded-lg shadow-shadow-timeword gap-6">
+        <div class="mb-8 flex justify-between items-center">
+            <h3 class="text-primary text-[18px] font-medium">Danh sách chức vụ</h3>
+            <div (click)="handelOpenPopUpAddLevelManagement()" class="px-[12px] py-[8px] rounded-[6px] cursor-pointer bg-primary text-[#fff]" >Thêm chức vụ mới</div>
+        </div>
+        <app-share-table [pageIndex]="params.page" [pageSize]="params.pageSize" [loaded]="!isLoading" [data]="listPosition" [total]="totalCount"
+          [maxHeight]="'calc(100vh - 150px)'" (pageIndexChange)="changePage($event)"
+          (pageSizeChange)="changePageSize($event)">
+          <ng-template #headers>
+            <th scope="col" class="font-semibold !text-center">STT</th>
+            <th scope="col" class="!text-start">Tên chức vụ</th>
+            <th scope="col" class="!text-start">Mô tả</th>
+            <th scope="col" class="!text-center">Trạng thái</th>
+            <th scope="col" class="!text-center">Thao tác</th>
+          </ng-template>
+          <ng-template #rows let-row let-index="index">
+            <td class="!text-center">{{ index + 1 + (params.page - 1) * params.pageSize }}</td>
+            <td scope="col" >{{ row.positionName }}</td>
+            <td scope="col" >{{ row.positionDescription }}</td>
+            <td scope="col" class="text-center" [ngClass]="{'text-green-500': row.status === true, 'text-red-600': row.status === false}">
+              {{ row.status === true ? 'Hoạt động' : 'Bị khoá' }}
+            </td>
+            <td scope="col" class="!text-center">
+              <div class="flex items-center justify-center h-full gap-2">
+                <span (click)="handelOpenPopUpEditManagement(row?.id)" nz-icon nzType="edit:antd" class="icon text-[20px] cursor-pointer" nzTheme="outline"></span>
+                <i (click)="openDeletePopup(row?.id, row?.positionName)" class="fa-regular fa-trash-can text-red-500 cursor-pointer"></i>
+              </div>
+            </td>
+          </ng-template>
+        </app-share-table>
+    </div>
+</div>
+
+<app-level-management-add *ngIf="isVisiblePopUpAddLevelManagement"
+[idLevelManagement] = "idLevelManagement" [mode]="mode"
+[isVisiblePopUpAddLevelManagement]="isVisiblePopUpAddLevelManagement"
+(visiblePopUpAddLevelManagement)="handelVisiblePopUpAddLevelManagement($event)"></app-level-management-add>
+
+<app-popup-delete [isVisible]="isVisible" [nameLevel]="nameLevel" [idLevelManagement]="idLevelManagement" (changeVisibleDelete)="handleChangeVisible($event)"></app-popup-delete>
