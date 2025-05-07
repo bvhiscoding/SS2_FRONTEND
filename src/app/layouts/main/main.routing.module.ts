@@ -30,6 +30,14 @@ const routes: Routes = [
           canActivate: [RolesGuard],
       },
       {
+        path: 'level-management',
+        loadChildren: () =>
+          import('../../features/level-management/level-management.routing.module').then(
+            (m) => m.LevelManagementRoutingModule,
+          ),
+          canActivate: [RolesGuard],
+      },
+      {
         path: 'user-infor/:id',
         loadChildren: () =>
           import('../../features/my-info/my-info.routing.module').then(
