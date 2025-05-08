@@ -21,8 +21,9 @@
       </div>
   </div>
   
-  <!-- Search Box -->
+  <!-- Search and Filter Box -->
   <div class="bg-white rounded-xl shadow-md p-6 mb-8 transition-all duration-300 hover:shadow-lg">
+      <!-- Search and Filter Toggle -->
       <div class="flex flex-col md:flex-row md:items-center gap-4">
           <div class="text-lg font-medium text-gray-700 flex items-center">
               <i class="fas fa-search text-primary mr-2"></i>
@@ -31,6 +32,7 @@
           <div class="relative flex-1 max-w-lg">
               <input 
                   [(ngModel)]="searchQuery"
+                  (input)="onSearchChange()"
                   class="w-full px-5 py-3 pr-10 bg-gray-50 border-0 rounded-lg shadow-inner focus:ring-2 focus:ring-primary outline-none transition-all duration-300" 
                   placeholder="Nhập tên chức vụ để tìm kiếm..."
               >
@@ -38,9 +40,108 @@
                   <i class="fas fa-search"></i>
               </button>
           </div>
-          <button class="px-5 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-all duration-200 flex items-center gap-2">
-              <i class="fas fa-filter"></i>
+          <button 
+              class="px-5 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-all duration-200 flex items-center gap-2"
+              (click)="toggleFilterPanel()"
+          >
+              <i class="fas fa-filter" [class.text-primary]="isFilterActive"></i>
               <span>Lọc</span>
+              <span *ngIf="activeFilterCount > 0" class="ml-1 flex items-center justify-center h-5 w-5 bg-primary text-white text-xs rounded-full">
+                  {{activeFilterCount}}
+              </span>
+          </button>
+      </div>
+      
+      <!-- Filter Panel (Expandable) -->
+      <div *ngIf="showFilterPanel" class="mt-4 pt-4 border-t border-gray-200 animate-fade-in">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <!-- Status Filter -->
+              <div class="filter-group">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Trạng thái:</label>
+                  <select 
+                      [(ngModel)]="filters.status" 
+                      (change)="applyFilters()"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                  >
+                      <option [ngValue]="null">Tất cả trạng thái</option>
+                      <option [ngValue]="true">Hoạt động</option>
+                      <option [ngValue]="false">Bị khóa</option>
+                  </select>
+              </div>
+              
+              <!-- Created Date Range Filter -->
+              <div class="filter-group">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Ngày tạo (từ):</label>
+                  <input 
+                      type="date" 
+                      [(ngModel)]="filters.createdDateFrom"
+                      (change)="applyFilters()"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                  >
+              </div>
+              
+              <div class="filter-group">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Ngày tạo (đến):</label>
+                  <input 
+                      type="date" 
+                      [(ngModel)]="filters.createdDateTo"
+                      (change)="applyFilters()"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                  >
+              </div>
+          </div>
+          
+          <!-- Filter Actions -->
+          <div class="flex justify-end mt-4 space-x-3">
+              <button 
+                  (click)="resetFilters()"
+                  class="px-3 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors duration-200 flex items-center gap-1"
+              >
+                  <i class="fas fa-undo"></i>
+                  <span>Đặt lại</span>
+              </button>
+              
+              <button 
+                  (click)="applyFilters()"
+                  class="px-3 py-2 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors duration-200 flex items-center gap-1"
+              >
+                  <i class="fas fa-check"></i>
+                  <span>Áp dụng</span>
+              </button>
+          </div>
+      </div>
+      
+      <!-- Active Filters Display -->
+      <div *ngIf="activeFilterCount > 0" class="mt-4 pt-3 border-t border-gray-200 flex flex-wrap items-center gap-2">
+          <span class="text-sm text-gray-600">Bộ lọc đang áp dụng:</span>
+          
+          <div *ngIf="filters.status !== null" class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm flex items-center gap-1">
+              <span>Trạng thái: {{filters.status ? 'Hoạt động' : 'Bị khóa'}}</span>
+              <button (click)="removeFilter('status')" class="ml-1 text-blue-600 hover:text-blue-800">
+                  <i class="fas fa-times-circle"></i>
+              </button>
+          </div>
+          
+          <div *ngIf="filters.createdDateFrom" class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm flex items-center gap-1">
+              <span>Từ ngày: {{filters.createdDateFrom | date:'dd/MM/yyyy'}}</span>
+              <button (click)="removeFilter('createdDateFrom')" class="ml-1 text-blue-600 hover:text-blue-800">
+                  <i class="fas fa-times-circle"></i>
+              </button>
+          </div>
+          
+          <div *ngIf="filters.createdDateTo" class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm flex items-center gap-1">
+              <span>Đến ngày: {{filters.createdDateTo | date:'dd/MM/yyyy'}}</span>
+              <button (click)="removeFilter('createdDateTo')" class="ml-1 text-blue-600 hover:text-blue-800">
+                  <i class="fas fa-times-circle"></i>
+              </button>
+          </div>
+          
+          <button 
+              (click)="resetFilters()"
+              class="ml-2 text-sm text-gray-600 hover:text-primary underline flex items-center gap-1"
+          >
+              <i class="fas fa-trash-alt text-xs"></i>
+              <span>Xóa tất cả bộ lọc</span>
           </button>
       </div>
   </div>
@@ -55,7 +156,7 @@
                   <span>Danh sách chức vụ</span>
               </h2>
               <div class="flex items-center gap-3 text-sm text-gray-600">
-                  <span>Tổng số: <strong class="text-primary">{{totalCount || 0}}</strong></span>
+                  <span>Tổng số: <strong class="text-primary">{{filteredCount || 0}}</strong></span>
                   <div class="h-4 w-px bg-gray-300"></div>
                   <div class="flex items-center gap-1">
                       <i class="fas fa-eye text-primary"></i>
@@ -65,9 +166,9 @@
                           (ngModelChange)="changePageSize($event)"
                           class="ml-1 bg-gray-100 border-0 rounded p-1 focus:outline-none focus:ring-1 focus:ring-primary"
                       >
-                          <option value="10">10</option>
-                          <option value="20">20</option>
-                          <option value="50">50</option>
+                          <option [ngValue]="10">10</option>
+                          <option [ngValue]="20">20</option>
+                          <option [ngValue]="50">50</option>
                       </select>
                   </div>
               </div>
@@ -92,14 +193,36 @@
                   <thead>
                       <tr class="bg-gray-50">
                           <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-16">STT</th>
-                          <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tên chức vụ</th>
+                          <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              <div class="flex items-center">
+                                  <span>Tên chức vụ</span>
+                                  <button (click)="sortBy('positionName')" class="ml-1 focus:outline-none">
+                                      <i class="fas" 
+                                         [ngClass]="{'fa-sort': sortField !== 'positionName', 
+                                                     'fa-sort-up': sortField === 'positionName' && sortDirection === 'asc', 
+                                                     'fa-sort-down': sortField === 'positionName' && sortDirection === 'desc'}">
+                                      </i>
+                                  </button>
+                              </div>
+                          </th>
                           <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mô tả</th>
-                          <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Trạng thái</th>
+                          <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              <div class="flex items-center justify-center">
+                                  <span>Trạng thái</span>
+                                  <button (click)="sortBy('status')" class="ml-1 focus:outline-none">
+                                      <i class="fas" 
+                                         [ngClass]="{'fa-sort': sortField !== 'status', 
+                                                     'fa-sort-up': sortField === 'status' && sortDirection === 'asc', 
+                                                     'fa-sort-down': sortField === 'status' && sortDirection === 'desc'}">
+                                      </i>
+                                  </button>
+                              </div>
+                          </th>
                           <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Thao tác</th>
                       </tr>
                   </thead>
                   <tbody class="bg-white divide-y divide-gray-200">
-                      <tr *ngFor="let row of listPosition; let index = index" class="hover:bg-gray-50 transition-colors duration-150">
+                      <tr *ngFor="let row of filteredPositions; let index = index" class="hover:bg-gray-50 transition-colors duration-150">
                           <td class="px-6 py-4 text-center whitespace-nowrap">
                               <div class="flex justify-center">
                                   <span class="h-8 w-8 flex items-center justify-center rounded-full bg-primary bg-opacity-10 text-primary font-medium">
@@ -152,31 +275,44 @@
           </div>
           
           <!-- Empty State -->
-          <div *ngIf="!listPosition || listPosition.length === 0" class="py-20 flex justify-center items-center">
+          <div *ngIf="!filteredPositions || filteredPositions.length === 0" class="py-20 flex justify-center items-center">
               <div class="text-center">
                   <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                       <i class="fas fa-folder-open text-gray-400 text-3xl"></i>
                   </div>
                   <h3 class="text-lg font-medium text-gray-600 mb-2">Không có dữ liệu</h3>
-                  <p class="text-gray-500 mb-6">Chưa có chức vụ nào được tạo trong hệ thống</p>
-                  <button 
-                      (click)="handelOpenPopUpAddLevelManagement()" 
-                      class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors duration-200"
-                  >
-                      <i class="fas fa-plus-circle mr-2"></i>
-                      Thêm chức vụ mới
-                  </button>
+                  <p class="text-gray-500 mb-6">
+                      <span *ngIf="activeFilterCount > 0">Không tìm thấy chức vụ nào phù hợp với bộ lọc. Hãy thử điều chỉnh lại bộ lọc.</span>
+                      <span *ngIf="activeFilterCount === 0">Chưa có chức vụ nào được tạo trong hệ thống.</span>
+                  </p>
+                  <div class="flex justify-center space-x-3">
+                      <button 
+                          *ngIf="activeFilterCount > 0"
+                          (click)="resetFilters()" 
+                          class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors duration-200"
+                      >
+                          <i class="fas fa-filter-circle-xmark mr-2"></i>
+                          Xóa bộ lọc
+                      </button>
+                      <button 
+                          (click)="handelOpenPopUpAddLevelManagement()" 
+                          class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors duration-200"
+                      >
+                          <i class="fas fa-plus-circle mr-2"></i>
+                          Thêm chức vụ mới
+                      </button>
+                  </div>
               </div>
           </div>
       </div>
       
       <!-- Pagination -->
-      <div *ngIf="!isLoading && listPosition && listPosition.length > 0" class="border-t border-gray-200 px-6 py-4">
+      <div *ngIf="!isLoading && filteredPositions && filteredPositions.length > 0" class="border-t border-gray-200 px-6 py-4">
           <div class="flex justify-between items-center">
               <div class="text-sm text-gray-600">
                   Hiển thị {{ (params.page - 1) * params.pageSize + 1 }} đến 
-                  {{ (params.page * params.pageSize > totalCount) ? totalCount : params.page * params.pageSize }}
-                  trong tổng số {{ totalCount }} kết quả
+                  {{ (params.page * params.pageSize > filteredCount) ? filteredCount : params.page * params.pageSize }}
+                  trong tổng số {{ filteredCount }} kết quả
               </div>
               <div>
                   <!-- Simplified pagination control -->
@@ -194,7 +330,7 @@
                       </span>
                       
                       <button 
-                          [disabled]="params.page * params.pageSize >= totalCount"
+                          [disabled]="params.page * params.pageSize >= filteredCount"
                           (click)="changePage(params.page + 1)"
                           class="px-3 py-1 rounded border bg-white text-gray-600 disabled:opacity-50"
                       >

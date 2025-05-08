@@ -79,13 +79,17 @@ export class LevelManagementListComponent implements OnInit{
         this.isLoading = false;
         this.listPosition = res.data;
         this.totalCount = res.totalItems;
+        
+        // Thêm dòng này
+        this.filterAndSortData();
+        
         this.cdr.detectChanges();
         this.message.success('Lấy dữ liệu thành công');
       },
       error: (err) => {
         this.isLoading = false;
       }
-    })
+    });
   }
 
   isVisiblePopUpAddLevelManagement: boolean = false;
@@ -129,12 +133,142 @@ export class LevelManagementListComponent implements OnInit{
 
   }
 
-  changePage(e: number) {
-    this.params.page = e;
-    this.viewListPosition();
+  changePage(page: number): void {
+    this.params.page = page;
+    this.filterAndSortData(); // Thay vì gọi viewListPosition()
   }
-  changePageSize(e: number) {
-    this.params.pageSize = e;
-    this.viewListPosition();
+  
+  changePageSize(size: number): void {
+    this.params.pageSize = size;
+    this.params.page = 1; // Reset về trang đầu tiên
+    this.filterAndSortData(); // Thay vì gọi viewListPosition()
+  }
+  // Thêm các thuộc tính mới
+  public isFilterActive: boolean = false;
+  public showFilterPanel: boolean = false;
+  // Thay đổi định nghĩa đối tượng filters
+  public filters: {
+    status: boolean | null;
+    createdDateFrom: string | null;
+    createdDateTo: string | null;
+    [key: string]: any; // Thêm index signature này
+  } = {
+    status: null,
+    createdDateFrom: null,
+    createdDateTo: null
+  };
+  public activeFilterCount: number = 0;
+  public sortField: string = '';
+  public sortDirection: 'asc' | 'desc' = 'asc';
+  public filteredPositions: any[] = []; 
+  public filteredCount: number = 0;
+
+  // Thêm các phương thức mới
+  toggleFilterPanel(): void {
+    this.showFilterPanel = !this.showFilterPanel;
+  }
+
+  applyFilters(): void {
+    // Đếm số bộ lọc đang áp dụng
+    this.activeFilterCount = 0;
+    if (this.filters.status !== null) this.activeFilterCount++;
+    if (this.filters.createdDateFrom) this.activeFilterCount++;
+    if (this.filters.createdDateTo) this.activeFilterCount++;
+    
+    // Cập nhật isFilterActive dựa trên số lượng bộ lọc
+    this.isFilterActive = this.activeFilterCount > 0;
+    
+    this.filterAndSortData();
+    this.params.page = 1; // Reset về trang đầu
+  }
+
+  removeFilter(filterName: string): void {
+    this.filters[filterName] = null;
+    this.applyFilters();
+  }
+  resetFilters(): void {
+    this.filters = {
+      status: null,
+      createdDateFrom: null,
+      createdDateTo: null
+    };
+    this.activeFilterCount = 0;
+    this.isFilterActive = false; // Đặt lại trạng thái này
+    this.filterAndSortData();
+  }
+
+  sortBy(field: string): void {
+    if (this.sortField === field) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortField = field;
+      this.sortDirection = 'asc';
+    }
+    
+    this.filterAndSortData();
+  }
+
+  onSearchChange(): void {
+    this.params.page = 1;
+    this.filterAndSortData();
+  }
+
+  filterAndSortData(): void {
+    if (!this.listPosition) {
+      this.filteredPositions = [];
+      this.filteredCount = 0;
+      return;
+    }
+    
+    // Lọc dữ liệu
+    let filtered = [...this.listPosition];
+    
+    // Lọc theo trạng thái
+    if (this.filters.status !== null) {
+      filtered = filtered.filter(item => item.status === this.filters.status);
+    }
+    
+    // Lọc theo ngày tạo (nếu có trong dữ liệu)
+    if (this.filters.createdDateFrom && filtered[0]?.createdDate) {
+      const fromDate = new Date(this.filters.createdDateFrom);
+      filtered = filtered.filter(item => new Date(item.createdDate) >= fromDate);
+    }
+    
+    if (this.filters.createdDateTo && filtered[0]?.createdDate) {
+      const toDate = new Date(this.filters.createdDateTo);
+      filtered = filtered.filter(item => new Date(item.createdDate) <= toDate);
+    }
+    
+    // Lọc theo từ khóa tìm kiếm
+    if (this.searchQuery) {
+      const searchLower = this.searchQuery.toLowerCase();
+      filtered = filtered.filter(item => 
+        item.positionName.toLowerCase().includes(searchLower) || 
+        (item.positionDescription && item.positionDescription.toLowerCase().includes(searchLower))
+      );
+    }
+    
+    // Sắp xếp dữ liệu
+    if (this.sortField) {
+      filtered.sort((a, b) => {
+        const aValue = a[this.sortField];
+        const bValue = b[this.sortField];
+        
+        if (typeof aValue === 'string') {
+          const comparison = aValue.localeCompare(bValue);
+          return this.sortDirection === 'asc' ? comparison : -comparison;
+        } else {
+          const comparison = aValue > bValue ? 1 : (aValue < bValue ? -1 : 0);
+          return this.sortDirection === 'asc' ? comparison : -comparison;
+        }
+      });
+    }
+    
+    // Lưu tổng số kết quả
+    this.filteredCount = filtered.length;
+    
+    // Phân trang kết quả
+    const startIndex = (this.params.page - 1) * this.params.pageSize;
+    this.filteredPositions = filtered.slice(startIndex, startIndex + this.params.pageSize);
   }
 }
