@@ -1,0 +1,149 @@
+/* Global styles for Level Management */
+
+/* Custom form field styles */
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #e2e8f0;
+  }
+  
+  :host ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: #0EAF8F;
+  }
+  
+  :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.5em 0;
+  }
+  
+  :host ::ng-deep .mat-form-field-label-wrapper {
+    top: -1.2em;
+  }
+  
+  :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-label {
+    margin-top: 0.2em;
+  }
+  
+  :host ::ng-deep .mat-select-value {
+    color: #374151;
+  }
+  
+  /* Custom table styles */
+  :host ::ng-deep .table-wrapper {
+    box-shadow: none !important;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  
+  :host ::ng-deep th {
+    @apply bg-gray-50 text-left border-b border-gray-200 px-4 py-3 font-medium text-gray-700;
+  }
+  
+  :host ::ng-deep td {
+    @apply border-b border-gray-100 px-4 py-3 text-gray-700;
+  }
+  
+  :host ::ng-deep tbody tr:hover {
+    @apply bg-gray-50;
+  }
+  
+  /* Custom modal styles */
+  :host ::ng-deep .ant-modal-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid #f0f0f0;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  :host ::ng-deep .ant-modal-content {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  :host ::ng-deep .ant-modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid #f0f0f0;
+    border-radius: 0 0 8px 8px;
+  }
+  
+  :host ::ng-deep .ant-btn-primary {
+    background-color: #0EAF8F;
+    border-color: #0EAF8F;
+  }
+  
+  :host ::ng-deep .ant-btn-primary:hover {
+    background-color: #0c9a7d;
+    border-color: #0c9a7d;
+  }
+  
+  /* Loading animation */
+  .lds-facebook {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  
+  .lds-facebook div {
+    display: inline-block;
+    position: absolute;
+    left: 8px;
+    width: 16px;
+    background: #0EAF8F;
+    animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+  }
+  
+  .lds-facebook div:nth-child(1) {
+    left: 8px;
+    animation-delay: -0.24s;
+  }
+  
+  .lds-facebook div:nth-child(2) {
+    left: 32px;
+    animation-delay: -0.12s;
+  }
+  
+  .lds-facebook div:nth-child(3) {
+    left: 56px;
+    animation-delay: 0;
+  }
+  
+  @keyframes lds-facebook {
+    0% {
+      top: 8px;
+      height: 64px;
+    }
+    50%, 100% {
+      top: 24px;
+      height: 32px;
+    }
+  }
+  
+  /* Custom ScrollBar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    :host ::ng-deep th,
+    :host ::ng-deep td {
+      padding: 8px;
+    }
+    
+    .table-wrapper {
+      overflow-x: auto;
+    }
+  }

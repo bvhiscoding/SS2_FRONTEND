@@ -1,53 +1,140 @@
-<div class=" bg-bgGray w-full p-10">
-    <div class="mb-8 flex justify-between items-center">
-        <h3 class="uppercase text-primary text-[18px] font-medium">QUẢN LÝ CHỨC VỤ</h3>
-    </div>
-    <div class="flex bg-white py-6 px-5 items-center justify-start rounded-lg shadow-shadow-timeword gap-6 mb-10">
-        <div class="font-medium">Tìm kiếm</div>
-        <div class="relative w-[350px] h-[44px]">
-            <input class="w-full px-3 py-1 h-[44px] rounded-lg border-[#ccc] border-solid border-[2px] outline-none" placeholder="Tìm kiếm tên chức vụ"
-            [(ngModel)]="searchQuery"
-            >
-            <i
-            class="fa-solid fa-magnifying-glass absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer hover:text-primary p-1"></i>
+<div class="bg-bgGray w-full p-4 md:p-10">
+  <!-- Header Section -->
+  <div class="mb-6 flex flex-col md:flex-row md:justify-between md:items-center">
+      <h3 class="uppercase text-primary text-xl font-medium mb-4 md:mb-0">
+          <i class="fa-solid fa-sitemap mr-2"></i>QUẢN LÝ CHỨC VỤ
+      </h3>
+  </div>
+  
+  <!-- Search Box Section -->
+  <div class="bg-white py-4 px-4 md:px-5 rounded-lg shadow-md mb-6">
+      <div class="flex flex-col md:flex-row md:items-center gap-3">
+          <div class="font-medium text-gray-700">Tìm kiếm:</div>
+          <div class="relative flex-1 max-w-lg">
+              <input 
+                  class="w-full px-4 py-2 h-11 rounded-lg border-gray-300 border-solid border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all duration-200" 
+                  placeholder="Nhập tên chức vụ để tìm kiếm..."
+                  [(ngModel)]="searchQuery"
+              >
+              <button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary transition-colors duration-200">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
           </div>
-    </div>
-    <div class="bg-white py-6 px-5 rounded-lg shadow-shadow-timeword gap-6">
-        <div class="mb-8 flex justify-between items-center">
-            <h3 class="text-primary text-[18px] font-medium">Danh sách chức vụ</h3>
-            <div (click)="handelOpenPopUpAddLevelManagement()" class="px-[12px] py-[8px] rounded-[6px] cursor-pointer bg-primary text-[#fff]" >Thêm chức vụ mới</div>
-        </div>
-        <app-share-table [pageIndex]="params.page" [pageSize]="params.pageSize" [loaded]="!isLoading" [data]="listPosition" [total]="totalCount"
-          [maxHeight]="'calc(100vh - 150px)'" (pageIndexChange)="changePage($event)"
-          (pageSizeChange)="changePageSize($event)">
-          <ng-template #headers>
-            <th scope="col" class="font-semibold !text-center">STT</th>
-            <th scope="col" class="!text-start">Tên chức vụ</th>
-            <th scope="col" class="!text-start">Mô tả</th>
-            <th scope="col" class="!text-center">Trạng thái</th>
-            <th scope="col" class="!text-center">Thao tác</th>
-          </ng-template>
-          <ng-template #rows let-row let-index="index">
-            <td class="!text-center">{{ index + 1 + (params.page - 1) * params.pageSize }}</td>
-            <td scope="col" >{{ row.positionName }}</td>
-            <td scope="col" >{{ row.positionDescription }}</td>
-            <td scope="col" class="text-center" [ngClass]="{'text-green-500': row.status === true, 'text-red-600': row.status === false}">
-              {{ row.status === true ? 'Hoạt động' : 'Bị khoá' }}
-            </td>
-            <td scope="col" class="!text-center">
-              <div class="flex items-center justify-center h-full gap-2">
-                <span (click)="handelOpenPopUpEditManagement(row?.id)" nz-icon nzType="edit:antd" class="icon text-[20px] cursor-pointer" nzTheme="outline"></span>
-                <i (click)="openDeletePopup(row?.id, row?.positionName)" class="fa-regular fa-trash-can text-red-500 cursor-pointer"></i>
-              </div>
-            </td>
-          </ng-template>
-        </app-share-table>
-    </div>
+      </div>
+  </div>
+  
+  <!-- Table Section -->
+  <div class="bg-white py-5 px-5 rounded-lg shadow-md">
+      <div class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center">
+          <h3 class="text-primary text-lg font-medium mb-3 md:mb-0">
+              <i class="fa-solid fa-list-ul mr-2"></i>Danh sách chức vụ
+          </h3>
+          <button 
+              (click)="handelOpenPopUpAddLevelManagement()" 
+              class="px-4 py-2 rounded-lg cursor-pointer bg-primary text-white flex items-center gap-2 hover:bg-opacity-90 transition-all duration-200 transform hover:scale-105"
+          >
+              <i class="fa-solid fa-plus"></i>
+              <span>Thêm chức vụ mới</span>
+          </button>
+      </div>
+      
+      <!-- Loading State -->
+      <div *ngIf="isLoading" class="py-20 flex justify-center items-center">
+          <div class="flex flex-col items-center">
+              <div class="lds-facebook"><div></div><div></div><div></div></div>
+              <p class="mt-4 text-gray-500">Đang tải dữ liệu...</p>
+          </div>
+      </div>
+      
+      <!-- Table -->
+      <div *ngIf="!isLoading" class="overflow-hidden border border-gray-200 rounded-lg">
+          <app-share-table 
+              [pageIndex]="params.page" 
+              [pageSize]="params.pageSize" 
+              [loaded]="!isLoading" 
+              [data]="listPosition" 
+              [total]="totalCount"
+              [maxHeight]="'calc(100vh - 250px)'" 
+              (pageIndexChange)="changePage($event)"
+              (pageSizeChange)="changePageSize($event)"
+          >
+              <ng-template #headers>
+                  <th scope="col" class="font-medium text-gray-700 !text-center py-3 bg-gray-50">STT</th>
+                  <th scope="col" class="font-medium text-gray-700 !text-start py-3 bg-gray-50">Tên chức vụ</th>
+                  <th scope="col" class="font-medium text-gray-700 !text-start py-3 bg-gray-50">Mô tả</th>
+                  <th scope="col" class="font-medium text-gray-700 !text-center py-3 bg-gray-50">Trạng thái</th>
+                  <th scope="col" class="font-medium text-gray-700 !text-center py-3 bg-gray-50">Thao tác</th>
+              </ng-template>
+              <ng-template #rows let-row let-index="index">
+                  <td class="!text-center py-3 border-b border-gray-100">
+                      <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-700">
+                          {{ index + 1 + (params.page - 1) * params.pageSize }}
+                      </span>
+                  </td>
+                  <td scope="col" class="py-3 border-b border-gray-100 font-medium">{{ row.positionName }}</td>
+                  <td scope="col" class="py-3 border-b border-gray-100 text-gray-600">
+                      <span *ngIf="row.positionDescription">{{ row.positionDescription }}</span>
+                      <span *ngIf="!row.positionDescription" class="text-gray-400 italic">Chưa có mô tả</span>
+                  </td>
+                  <td scope="col" class="text-center py-3 border-b border-gray-100">
+                      <span *ngIf="row.status === true" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                          <span class="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span>
+                          Hoạt động
+                      </span>
+                      <span *ngIf="row.status === false" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                          <span class="w-2 h-2 rounded-full bg-red-500 mr-1.5"></span>
+                          Bị khóa
+                      </span>
+                  </td>
+                  <td scope="col" class="!text-center py-3 border-b border-gray-100">
+                      <div class="flex items-center justify-center h-full gap-3">
+                          <button 
+                              (click)="handelOpenPopUpEditManagement(row?.id)" 
+                              class="p-2 rounded-md hover:bg-gray-100 text-blue-600 transition-colors duration-200"
+                              title="Chỉnh sửa"
+                          >
+                              <i class="fa-regular fa-pen-to-square"></i>
+                          </button>
+                          <button 
+                              (click)="openDeletePopup(row?.id, row?.positionName)" 
+                              class="p-2 rounded-md hover:bg-gray-100 text-red-600 transition-colors duration-200"
+                              title="Xóa"
+                          >
+                              <i class="fa-regular fa-trash-can"></i>
+                          </button>
+                      </div>
+                  </td>
+              </ng-template>
+          </app-share-table>
+      </div>
+      
+      <!-- Empty State -->
+      <div *ngIf="!isLoading && (!listPosition || listPosition.length === 0)" class="py-20 flex justify-center items-center">
+          <div class="text-center">
+              <i class="fa-regular fa-folder-open text-4xl text-gray-300 mb-3"></i>
+              <p class="text-gray-500">Không có dữ liệu để hiển thị</p>
+              <button 
+                  (click)="handelOpenPopUpAddLevelManagement()" 
+                  class="mt-4 px-3 py-2 rounded-md bg-primary text-white text-sm hover:bg-opacity-90"
+              >
+                  Thêm chức vụ mới
+              </button>
+          </div>
+      </div>
+  </div>
 </div>
 
-<app-level-management-add *ngIf="isVisiblePopUpAddLevelManagement"
-[idLevelManagement] = "idLevelManagement" [mode]="mode"
-[isVisiblePopUpAddLevelManagement]="isVisiblePopUpAddLevelManagement"
-(visiblePopUpAddLevelManagement)="handelVisiblePopUpAddLevelManagement($event)"></app-level-management-add>
+<app-level-management-add 
+  *ngIf="isVisiblePopUpAddLevelManagement"
+  [idLevelManagement]="idLevelManagement" 
+  [mode]="mode"
+  [isVisiblePopUpAddLevelManagement]="isVisiblePopUpAddLevelManagement"
+  (visiblePopUpAddLevelManagement)="handelVisiblePopUpAddLevelManagement($event)"
+></app-level-management-add>
 
-<app-popup-delete [isVisible]="isVisible" [nameLevel]="nameLevel" [idLevelManagement]="idLevelManagement" (changeVisibleDelete)="handleChangeVisible($event)"></app-popup-delete>
+<app-popup-delete 
+  [isVisible]="isVisible" 
+  [nameLevel]="nameLevel" 
+  [idLevelManagement]="idLevelManagement" 
+  (changeVisibleDelete)="handleChangeVisible($event)"
+></app-popup-delete>
