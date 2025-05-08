@@ -17,6 +17,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-management-list',
+  
   standalone: true,
   imports: [
     CommonModule,
@@ -38,6 +39,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   styleUrl: './management-list.component.scss'
 })
 export class ManagementListComponent implements OnInit{
+  public chartType: any = 'columns';
   public isLoading: boolean = false;
   public idManagement: any = '';
   public nameManagement: any = '';
@@ -49,6 +51,7 @@ export class ManagementListComponent implements OnInit{
     page: 1,
     pageSize:10
   }
+  public math = Math; 
 
   listStatus = [
     {

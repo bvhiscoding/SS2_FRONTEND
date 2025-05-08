@@ -1,89 +1,229 @@
-<div class="border-b-2 p-10 border-solid border-[#D8D8D8] relative">
-  <ng-container >
-    <form [formGroup]="form" class="grid grid-cols-3 items-center gap-x-4 gap-y-3">
-      <mat-form-field class="custom-input" appearance="outline">
-        <mat-label>Họ tên</mat-label>
-        <input formControlName="fullName" matInput />
-      </mat-form-field>
-      <mat-form-field class="custom-input" appearance="outline">
-        <mat-label>Email</mat-label>
-        <input formControlName="email" matInput />
-      </mat-form-field>
-      <mat-form-field class="custom-input" appearance="outline">
-        <mat-label>Số điện thoại</mat-label>
-        <input formControlName="cellPhone" matInput />
-      </mat-form-field>
-      <mat-form-field class="custom-input" appearance="outline">
-        <mat-label>Trạng thái tài khoản</mat-label>
-        <mat-select formControlName="status">
-          <mat-option *ngFor="let status of listStatus" [value]="status.value">
-            {{ status.label }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field class="custom-input" appearance="outline">
-        <mat-label>Quyền người dùng</mat-label>
-        <mat-select formControlName="roles">
-          <mat-option *ngFor="let role of listRoles" [value]="role.value">
-            {{ role.label }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <div class="custom-input flex w-full gap-3 items-start">
-        <button (click)="handleCancel()"
-          class="bg-[#EDEDED] w-full h-10 px-4 rounded text-[#000]"
-          >Huỷ bỏ
+<div class="min-h-screen bg-gradient-to-br from-teal-50 to-blue-50 p-6 md:p-10">
+  <!-- Page Header -->
+  <div class="flex flex-wrap items-center justify-between mb-8">
+    <div class="flex items-center mb-4 md:mb-0">
+      <div class="bg-primary p-3 rounded-lg shadow-lg mr-4">
+        <i class="fas fa-users text-white text-xl"></i>
+      </div>
+      <div>
+        <h1 class="text-2xl font-bold text-gray-800">{{'Management.userList'| translate }}</h1>
+        <p class="text-gray-500 mt-1">Quản lý và theo dõi người dùng trong hệ thống</p>
+      </div>
+    </div>
+    <button 
+      (click)="handelOpenPopUpAddManagement()" 
+      class="bg-primary text-white px-4 py-3 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-2 hover:-translate-y-1">
+      <i class="fas fa-user-plus"></i>
+      <span>Thêm mới người dùng</span>
+    </button>
+  </div>
+
+  <!-- Search & Filter Panel -->
+  <div class="bg-white rounded-xl shadow-lg p-6 mb-8 transition-all hover:shadow-xl">
+    <h2 class="text-lg font-medium text-gray-700 mb-4 flex items-center">
+      <i class="fas fa-filter text-primary mr-2"></i>
+      <span>Bộ lọc tìm kiếm</span>
+    </h2>
+    
+    <form [formGroup]="form" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4">
+      <!-- Name field -->
+      <div class="form-group">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Họ tên</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+            <i class="fas fa-user"></i>
+          </span>
+          <input 
+            formControlName="fullName" 
+            class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+            placeholder="Nhập tên người dùng...">
+        </div>
+      </div>
+
+      <!-- Email field -->
+      <div class="form-group">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+            <i class="fas fa-envelope"></i>
+          </span>
+          <input 
+            formControlName="email" 
+            class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+            placeholder="Nhập email...">
+        </div>
+      </div>
+
+      <!-- Phone field -->
+      <div class="form-group">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Số điện thoại</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+            <i class="fas fa-phone"></i>
+          </span>
+          <input 
+            formControlName="cellPhone" 
+            class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+            placeholder="Nhập số điện thoại...">
+        </div>
+      </div>
+
+      <!-- Account status -->
+      <div class="form-group">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Trạng thái tài khoản</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+            <i class="fas fa-toggle-on"></i>
+          </span>
+          <select 
+            formControlName="status"
+            class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary appearance-none transition-colors">
+            <option [ngValue]="null">Tất cả trạng thái</option>
+            <option *ngFor="let status of listStatus" [value]="status.value">
+              {{ status.label }}
+            </option>
+          </select>
+          <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400">
+            <i class="fas fa-chevron-down text-xs"></i>
+          </span>
+        </div>
+      </div>
+
+      <!-- User role -->
+      <div class="form-group">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Quyền người dùng</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+            <i class="fas fa-user-shield"></i>
+          </span>
+          <select 
+            formControlName="roles"
+            class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary appearance-none transition-colors">
+            <option [ngValue]="null">Tất cả quyền</option>
+            <option *ngFor="let role of listRoles" [value]="role.value">
+              {{ role.label }}
+            </option>
+          </select>
+          <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400">
+            <i class="fas fa-chevron-down text-xs"></i>
+          </span>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="form-group flex items-end gap-3">
+        <button 
+          (click)="handleCancel()"
+          class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors flex-1 flex items-center justify-center gap-1">
+          <i class="fas fa-times"></i>
+          <span>Huỷ bỏ</span>
         </button>
-        <button (click)="handleSearch()"
-        class="bg-primary w-full h-10 px-4 hover:bg-[#10c39f] rounded text-white"
-          >Tìm kiếm
+        <button 
+          (click)="handleSearch()"
+          class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors flex-1 flex items-center justify-center gap-1">
+          <i class="fas fa-search"></i>
+          <span>Tìm kiếm</span>
         </button>
       </div>
     </form>
-  </ng-container>
+  </div>
 
-</div>
-
-<div class="h-[100vh] w-full p-10">
-    <div class="mb-8 flex justify-between items-center">
-        <h3 class="uppercase text-primary text-[18px] font-medium">{{'Management.userList'| translate }}</h3>
-        <div (click)="handelOpenPopUpAddManagement()" class="px-[12px] py-[8px] rounded-[6px] border border-primary text-primary cursor-pointer hover:bg-primary hover:text-[#fff]" >Thêm mới người dùng</div>
+  <!-- Users Data Table -->
+  <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all hover:shadow-xl">
+    <!-- Table Header -->
+    <div class="bg-gray-50 p-6 border-b border-gray-100">
+      <div class="flex flex-wrap items-center justify-between">
+        <h2 class="text-lg font-semibold text-gray-800 flex items-center">
+          <i class="fas fa-list-ul text-primary mr-2"></i>
+          <span>Danh sách người dùng</span>
+        </h2>
+        
+        <!-- Stats and pagination info -->
+        <div class="flex items-center text-sm text-gray-500 mt-2 md:mt-0">
+          <span>Tổng số: <strong class="text-primary">{{totalCount}}</strong></span>
+          <span class="mx-2">|</span>
+          <span>Trang {{params.page}} / {{math.ceil(totalCount / params.pageSize)}}</span>
+        </div>
+      </div>
     </div>
-    <app-share-table [pageIndex]="params.page" [pageSize]="params.pageSize" [loaded]="!isLoading" [data]="listUserManagements" [total]="totalCount"
-      [maxHeight]="'calc(100vh - 150px)'" (pageIndexChange)="changePage($event)"
-      (pageSizeChange)="changePageSize($event)">
-      <ng-template #headers>
-        <th scope="col" class="font-semibold !text-center">STT</th>
-        <th scope="col" class="!text-start">Họ và tên</th>
-        <th scope="col" class="!text-start">Tên đăng nhập</th>
-        <th scope="col" class="!text-start">Email</th>
-        <th scope="col" class="!text-start">Số điện thoại</th>
-        <th scope="col" class="!text-start">Ngày sinh</th>
-        <th scope="col" class="!text-start">Địa chỉ</th>
-        <th scope="col" class="!text-start">Trạng thái</th>
-        <th scope="col" class="!text-center">Thao tác</th>
-      </ng-template>
-      <ng-template #rows let-row let-index="index">
-        <td class="!text-center">{{ index + 1 + (params.page - 1) * params.pageSize }}</td>
-        <td (click)="handleDetail(row?.id)" class="hover:cursor-pointer hover:text-green-500 hover:scale-105" scope="col" >{{ row.fullname }}</td>
-        <td class="hover:cursor-pointer hover:text-green-500 hover:scale-105" scope="col" >{{ row.userName }}</td>
-        <td scope="col" >{{ row.email }}</td>
-        <td scope="col" >{{ row.cellPhone }}</td>
-        <td scope="col" >{{ row.birthday | date: 'dd/MM/yyyy' }}</td>
-        <td scope="col" >{{ row.address }}</td>
-        <td scope="col" [ngClass]="{'text-green-500': row.status === 'Active', 'text-red-600': row.status === 'Disable'}">
-          {{row.status === 'Active' ? 'Hoạt động' : 'Vô hiệu hoá'}}
-        </td>
-        <td (click)="openDisablePopup(row?.id, row?.userName, row?.status)" scope="col" class="!text-center cursor-pointer">
-          <i *ngIf="row.status === 'Active'" class="fa-solid fa-user-xmark text-myRed"></i>
-          <i *ngIf="row.status === 'Disable'" class="fa-solid fa-user-check text-green-500"></i>
-        </td>
-      </ng-template>
-    </app-share-table>
-</div>
 
-<app-management-add *ngIf="isVisiblePopUpAddManagement" [mode]="mode" [idManagement]="idManagement"
-[isVisiblePopUpAddManagement]="isVisiblePopUpAddManagement"
-(visiblePopUpAddManagement)="handelVisiblePopUpAddManagement($event)"></app-management-add>
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="flex items-center justify-center p-12">
+      <div class="relative">
+        <div class="h-16 w-16 rounded-full border-4 border-t-primary border-r-primary border-b-gray-200 border-l-gray-200 animate-spin"></div>
+        <div class="mt-4 text-center text-gray-500">Đang tải dữ liệu...</div>
+      </div>
+    </div>
 
-<app-account-disable [isVisible]="isVisible" [nameManagement]="nameManagement" [idManagement]="idManagement" (changeVisibleDelete)="handleChangeVisible($event)"></app-account-disable>
+    <!-- Table Content -->
+    <div *ngIf="!isLoading" class="overflow-x-auto">
+      <table class="min-w-full">
+        <thead>
+          <tr class="bg-gray-50 text-left">
+            <th class="py-4 px-6 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-16">STT</th>
+            <th class="py-4 px-6 text-xs font-medium text-gray-500 uppercase tracking-wider">Họ và tên</th>
+            <th class="py-4 px-6 text-xs font-medium text-gray-500 uppercase tracking-wider">Tên đăng nhập</th>
+            <th class="py-4 px-6 text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+            <th class="py-4 px-6 text-xs font-medium text-gray-500 uppercase tracking-wider">Số điện thoại</th>
+            <th class="py-4 px-6 text-xs font-medium text-gray-500 uppercase tracking-wider">Ngày sinh</th>
+            <th class="py-4 px-6 text-xs font-medium text-gray-500 uppercase tracking-wider">Địa chỉ</th>
+            <th class="py-4 px-6 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Trạng thái</th>
+            <th class="py-4 px-6 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 bg-white">
+          <tr *ngFor="let row of listUserManagements; let index = index" 
+              class="hover:bg-gray-50 transition-colors">
+            <td class="py-4 px-6 text-center whitespace-nowrap">
+              <div class="flex justify-center">
+                <span class="h-7 w-7 flex items-center justify-center rounded-full bg-primary bg-opacity-10 text-primary font-medium text-sm">
+                  {{ index + 1 + (params.page - 1) * params.pageSize }}
+                </span>
+              </div>
+            </td>
+            <td class="py-4 px-6 whitespace-nowrap">
+              <div (click)="handleDetail(row?.id)" 
+                   class="font-medium text-gray-900 hover:text-primary hover:underline cursor-pointer transition-colors">
+                {{ row.fullname }}
+              </div>
+            </td>
+            <td class="py-4 px-6 whitespace-nowrap">
+              <div class="text-gray-700">{{ row.userName }}</div>
+            </td>
+            <td class="py-4 px-6 whitespace-nowrap">
+              <div class="text-gray-700">{{ row.email }}</div>
+            </td>
+            <td class="py-4 px-6 whitespace-nowrap">
+              <div class="text-gray-700">{{ row.cellPhone }}</div>
+            </td>
+            <td class="py-4 px-6 whitespace-nowrap">
+              <div class="text-gray-700">{{ row.birthday | date: 'dd/MM/yyyy' }}</div>
+            </td>
+            <td class="py-4 px-6">
+              <div class="text-gray-700 truncate max-w-[180px]" title="{{row.address}}">{{ row.address }}</div>
+            </td>
+            <td class="py-4 px-6 text-center whitespace-nowrap">
+              <span *ngIf="row.status === 'Active'" 
+                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-green-500"></span>
+                Hoạt động
+              </span>
+              <span *ngIf="row.status === 'Disable'" 
+                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-red-500"></span>
+                Vô hiệu hoá
+              </span>
+            </td>
+            <td class="py-4 px-6 text-center whitespace-nowrap">
+              <button 
+                (click)="openDisablePopup(row?.id, row?.userName, row?.status)" 
+                class="text-gray-600 hover:text-primary p-1 rounded transition-colors"
+                [title]="row.status === 'Active' ? 'Vô hiệu hoá tài khoản' : 'Kích hoạt tài khoản'">
+                <i *ngIf="row.status === 'Active'" class="fas fa-user-slash text-red-500 text-lg"></i>
+                <i *ngIf="row.status === 'Disable'" class="fas fa-user-check text-green-500 text-lg"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>

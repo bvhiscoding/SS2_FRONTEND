@@ -53,3 +53,31 @@ body {
 .stagger-item:nth-child(3) { animation-delay: 0.2s; }
 .stagger-item:nth-child(4) { animation-delay: 0.3s; }
 .stagger-item:nth-child(5) { animation-delay: 0.4s; }
+/* User Management Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modal animation */
+::ng-deep .ant-modal-content {
+  animation: fadeInUp 0.3s ease-out forwards;
+}
+
+/* Table row hover effect */
+.hover-scale-row {
+  transition: all 0.2s ease-in-out;
+}
+
+.hover-scale-row:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  z-index: 10;
+  position: relative;
+}
