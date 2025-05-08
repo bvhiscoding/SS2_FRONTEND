@@ -1,24 +1,14 @@
 <nz-layout class="min-h-full">
-  <!-- Enhanced Sidebar -->
+  <!-- Modified Sidebar - Removed collapsible functionality -->
   <nz-sider 
-    nzCollapsible 
-    [(nzCollapsed)]="isCollapsed" 
     [nzWidth]="280" 
     nzTheme="light" 
-    [nzTrigger]="null" 
     class="main-sidebar shadow-xl border-r overflow-hidden">
     
     <!-- Logo & Profile Section -->
     <div class="sidebar-profile-section">
-      <!-- Collapsed State Logo -->
-      <div *ngIf="isCollapsed" class="py-6 flex justify-center">
-        <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary shadow-md">
-          <img src="../../../assets/img/Hanu.jpeg" alt="logo" class="w-full h-full object-cover">
-        </div>
-      </div>
-      
-      <!-- Expanded State Profile -->
-      <div *ngIf="!isCollapsed" class="flex flex-col items-center pt-8 pb-6">
+      <!-- Profile Section - Always Expanded -->
+      <div class="flex flex-col items-center pt-8 pb-6">
         <div class="relative">
           <!-- Profile Image with Status Indicator -->
           <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg mb-3">
@@ -30,7 +20,7 @@
         <!-- User Info -->
         <h3 class="text-lg font-semibold text-gray-800 mt-2">{{userName}}</h3>
         <div class="px-3 py-1 bg-primary/10 rounded-full text-primary text-xs font-medium mt-1">
-          {{role?.[0] === 'Administrator' ? 'Quản trị viên' : 'Người dùng'}}
+          {{role[0] === 'Administrator' ? 'Quản trị viên' : 'Người dùng'}}
         </div>
       </div>
       
@@ -42,13 +32,13 @@
     <div class="sidebar-menu-container py-4 px-3">
       <!-- Admin Menu -->
       <div *ngIf="canActive">
-        <div class="menu-category" *ngIf="!isCollapsed">
+        <div class="menu-category">
           <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 mb-2 block">
             Chức năng chính
           </span>
         </div>
         
-        <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" class="custom-menu">
+        <ul nz-menu [nzMode]="'inline'" class="custom-menu">
           <!-- Dashboard -->
           <li nz-menu-item [routerLink]="['/', 'statistical']" routerLinkActive="active-menu-item">
             <div class="menu-item-content">
@@ -70,7 +60,7 @@
           </li>
           
           <!-- Election Management Section -->
-          <div class="menu-category mt-6" *ngIf="!isCollapsed">
+          <div class="menu-category mt-6">
             <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 mb-2 block">
               Quản lý bầu cử
             </span>
@@ -114,7 +104,7 @@
           </li>
           
           <!-- Settings Section -->
-          <div class="menu-category mt-6" *ngIf="!isCollapsed">
+          <div class="menu-category mt-6">
             <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 mb-2 block">
               Cài đặt & Tài khoản
             </span>
@@ -147,7 +137,7 @@
       <!-- Regular User Menu (Non-Admin) -->
       <div *ngIf="!canActive">
         <!-- Similar structure as admin menu but with fewer options -->
-        <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" class="custom-menu">
+        <ul nz-menu [nzMode]="'inline'" class="custom-menu">
           <li nz-menu-item [routerLink]="['/', 'statistical']" routerLinkActive="active-menu-item">
             <div class="menu-item-content">
               <span class="menu-icon">
@@ -176,7 +166,7 @@
           </li>
           
           <!-- Settings Section -->
-          <div class="menu-category mt-6" *ngIf="!isCollapsed">
+          <div class="menu-category mt-6">
             <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 mb-2 block">
               Cài đặt & Tài khoản
             </span>
@@ -207,18 +197,11 @@
       </div>
     </div>
     
-    <!-- Collapse Toggle Button -->
-    <div class="sidebar-collapse-toggle" [class.collapsed]="isCollapsed">
-      <button (click)="isCollapsed = !isCollapsed" class="collapse-btn">
-        <i class="fas" [ngClass]="isCollapsed ? 'fa-angle-right' : 'fa-angle-left'"></i>
-      </button>
-    </div>
-    
     <!-- Logout Button -->
-    <div class="sidebar-footer" [class.collapsed]="isCollapsed">
+    <div class="sidebar-footer">
       <button class="logout-button" (click)="handleLogout()">
         <i class="fas fa-sign-out-alt"></i>
-        <span *ngIf="!isCollapsed">Đăng xuất</span>
+        <span>Đăng xuất</span>
       </button>
     </div>
   </nz-sider>
