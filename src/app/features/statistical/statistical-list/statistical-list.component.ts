@@ -44,6 +44,7 @@ export class StatisticalListComponent implements OnInit {
   };
   public slectionArray: any = [];
   public listDetailVote: any = [];
+  public chartAnimationComplete: boolean = false;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -101,8 +102,11 @@ export class StatisticalListComponent implements OnInit {
 
   selectVote(voteId: string): void {
     this.selectedVoteId = voteId;
+    this.chartAnimationComplete = false;
+    
     this.voteService.listViewCandidate(voteId).subscribe((candidateRes) => {
       this.listDetailVote = candidateRes.data;
+      setTimeout(() => this.chartAnimationComplete = true, 300);
       this.cdr.detectChanges();
     });
   }

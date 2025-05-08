@@ -2,3 +2,19 @@
   max-width: 650px;
   margin: 35px auto;
 }
+:host ::ng-deep {
+  .apexcharts-canvas {
+    border-radius: 0.5rem;
+    
+    .apexcharts-tooltip {
+      background: white !important;
+      border: none !important;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
+      border-radius: 0.5rem !important;
+    }
+    
+    .apexcharts-xaxis-label, .apexcharts-yaxis-label {
+      font-weight: 500 !important;
+    }
+  }
+}
