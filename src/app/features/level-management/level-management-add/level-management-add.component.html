@@ -4,121 +4,153 @@
     nzCentered 
     [nzTitle]="modalTitle"
     [nzContent]="modalContent"
-    [nzFooter]="modalFooter" 
+    [nzFooter]="null" 
     (nzOnCancel)="handleCancel()"
+    [nzBodyStyle]="{ padding: '0' }"
+    [nzMaskStyle]="{ background: 'rgba(0, 0, 0, 0.45)' }"
     class="custom-modal"
 >
+    <!-- Custom title template -->
     <ng-template #modalTitle>
-        <div class="text-primary font-medium text-lg flex items-center">
-            <i class="fa-solid {{ edit ? 'fa-pen-to-square' : 'fa-plus-circle' }} mr-2"></i>
-            <span>{{edit ? 'Chỉnh sửa chức vụ' : 'Thêm chức vụ mới'}}</span>
+        <div class="flex items-center text-primary">
+            <i class="fas {{ edit ? 'fa-edit' : 'fa-plus-circle' }} text-xl mr-2"></i>
+            <span class="font-bold">{{edit ? 'Chỉnh sửa chức vụ' : 'Thêm chức vụ mới'}}</span>
         </div>
     </ng-template>
 
     <ng-template #modalContent>
-        <div class="py-2">
-            <form [formGroup]="form" class="flex flex-col gap-4">
-                <!-- Position Name Field -->
-                <div class="flex flex-col">
-                    <label class="font-medium text-gray-700 mb-1">
-                        Tên chức vụ<span class="text-red-500 ml-1">*</span>
-                    </label>
-                    <mat-form-field class="custom-input" appearance="outline">
-                        <input 
-                            matInput 
-                            formControlName="levelName" 
-                            placeholder="Nhập tên chức vụ"
-                            class="py-1"
-                        />
-                        <mat-error
-                            *ngIf="form.get('levelName')?.errors?.['required'] && (form.get('levelName')?.dirty || form.get('levelName')?.touched)"
-                            class="text-red-600"
-                        >
-                            {{'PopUpRegister.noEmty'|translate}}
-                        </mat-error>
-                    </mat-form-field>
+        <div class="modal-container">
+            <!-- Header -->
+            <div class="bg-primary p-6">
+                <div class="flex items-center text-white">
+                    <div class="bg-white bg-opacity-20 rounded-full p-3 mr-4">
+                        <i class="fas {{ edit ? 'fa-edit' : 'fa-plus-circle' }} text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold">{{edit ? 'Chỉnh sửa chức vụ' : 'Thêm chức vụ mới'}}</h3>
+                        <p class="text-white text-opacity-80 mt-1 text-sm">
+                            {{edit ? 'Cập nhật thông tin chức vụ' : 'Tạo một chức vụ mới trong hệ thống'}}
+                        </p>
+                    </div>
                 </div>
-                
-                <!-- Description Field -->
-                <div class="flex flex-col">
-                    <label class="font-medium text-gray-700 mb-1">
-                        Mô tả
-                    </label>
-                    <mat-form-field class="custom-input" appearance="outline">
-                        <textarea 
-                            matInput 
-                            formControlName="description" 
-                            rows="4"
-                            placeholder="Nhập mô tả chi tiết về chức vụ này"
-                            class="py-1"
-                        ></textarea>
-                    </mat-form-field>
-                </div>
-                
-                <!-- Status Field -->
-                <div class="flex flex-col">
-                    <label class="font-medium text-gray-700 mb-1">
-                        Trạng thái<span class="text-red-500 ml-1">*</span>
-                    </label>
-                    <mat-form-field class="custom-input" appearance="outline">
-                        <mat-select 
-                            formControlName="status"
-                            placeholder="Chọn trạng thái"
-                        >
-                            <mat-option *ngFor="let status of listStatus" [value]="status.value">
-                                <div class="flex items-center">
-                                    <span class="w-2 h-2 rounded-full mr-2" 
-                                    [ngClass]="{'bg-green-500': status.value, 'bg-red-500': !status.value}"></span>
+            </div>
+            
+            <!-- Form Body -->
+            <div class="p-6">
+                <form [formGroup]="form" class="space-y-5">
+                    <!-- Position Name Field -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <span class="flex items-center">
+                                <i class="fas fa-briefcase text-primary mr-2"></i>
+                                Tên chức vụ<span class="text-red-500 ml-1">*</span>
+                            </span>
+                        </label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <input 
+                                type="text" 
+                                formControlName="levelName" 
+                                class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary bg-white"
+                                placeholder="Nhập tên chức vụ" 
+                            />
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-user-tie text-gray-400"></i>
+                            </div>
+                        </div>
+                        <div *ngIf="form.get('levelName')?.errors?.['required'] && (form.get('levelName')?.dirty || form.get('levelName')?.touched)" 
+                            class="mt-2 text-sm text-red-600 flex items-center">
+                            <i class="fas fa-exclamation-circle mr-1"></i>
+                            <span>{{'PopUpRegister.noEmty'|translate}}</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Description Field -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <span class="flex items-center">
+                                <i class="fas fa-align-left text-primary mr-2"></i>
+                                Mô tả
+                            </span>
+                        </label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <textarea 
+                                formControlName="description" 
+                                rows="4" 
+                                class="block w-full px-4 py-3 pl-10 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary bg-white"
+                                placeholder="Nhập mô tả chi tiết về chức vụ này"
+                            ></textarea>
+                            <div class="absolute top-3 left-3 pointer-events-none">
+                                <i class="fas fa-file-alt text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Status Field -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <span class="flex items-center">
+                                <i class="fas fa-toggle-on text-primary mr-2"></i>
+                                Trạng thái<span class="text-red-500 ml-1">*</span>
+                            </span>
+                        </label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <select 
+                                formControlName="status"
+                                class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary bg-white appearance-none"
+                            >
+                                <option [ngValue]="null" disabled selected>-- Chọn trạng thái --</option>
+                                <option *ngFor="let status of listStatus" [ngValue]="status.value">
                                     {{ status.label }}
-                                </div>
-                            </mat-option>
-                        </mat-select>
-                        <mat-error
-                            *ngIf="form.get('status')?.errors?.['required'] && (form.get('status')?.dirty || form.get('status')?.touched)"
-                            class="text-red-600"
-                        >
-                            {{'PopUpRegister.noEmty'|translate}}
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </form>
-        </div>
-    </ng-template>
-
-    <ng-template #modalFooter>
-        <div class="flex gap-3 justify-center pt-2">
-            <button 
-                *ngIf="!edit" 
-                nz-button 
-                nzType="primary"
-                class="min-w-28 bg-primary border-none rounded-lg hover:opacity-90 text-white flex items-center justify-center gap-2"
-                [disabled]="form.invalid"
-                (click)="handleOk()"
-            >
-                <i class="fa-solid fa-check"></i>
-                <span>Thêm mới</span>
-            </button>
+                                </option>
+                            </select>
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-check-circle text-gray-400"></i>
+                            </div>
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <i class="fas fa-chevron-down text-gray-400"></i>
+                            </div>
+                        </div>
+                        <div *ngIf="form.get('status')?.errors?.['required'] && (form.get('status')?.dirty || form.get('status')?.touched)" 
+                            class="mt-2 text-sm text-red-600 flex items-center">
+                            <i class="fas fa-exclamation-circle mr-1"></i>
+                            <span>{{'PopUpRegister.noEmty'|translate}}</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
             
-            <button 
-                *ngIf="edit" 
-                nz-button 
-                nzType="primary"
-                class="min-w-28 bg-primary border-none rounded-lg hover:opacity-90 text-white flex items-center justify-center gap-2"
-                [disabled]="form.invalid"
-                (click)="handleEdit()"
-            >
-                <i class="fa-solid fa-pen"></i>
-                <span>Cập nhật</span>
-            </button>
-            
-            <button 
-                nz-button
-                class="min-w-28 bg-gray-500 font-medium border-none rounded-lg hover:opacity-90 text-white flex items-center justify-center gap-2"
-                (click)="handleCancel()"
-            >
-                <i class="fa-solid fa-times"></i>
-                <span>Huỷ bỏ</span>
-            </button>
+            <!-- Footer with Actions -->
+            <div class="p-6 border-t border-gray-200 bg-gray-50 flex justify-end space-x-4">
+                <button 
+                    class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors duration-200 flex items-center"
+                    (click)="handleCancel()"
+                >
+                    <i class="fas fa-times mr-2"></i>
+                    <span>Hủy bỏ</span>
+                </button>
+                
+                <button 
+                    *ngIf="!edit" 
+                    class="px-4 py-2 bg-primary text-white rounded-lg hover:shadow-lg transition-all duration-200 flex items-center"
+                    [disabled]="form.invalid"
+                    [class.opacity-60]="form.invalid"
+                    (click)="handleOk()"
+                >
+                    <i class="fas fa-plus-circle mr-2"></i>
+                    <span>Thêm mới</span>
+                </button>
+                
+                <button 
+                    *ngIf="edit" 
+                    class="px-4 py-2 bg-primary text-white rounded-lg hover:shadow-lg transition-all duration-200 flex items-center"
+                    [disabled]="form.invalid"
+                    [class.opacity-60]="form.invalid"
+                    (click)="handleEdit()"
+                >
+                    <i class="fas fa-save mr-2"></i>
+                    <span>Cập nhật</span>
+                </button>
+            </div>
         </div>
     </ng-template>
 </nz-modal>
