@@ -1,3 +1,57 @@
-:host::ng-deep .ant-select-selector {
-  border-radius: 8px !important;
+// Variables
+$primary: #0EAF8F;
+$primary-light: #31c9ab;
+$primary-dark: #0a9579;
+$transition: all 0.3s ease;
+
+// Settings page styling
+.bg-gradient-to-br {
+  background-attachment: fixed;
+}
+
+// Card hover effects
+.rounded-xl.shadow-lg {
+  transition: $transition;
+  
+  &:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+}
+
+// Form inputs styling
+.relative select, 
+.relative input {
+  transition: $transition;
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba($primary, 0.2);
+  }
+}
+
+// Settings navigation styles
+.settings-nav-item {
+  transition: $transition;
+  
+  &:hover {
+    background-color: rgba($primary, 0.05);
+  }
+  
+  &.active {
+    background-color: rgba($primary, 0.1);
+    border-left: 3px solid $primary;
+  }
+}
+
+// Action buttons
+button {
+  transition: $transition;
+  
+  &:hover {
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
 }

@@ -1,69 +1,191 @@
-<div class="h-[100vh] bg-bgGray w-full p-10 pr-20">
-    <div class="mb-8 flex justify-start items-center gap-2">
-        <span nz-icon nzType="settingsIcon:antd" class="icon !text-[20px]" nzTheme="outline"></span>
-        <h3 class="uppercase text-primary text-[18px] font-medium">Cài đặt</h3>
+<div class="bg-gradient-to-br from-teal-50 to-blue-50 min-h-screen p-6 md:p-10">
+    <!-- Page Header -->
+    <div class="flex items-center mb-8">
+      <div class="bg-primary p-3 rounded-xl shadow-lg mr-4">
+        <i class="fas fa-cog text-white text-xl"></i>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-gray-800">Cài đặt hệ thống</h2>
+        <p class="text-gray-500 mt-1">Tùy chỉnh giao diện và thiết lập tài khoản</p>
+      </div>
     </div>
-    <div class="flex flex-col gap-10 w-full ">
-        <div class="flex gap-16 items-center w-full bg-white rounded-lg shadow-shadow-timeword p-4">
-            <div class="flex flex-col gap-2">
-                <span class="font-medium text-base">Ngôn ngữ</span>
-                <nz-select [(ngModel)]="lang" class="w-[280px]" nzPlaceHolder="Ngôn ngữ"
+  
+    <!-- Settings Sections Container -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Left Column - Settings Navigation -->
+      <div class="lg:col-span-1">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="bg-primary bg-opacity-10 p-4 border-l-4 border-primary">
+            <h3 class="font-medium text-primary">Danh mục cài đặt</h3>
+          </div>
+          <div class="p-2">
+            <ul class="divide-y divide-gray-100">
+              <li>
+                <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 text-primary font-medium">
+                  <i class="fas fa-globe text-primary"></i>
+                  <span>Ngôn ngữ & Khu vực</span>
+                </a>
+              </li>
+              <li>
+                <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50">
+                  <i class="fas fa-palette text-gray-500"></i>
+                  <span class="text-gray-700">Giao diện</span>
+                </a>
+              </li>
+              <li>
+                <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50">
+                  <i class="fas fa-bell text-gray-500"></i>
+                  <span class="text-gray-700">Thông báo</span>
+                </a>
+              </li>
+              <li>
+                <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50">
+                  <i class="fas fa-shield-alt text-gray-500"></i>
+                  <span class="text-gray-700">Bảo mật</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Right Column - Active Settings Section -->
+      <div class="lg:col-span-2">
+        <!-- Language and Region Settings Card -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-6">
+          <div class="border-b border-gray-100 p-6">
+            <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+              <i class="fas fa-globe text-primary mr-2"></i>
+              <span>Ngôn ngữ & Khu vực</span>
+            </h3>
+          </div>
+  
+          <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Language Selection -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Ngôn ngữ hiển thị</label>
+                <div class="relative">
+                  <select [(ngModel)]="lang" 
+                    class="w-full pl-10 pr-10 py-3 bg-gray-50 border border-gray-200 rounded-lg appearance-none focus:ring-2 focus:ring-primary focus:border-primary transition-all"
                     (ngModelChange)="changeLanguage($event)">
-                    <nz-option nzValue="vi" nzLabel="Tiếng Việt"></nz-option>
-                    <nz-option nzValue="en" nzLabel="Tiếng Anh"></nz-option>
-                </nz-select>
-            </div>
-            <div class="flex flex-col gap-2">
-                <span class="font-medium text-base">Múi giờ</span>
-                <nz-select [(ngModel)]="timeZone" class="w-[280px]" nzPlaceHolder="Múi giờ"
+                    <option value="vi">Tiếng Việt</option>
+                    <option value="en">Tiếng Anh</option>
+                  </select>
+                  <div class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                    <i class="fas fa-language"></i>
+                  </div>
+                  <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                    <i class="fas fa-chevron-down"></i>
+                  </div>
+                </div>
+                <p class="mt-2 text-sm text-gray-500">Thay đổi ngôn ngữ hiển thị trong toàn bộ ứng dụng</p>
+              </div>
+  
+              <!-- Timezone Selection -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Múi giờ</label>
+                <div class="relative">
+                  <select [(ngModel)]="timeZone" 
+                    class="w-full pl-10 pr-10 py-3 bg-gray-50 border border-gray-200 rounded-lg appearance-none focus:ring-2 focus:ring-primary focus:border-primary transition-all"
                     (ngModelChange)="changeTimeZone($event)">
-                    <nz-option *ngFor="let timeZone of timeZoneList" [nzValue]="timeZone.value"
-                        [nzLabel]="timeZone.label"></nz-option>
-                </nz-select>
-            </div>
-        </div>
-        <div class="flex justify-between items-center w-full bg-white rounded-lg shadow-shadow-timeword p-4">
-            <div class="flex flex-col gap-2 items-start">
-                <div class="text-textColor font-medium text-[18px]">
-                    <i class="fa-solid fa-lock"></i>
-                    Mật khẩu
+                    <option *ngFor="let timeZone of timeZoneList" [value]="timeZone.value">
+                      {{timeZone.label}}
+                    </option>
+                  </select>
+                  <div class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                    <i class="fas fa-clock"></i>
+                  </div>
+                  <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                    <i class="fas fa-chevron-down"></i>
+                  </div>
                 </div>
-                <div class="font-normal text-[#888] text-[16px]">Để đảm bảo an toàn bạn nên đổi mật khẩu ít nhất 6 tháng 1 lần</div>
+                <p class="mt-2 text-sm text-gray-500">Đặt múi giờ để hiển thị thời gian chính xác</p>
+              </div>
             </div>
-            <div (click)="handelOpenPopUpChangePassword()" class="text-white bg-primary text-[16px] px-4 py-2 rounded-xl shadow-shadow-timeword cursor-pointer">Thay đổi mật khẩu</div>
+          </div>
         </div>
-        <div class="flex justify-between items-center w-full bg-white rounded-lg shadow-shadow-timeword p-4">
-            <div class="flex flex-col gap-2 items-start">
-                <div class="text-textColor font-medium flex items-center gap-2 text-[18px]">
-                    <i class="fa-regular fa-envelope"></i>
-                    Email
-                </div>
-                <div class="font-normal text-[#888] text-[16px]">
-                    {{infoAccount.newEmail === null ? infoAccount?.email : infoAccount.newEmail}}
-                </div>
+  
+        <!-- Password Settings Card -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-6">
+          <div class="border-b border-gray-100 p-6">
+            <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+              <i class="fas fa-lock text-primary mr-2"></i>
+              <span>Mật khẩu & Bảo mật</span>
+            </h3>
+          </div>
+  
+          <div class="p-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between">
+              <div>
+                <h4 class="font-medium text-gray-800">Thay đổi mật khẩu</h4>
+                <p class="text-gray-500 text-sm mt-1">Để đảm bảo an toàn bạn nên đổi mật khẩu ít nhất 6 tháng 1 lần</p>
+              </div>
+              <button 
+                (click)="handelOpenPopUpChangePassword()" 
+                class="mt-4 md:mt-0 bg-primary text-white px-4 py-2 rounded-lg shadow hover:bg-primary-dark transition-colors flex items-center gap-2">
+                <i class="fas fa-key"></i>
+                <span>Thay đổi mật khẩu</span>
+              </button>
             </div>
-            <div 
-            (click)="handleOpenPopUpForgotPassWord()"
-            class="text-white bg-primary text-[16px] px-4 py-2 rounded-xl shadow-shadow-timeword cursor-pointer">Thay đổi email</div>
+          </div>
         </div>
+  
+        <!-- Email Settings Card -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="border-b border-gray-100 p-6">
+            <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+              <i class="fas fa-envelope text-primary mr-2"></i>
+              <span>Email liên kết</span>
+            </h3>
+          </div>
+  
+          <div class="p-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between">
+              <div>
+                <div class="flex items-center gap-2">
+                  <h4 class="font-medium text-gray-800">Email hiện tại</h4>
+                  <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Đã xác thực</span>
+                </div>
+                <p class="text-gray-700 mt-2 flex items-center gap-2">
+                  <i class="fas fa-envelope-open text-gray-400"></i>
+                  <span>{{infoAccount.newEmail === null ? infoAccount?.email : infoAccount.newEmail}}</span>
+                </p>
+              </div>
+              <button 
+                (click)="handleOpenPopUpForgotPassWord()"
+                class="mt-4 md:mt-0 bg-primary text-white px-4 py-2 rounded-lg shadow hover:bg-primary-dark transition-colors flex items-center gap-2">
+                <i class="fas fa-envelope"></i>
+                <span>Thay đổi email</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-
-<app-change-password *ngIf="isVisiblePopUpChangePassword"
-[isVisiblePopUpChangePassword]="isVisiblePopUpChangePassword"
-(visiblePopUpChangePassword)="handelVisiblePopUpChangePassword($event)"></app-change-password>
-
-<app-check-password *ngIf="isVisibleCheckPassword" [isVisiblePopUpCheckPassword]="isVisibleCheckPassword"
-(isVisiblePopUpOpen)="handleShowPopUpForgotPassWord($event)"></app-check-password>
-
-<app-check-email *ngIf="isVisibleCheckEmail" [isVisiblePopUpCheckEmail]="isVisibleCheckEmail"
-(isVisiblePopUpOpen)="handleShowCheckEmail($event)"></app-check-email>
-
-<app-check-insert-otp *ngIf="isVisibleInsertOTP" [isVisiblePopUpInsertOTP]="isVisibleInsertOTP"
-(isVisiblePopUpOpen)="handleShowInsertOTPPopUp($event)"></app-check-insert-otp>
-
-<app-change-email *ngIf="isVisibleChangeEmail" [isVisiblePopUpChangeEmail]="isVisibleChangeEmail"
-(isVisiblePopUpOpen)="handleShowChangeEmail($event)"></app-change-email>
-
-<app-insert-otp-new-email *ngIf="isVisiblePopUpNewOTP" [isVisiblePopUpNewOTP]="isVisiblePopUpNewOTP"
-(isVisiblePopUpOpen)="handleShowNewOTPPopUp($event)"></app-insert-otp-new-email>
+  </div>
+  
+  <!-- Modals - Keep existing modal components -->
+  <app-change-password *ngIf="isVisiblePopUpChangePassword"
+    [isVisiblePopUpChangePassword]="isVisiblePopUpChangePassword"
+    (visiblePopUpChangePassword)="handelVisiblePopUpChangePassword($event)"></app-change-password>
+  
+  <app-check-password *ngIf="isVisibleCheckPassword" 
+    [isVisiblePopUpCheckPassword]="isVisibleCheckPassword"
+    (isVisiblePopUpOpen)="handleShowPopUpForgotPassWord($event)"></app-check-password>
+  
+  <app-check-email *ngIf="isVisibleCheckEmail" 
+    [isVisiblePopUpCheckEmail]="isVisibleCheckEmail"
+    (isVisiblePopUpOpen)="handleShowCheckEmail($event)"></app-check-email>
+  
+  <app-check-insert-otp *ngIf="isVisibleInsertOTP" 
+    [isVisiblePopUpInsertOTP]="isVisibleInsertOTP"
+    (isVisiblePopUpOpen)="handleShowInsertOTPPopUp($event)"></app-check-insert-otp>
+  
+  <app-change-email *ngIf="isVisibleChangeEmail" 
+    [isVisiblePopUpChangeEmail]="isVisibleChangeEmail"
+    (isVisiblePopUpOpen)="handleShowChangeEmail($event)"></app-change-email>
+  
+  <app-insert-otp-new-email *ngIf="isVisiblePopUpNewOTP" 
+    [isVisiblePopUpNewOTP]="isVisiblePopUpNewOTP"
+    (isVisiblePopUpOpen)="handleShowNewOTPPopUp($event)"></app-insert-otp-new-email>
