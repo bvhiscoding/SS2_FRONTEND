@@ -190,7 +190,22 @@ export class MainComponent implements OnInit, OnChanges {
     this.cdr.detectChanges();
   }
 
-
+  // Add this method to your class
+  toggleSidebar(): void {
+    this.isCollapsed = !this.isCollapsed;
+    
+    // Add class to main content based on sidebar state
+    setTimeout(() => {
+      const mainContent = document.querySelector('nz-layout.bg-gray-50');
+      if (mainContent) {
+        if (this.isCollapsed) {
+          mainContent.classList.add('collapsed');
+        } else {
+          mainContent.classList.remove('collapsed');
+        }
+      }
+    }, 0);
+  }
   checkPasswordStatus(): void {
     this.accountService.checkPasswordStatus().subscribe({
       next: (res) => {
