@@ -1,0 +1,80 @@
+// Variables
+$primary: #0EAF8F;
+$primary-light: #31c9ab;
+$primary-dark: #0a9579;
+$transition: all 0.3s ease;
+
+// Profile page container
+.min-h-screen {
+  min-height: 100vh;
+}
+
+// Profile header with gradient
+.bg-gradient-to-r {
+  background-image: linear-gradient(to right, $primary, $primary-light);
+}
+
+// Avatar container
+.rounded-full {
+  &.border-4 {
+    transition: $transition;
+    
+    &:hover {
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.5);
+    }
+  }
+}
+
+// Form controls
+input, select, textarea {
+  transition: $transition;
+  
+  &:focus {
+    outline: none;
+    border-color: $primary;
+    box-shadow: 0 0 0 2px rgba($primary, 0.2);
+  }
+  
+  &[readonly], &:disabled {
+    background-color: #f3f4f6;
+    cursor: not-allowed;
+  }
+}
+
+// Section headings
+h3.font-semibold {
+  position: relative;
+  
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 40px;
+    height: 3px;
+    background-color: $primary;
+    border-radius: 2px;
+  }
+}
+
+// ID Card image container
+.border-dashed {
+  transition: $transition;
+  
+  &:hover {
+    border-color: $primary;
+  }
+}
+
+// Action buttons
+button {
+  transition: $transition;
+  
+  &:hover {
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
