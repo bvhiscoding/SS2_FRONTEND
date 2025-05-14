@@ -1,0 +1,53 @@
+<nz-modal nzWidth="750px" [(nzVisible)]="isVisibleDetail" nzCentered [nzContent]="modalContent"
+    [nzFooter]="null" (nzOnCancel)="handleCancel()">
+
+    <ng-template #modalContent>
+        <div class="text-start border-b border-primary pb-2 text-primary font-medium text-[20px]">
+            <span>Thông tin chi tiết</span>
+        </div>
+        <div class="flex flex-col py-2 px-2">
+            <div class="flex items-start py-2 border-b w-full">
+                <div class="w-[40%] text-[16px] font-medium">Ảnh đại diện:</div>
+                <img *ngIf="viewInfo?.imageUrl === null" class="rounded-[50%] object-cover h-[80px] w-[80px]"  src="../../../../../assets/img/Logo-Hoc-Vien-Ky-Thuat-Mat-Ma-ACTVN.webp" alt="">
+                <img *ngIf="viewInfo?.imageUrl !== null" class="rounded-[50%] object-cover h-[80px] w-[80px]"  [src]="viewInfo.imageUrl" alt="">
+            </div>
+            <div class="flex items-center py-2 border-b w-full">
+                <div class="w-[40%] text-[16px] font-medium">Họ và tên:</div>
+                <div class="text-[16px] font-normal">{{viewInfo?.fullname}}</div>
+            </div>
+            <div class="flex items-center py-2 border-b w-full">
+                <div class="w-[40%] text-[16px] font-medium">Username:</div>
+                <div class="text-[16px] font-normal">{{viewInfo?.userName}}</div>
+            </div>
+            <div class="flex items-center py-2 border-b w-full">
+                <div class="w-[40%] text-[16px] font-medium">Căn cước công dân:</div>
+                <div class="text-[16px] font-normal">{{viewInfo?.identityCardNumber}}</div>
+            </div>
+            <div class="flex items-center py-2 border-b w-full">
+                <div class="w-[40%] text-[16px] font-medium">Ngày tháng năm sinh:</div>
+                <div class="text-[16px] font-normal">{{viewInfo?.birthday | date: 'dd/MM/yyyy'}}</div>
+            </div>
+            <div class="flex items-center py-2 border-b w-full">
+                <div class="w-[40%] text-[16px] font-medium">Giới tính:</div>
+                <div class="text-[16px] font-normal">{{viewInfo?.gender === true ? 'Nam' : 'Nữ'}}</div>
+            </div>
+            <div class="flex items-center py-2 border-b w-full">
+                <div class="w-[40%] text-[16px] font-medium">Số điện thoại:</div>
+                <div class="text-[16px] font-normal">{{viewInfo?.cellPhone}}</div>
+            </div>
+            <div class="flex items-center py-2 border-b w-full">
+                <div class="w-[40%] text-[16px] font-medium">Email:</div>
+                <div class="text-[16px] font-normal">{{viewInfo?.newEmail === null ? viewInfo?.email : viewInfo?.newEmail}}</div>
+            </div>
+            <div class="flex items-center py-2 border-b w-full">
+                <div class="w-[40%] text-[16px] font-medium">Sinh sống:</div>
+                <div class="text-[16px] font-normal">{{viewInfo?.address}}</div>
+            </div>
+        </div>
+        <div class="flex gap-3 mt-3 justify-center">
+            <button
+                class="!bg-primary text-white py-2 font-medium w-[120px] border-none rounded-lg hover:scale-110"
+                (click)="handleCancel()">Đóng</button>
+        </div>
+    </ng-template>
+</nz-modal>
