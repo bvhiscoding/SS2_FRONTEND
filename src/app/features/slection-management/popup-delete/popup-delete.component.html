@@ -1,0 +1,23 @@
+<nz-modal nzWidth="400px" [(nzVisible)]="isVisible" nzCentered [nzContent]="modalContent"
+    [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()" class="rounded-xl">
+
+    <ng-template #modalContent>
+        <div class="text-center">
+            <div class="flex justify-center items-center gap-2">
+              <i class="fas fa-exclamation-triangle text-2xl text-[#FFA500]"></i>
+              <span class="text-[20px] font-semibold">Xác nhận xóa</span>
+            </div>
+            <div class="text-[#6B7280] text-[16px] mt-2">Bạn có chắc chắn muốn huỷ bỏ cuộc bầu cử <span class="text-myRed">{{nameSlection}}</span> không?</div>
+        </div>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="flex justify-center gap-9">
+            <button class="px-5 py-2 bg-[#969696] text-[#fff] font-medium rounded-lg" nz-button nzType="default" (click)="handleCancel()">Hủy</button>
+            <button nz-button nzType="primary"
+            class="!bg-myRed px-5 py-2 text-[#fff] font-medium rounded-lg"
+            (click)="handleOk()">Xoá</button>
+        </div>
+    </ng-template>
+</nz-modal>
+
