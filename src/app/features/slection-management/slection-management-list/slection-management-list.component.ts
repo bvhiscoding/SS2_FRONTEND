@@ -50,14 +50,14 @@ export class SlectionManagementListComponent implements OnInit{
   public idSlectionManagement: any = '';
   public nameSlection: any = '';
   public selectedView: string = 'candidate'; 
-  public listVote: any = [];
+  public listVote: any[] = [];
   public isCandidatesLoading: boolean = true;
   public isVotersLoading: boolean = true;
   get isLoadingOK(): boolean {
-    return this.isCandidatesLoading || this.isVotersLoading;
+    return this.isLoading || this.isCandidatesLoading || this.isVotersLoading;
   }
 
-  public listStatus: any = [
+  public listStatus: any[] = [
     {
       label: 'Chưa bắt đầu',
       value: '0'
@@ -78,7 +78,6 @@ export class SlectionManagementListComponent implements OnInit{
     name: [''],
     status: [null],
   });
-
 
   constructor(
     private fb: FormBuilder,
@@ -113,41 +112,77 @@ export class SlectionManagementListComponent implements OnInit{
 
   viewListVote() {
     this.isLoading = true;
+    this.isCandidatesLoading = true;
+    this.isVotersLoading = true;
+    
     this.voteService.viewListVote().subscribe({
       next: (res) => {
-        this.listVote = res.data.map((vote: any) => {
-          return {
-            ...vote,
-            candidates: [], // Khởi tạo danh sách ứng viên
-            voters: []      // Khởi tạo danh sách cử tri
-          };
-        });
+        if(!res.data || res.data.length === 0) {
+          this.listVote = [];
+          this.isLoading = false;
+          this.isCandidatesLoading = false;
+          this.isVotersLoading = false;
+          this.cdr.detectChanges();
+          return;
+        }
+
+        this.listVote = res.data.map((vote: any) => ({
+          ...vote,
+          candidates: [], 
+          voters: []      
+        }));
         
-        // Tải danh sách ứng viên và cử tri cho mỗi cuộc bầu cử
-        this.listVote.forEach((vote: any) => {
-          this.voteService.listViewCandidate(vote.id).subscribe({
-            next: (candidateRes) => {
-              vote.candidates = candidateRes.data;
-              this.cdr.detectChanges();
-              this.isCandidatesLoading = false;
-            }
+        // Tạo mảng các Promise để xử lý song song các API call
+        const candidatePromises = this.listVote.map((vote: any) => 
+          this.voteService.listViewCandidate(vote.id).toPromise()
+        );
+        const voterPromises = this.listVote.map((vote: any) => 
+          this.voteService.listViewVoter(vote.id).toPromise()
+        );
+
+        // Xử lý song song các API call
+        Promise.all([...candidatePromises, ...voterPromises])
+          .then(results => {
+            const candidateResults = results.slice(0, this.listVote.length);
+            const voterResults = results.slice(this.listVote.length);
+
+            // Cập nhật dữ liệu ứng viên
+            candidateResults.forEach((res: any, index: number) => {
+              if (res && res.data) {
+                this.listVote[index].candidates = res.data;
+              }
+            });
+
+            // Cập nhật dữ liệu cử tri
+            voterResults.forEach((res: any, index: number) => {
+              if (res && res.data) {
+                this.listVote[index].voters = res.data;
+              }
+            });
+
+            this.totalCount = res.totalItems;
+            this.isLoading = false;
+            this.isCandidatesLoading = false;
+            this.isVotersLoading = false;
+            this.cdr.detectChanges();
+            this.message.success('Lấy danh sách cuộc bầu cử thành công!');
+          })
+          .catch(error => {
+            console.error('Error loading data:', error);
+            this.isLoading = false;
+            this.isCandidatesLoading = false;
+            this.isVotersLoading = false;
+            this.message.error('Lỗi hệ thống');
+            this.cdr.detectChanges();
           });
-          this.voteService.listViewVoter(vote.id).subscribe({
-            next: (voterRes) => {
-              vote.voters = voterRes.data;
-              this.cdr.detectChanges();
-              this.isVotersLoading = false;
-            }
-          });
-        });
-  
-        this.totalCount = res.totalItems;
-        this.cdr.detectChanges();
-        this.message.success('Lấy danh sách cuộc bầu cử thành công!');
       },
       error: (err) => {
+        console.error('Error loading vote list:', err);
         this.isLoading = false;
+        this.isCandidatesLoading = false;
+        this.isVotersLoading = false;
         this.message.error('Lỗi hệ thống');
+        this.cdr.detectChanges();
       }
     });
   }
