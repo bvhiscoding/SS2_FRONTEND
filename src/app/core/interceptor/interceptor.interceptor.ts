@@ -1,10 +1,19 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor,
+  HttpInterceptorFn,
+  HttpErrorResponse,
+} from '@angular/common/http';
+import { Observable, catchError, throwError } from 'rxjs';
+import { Router } from '@angular/router';
+import { SnackbarService } from '../services/snackbar.service';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { TranslateService } from '@ngx-translate/core';
 
 export const Interceptor: HttpInterceptorFn = (request, next) => {
-  // DEVELOPMENT MODE: Always pass requests without token checks
-  return next(request);
-  
-  /* Original code (commented out)
   const router = inject(Router);
   const snackbar = inject(SnackbarService);
   const oauth = inject(OAuthService);
@@ -60,5 +69,4 @@ export const Interceptor: HttpInterceptorFn = (request, next) => {
   } else {
     return next(request);
   }
-  */
 };

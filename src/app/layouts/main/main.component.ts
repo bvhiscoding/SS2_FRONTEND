@@ -128,16 +128,6 @@ export class MainComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
   }
   ngOnInit(): void {
-    const mockUserData = {
-      sub: 'mock-user-id',
-      name: 'Test User',
-      role: ['Administrator'], // or ['User'] for regular user testing
-      email: 'test@example.com',
-      // Add other required user properties here
-    };
-    
-    localStorage.setItem('id_token_claims_obj', JSON.stringify(mockUserData));
-    localStorage.setItem('access_token', 'mock-token-for-development');
     // Xem quyền người dùng để hiển thị menu
     this.idOwner = JSON.parse(
       localStorage.getItem('id_token_claims_obj') || '{}',
@@ -190,22 +180,7 @@ export class MainComponent implements OnInit, OnChanges {
     this.cdr.detectChanges();
   }
 
-  // Add this method to your class
-  toggleSidebar(): void {
-    this.isCollapsed = !this.isCollapsed;
-    
-    // Add class to main content based on sidebar state
-    setTimeout(() => {
-      const mainContent = document.querySelector('nz-layout.bg-gray-50');
-      if (mainContent) {
-        if (this.isCollapsed) {
-          mainContent.classList.add('collapsed');
-        } else {
-          mainContent.classList.remove('collapsed');
-        }
-      }
-    }, 0);
-  }
+
   checkPasswordStatus(): void {
     this.accountService.checkPasswordStatus().subscribe({
       next: (res) => {

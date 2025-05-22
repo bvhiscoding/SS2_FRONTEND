@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { RolesGuard } from '../../core/guards/roles.guard';
+// import { AuthGuard } from 'src/app/core/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -36,7 +37,8 @@ const routes: Routes = [
             (m) => m.LevelManagementRoutingModule,
           ),
           canActivate: [RolesGuard],
-      },      {
+      },
+      {
         path: 'slection-management',
         loadChildren: () =>
           import('../../features/slection-management/slection-management.routing.module').then(
@@ -44,13 +46,13 @@ const routes: Routes = [
           ),
           canActivate: [RolesGuard],
       },
+
       {
         path: 'user-infor/:id',
         loadChildren: () =>
           import('../../features/my-info/my-info.routing.module').then(
             (m) => m.ManagementRoutingModule,
           ),
-        // Remove any canActivate guards for development
       },
       {
         path: 'setting',
@@ -58,7 +60,6 @@ const routes: Routes = [
           import('../../features/setting/setting.routing.module').then(
             (m) => m.SettingRoutingModule,
           ),
-        // Remove any canActivate guards for development
       },
     ],
   },

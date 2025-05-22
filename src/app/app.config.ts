@@ -34,8 +34,8 @@ import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { authCodeFlowConfig } from '../environments/auth/auth-config';
 import { provideEffects } from '@ngrx/effects';
 import { SocialLoginModule, FacebookLoginProvider, SocialAuthService, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
-import {MockVoteService} from './core/api/mock-vote.service';
-import { VoteService } from './core/api/vote.service';
+
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -44,8 +44,6 @@ export function storageFactory(): OAuthStorage {
 }
 export const appConfig: ApplicationConfig = {
   providers: [
-    { provide: VoteService, useClass: MockVoteService },
-
     provideRouter(routes),
     importProvidersFrom(HttpClientModule),
     provideAnimations(),

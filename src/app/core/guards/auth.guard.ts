@@ -21,16 +21,11 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    // DEVELOPMENT MODE: Always return true to bypass authentication
-    return true;
-    
-    /* Original code (commented out)
     let id_token = localStorage.getItem('access_token');
     if (!id_token) {
       this.router.navigate(['/login']);
       return false;
     }
     return true;
-    */
   }
 }
