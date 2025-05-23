@@ -1,80 +1,515 @@
+// ============================
 // Variables
+// ============================
 $primary: #0EAF8F;
 $primary-light: #31c9ab;
 $primary-dark: #0a9579;
-$transition: all 0.3s ease;
+$secondary: #6366f1;
+$success: #10b981;
+$warning: #f59e0b;
+$danger: #ef4444;
+$info: #3b82f6;
 
-// Profile page container
+// Neutral colors
+$gray-50: #f9fafb;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-400: #9ca3af;
+$gray-500: #6b7280;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-800: #1f2937;
+$gray-900: #111827;
+
+// Spacing
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+$spacing-2xl: 3rem;
+
+// Transitions
+$transition-fast: all 0.15s ease;
+$transition-normal: all 0.3s ease;
+$transition-slow: all 0.5s ease;
+
+// Shadows
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+// Border radius
+$radius-sm: 0.375rem;
+$radius-md: 0.5rem;
+$radius-lg: 0.75rem;
+$radius-xl: 1rem;
+$radius-2xl: 1.5rem;
+
+// ============================
+// Base Styles
+// ============================
 .min-h-screen {
   min-height: 100vh;
 }
 
-// Profile header with gradient
-.bg-gradient-to-r {
-  background-image: linear-gradient(to right, $primary, $primary-light);
+.bg-gradient-to-br {
+  background-attachment: fixed;
 }
 
-// Avatar container
-.rounded-full {
-  &.border-4 {
-    transition: $transition;
-    
-    &:hover {
-      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.5);
-    }
+// ============================
+// Form Components
+// ============================
+.form-group {
+  margin-bottom: $spacing-lg;
+  
+  &:last-child {
+    margin-bottom: 0;
   }
 }
 
-// Form controls
-input, select, textarea {
-  transition: $transition;
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $gray-700;
+  margin-bottom: $spacing-sm;
+  
+  i {
+    font-size: 0.875rem;
+    margin-right: $spacing-xs;
+  }
+  
+  .text-red-500 {
+    color: $danger;
+  }
+}
+
+.form-input-wrapper {
+  position: relative;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: $gray-900;
+  background-color: white;
+  border: 2px solid $gray-200;
+  border-radius: $radius-lg;
+  transition: $transition-fast;
+  box-shadow: $shadow-sm;
   
   &:focus {
     outline: none;
     border-color: $primary;
-    box-shadow: 0 0 0 2px rgba($primary, 0.2);
+    box-shadow: 0 0 0 3px rgba($primary, 0.1);
   }
   
-  &[readonly], &:disabled {
-    background-color: #f3f4f6;
+  &:hover:not(:focus):not(.readonly) {
+    border-color: $gray-300;
+  }
+  
+  &.readonly {
+    background-color: $gray-50;
+    color: $gray-600;
     cursor: not-allowed;
+    border-color: $gray-200;
+    
+    &:hover, &:focus {
+      border-color: $gray-200;
+      box-shadow: $shadow-sm;
+    }
   }
-}
-
-// Section headings
-h3.font-semibold {
-  position: relative;
   
-  &:after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-    width: 40px;
-    height: 3px;
-    background-color: $primary;
-    border-radius: 2px;
+  &::placeholder {
+    color: $gray-400;
   }
 }
 
-// ID Card image container
-.border-dashed {
-  transition: $transition;
+.error-message {
+  display: block;
+  margin-top: $spacing-xs;
+  font-size: 0.75rem;
+  color: $danger;
+  font-weight: 500;
+}
+
+.info-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: $danger;
+  border: 1px solid $danger;
+  border-radius: 50%;
+  margin-left: $spacing-xs;
+  cursor: help;
   
   &:hover {
-    border-color: $primary;
+    background-color: $danger;
+    color: white;
   }
 }
 
-// Action buttons
-button {
-  transition: $transition;
+// ============================
+// Section Styles
+// ============================
+.bg-gradient-to-r {
+  &.from-blue-50 {
+    background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+    border: 1px solid rgba($info, 0.1);
+  }
+  
+  &.from-green-50 {
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    border: 1px solid rgba($success, 0.1);
+  }
+  
+  &.from-purple-50 {
+    background: linear-gradient(135deg, #faf5ff 0%, #e9d5ff 100%);
+    border: 1px solid rgba($secondary, 0.1);
+  }
+  
+  &.from-primary {
+    background: linear-gradient(135deg, $primary 0%, $primary-light 100%);
+  }
+}
+
+// ============================
+// Button Styles
+// ============================
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, $primary 0%, $primary-light 100%);
+  border: none;
+  border-radius: $radius-lg;
+  cursor: pointer;
+  transition: $transition-normal;
+  box-shadow: $shadow-md;
   
   &:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+    background: linear-gradient(135deg, $primary-dark 0%, $primary 100%);
   }
   
   &:active {
     transform: translateY(0);
+    box-shadow: $shadow-md;
+  }
+  
+  i {
+    font-size: 0.875rem;
+  }
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $gray-700;
+  background-color: white;
+  border: 2px solid $gray-300;
+  border-radius: $radius-lg;
+  cursor: pointer;
+  transition: $transition-normal;
+  box-shadow: $shadow-sm;
+  
+  &:hover {
+    background-color: $gray-50;
+    border-color: $gray-400;
+    transform: translateY(-1px);
+    box-shadow: $shadow-md;
+  }
+  
+  &:active {
+    transform: translateY(0);
+    box-shadow: $shadow-sm;
+  }
+  
+  i {
+    font-size: 0.875rem;
+  }
+}
+
+// ============================
+// Identity Card Upload Area
+// ============================
+.id-card-upload-area {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.id-card-preview {
+  width: 100%;
+  height: 200px;
+  border: 2px dashed $gray-300;
+  border-radius: $radius-xl;
+  background-color: $gray-50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: $transition-normal;
+  
+  &:hover {
+    border-color: $primary;
+    background-color: rgba($primary, 0.02);
+  }
+  
+  img {
+    border-radius: $radius-lg;
+    box-shadow: $shadow-md;
+  }
+}
+
+.id-card-placeholder {
+  text-align: center;
+  color: $gray-400;
+  
+  i {
+    display: block;
+    margin-bottom: $spacing-sm;
+  }
+  
+  span {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+}
+
+.id-card-input {
+  display: none;
+}
+
+.id-card-upload-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $primary;
+  background-color: rgba($primary, 0.1);
+  border: 2px solid rgba($primary, 0.2);
+  border-radius: $radius-lg;
+  cursor: pointer;
+  transition: $transition-normal;
+  
+  &:hover {
+    background-color: rgba($primary, 0.15);
+    border-color: rgba($primary, 0.3);
+    transform: translateY(-1px);
+  }
+  
+  i {
+    font-size: 0.875rem;
+  }
+}
+
+// ============================
+// Profile Header Enhancements
+// ============================
+.relative.bg-gradient-to-r.from-primary {
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  
+  .relative {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// Avatar enhancements
+.w-32.h-32.rounded-full {
+  position: relative;
+  transition: $transition-normal;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+    z-index: -1;
+  }
+}
+
+// ============================
+// Animation Classes
+// ============================
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+// ============================
+// Responsive Design
+// ============================
+@media (max-width: 768px) {
+  .grid.grid-cols-1.md\\:grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+  
+  .flex.flex-col.md\\:flex-row {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .text-center.md\\:text-left {
+    text-align: center;
+  }
+  
+  .justify-center.md\\:justify-start {
+    justify-content: center;
+  }
+  
+  .bg-gradient-to-br.from-teal-50 {
+    padding: 1rem;
+  }
+  
+  .bg-white.rounded-2xl {
+    border-radius: $radius-xl;
+  }
+  
+  .p-8 {
+    padding: 1.5rem;
+  }
+  
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    margin-bottom: $spacing-sm;
+  }
+}
+
+@media (max-width: 480px) {
+  .text-2xl {
+    font-size: 1.5rem;
+  }
+  
+  .text-3xl {
+    font-size: 2rem;
+  }
+  
+  .w-32.h-32 {
+    width: 6rem;
+    height: 6rem;
+  }
+  
+  .p-6 {
+    padding: 1rem;
+  }
+}
+
+// ============================
+// Accessibility Improvements
+// ============================
+.form-input:focus-visible {
+  outline: 2px solid $primary;
+  outline-offset: 2px;
+}
+
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible {
+  outline: 2px solid $primary;
+  outline-offset: 2px;
+}
+
+// High contrast support
+@media (prefers-contrast: high) {
+  .form-input {
+    border-width: 2px;
+    border-color: $gray-800;
+  }
+  
+  .form-label {
+    color: $gray-900;
+    font-weight: 700;
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// ============================
+// Print Styles
+// ============================
+@media print {
+  .bg-gradient-to-br,
+  .bg-gradient-to-r {
+    background: white !important;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    display: none;
+  }
+  
+  .shadow-xl,
+  .shadow-lg,
+  .shadow-md {
+    box-shadow: none !important;
   }
 }
