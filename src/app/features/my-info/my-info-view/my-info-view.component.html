@@ -323,13 +323,17 @@
                                         <span class="text-gray-400">Chưa có ảnh CCCD/CMND</span>
                                     </div>
                                 </div>
-                                <input *ngIf="isEdit" type="file" 
-                                       (change)="handleFileChange($event, 'identityCard')" 
-                                       class="id-card-input">
-                                <label *ngIf="isEdit" class="id-card-upload-btn">
-                                    <i class="fas fa-upload mr-2"></i>
-                                    <span>Chọn ảnh CCCD/CMND</span>
-                                </label>
+                                <div *ngIf="isEdit" class="id-card-upload-container">
+                                    <input type="file" 
+                                           id="identityCardInput"
+                                           (change)="handleFileChange($event, 'identityCard')" 
+                                           class="id-card-input"
+                                           accept="image/*">
+                                    <label for="identityCardInput" class="id-card-upload-btn">
+                                        <i class="fas fa-upload mr-2"></i>
+                                        <span>Chọn ảnh CCCD/CMND</span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
