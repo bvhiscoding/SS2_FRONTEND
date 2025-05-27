@@ -38,13 +38,6 @@ const routes: Routes = [
           ),
           canActivate: [RolesGuard],
       },
-            {
-        path: 'slection-ticket',
-        loadChildren: () =>
-          import('../../features/slection-evoting/slection-evoting.routing.module').then(
-            (m) => m.SlectionEvotingRoutingModule,
-          ),
-      },
       {
         path: 'slection-management',
         loadChildren: () =>
