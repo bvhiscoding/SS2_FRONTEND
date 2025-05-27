@@ -1,0 +1,109 @@
+<div class=" bg-bgGray w-full p-10">
+    <nz-spin [nzSpinning]="isLoadingOK" nzSize="large">
+      <div class="mb-8 flex justify-between items-center">
+          <h3 class="uppercase text-primary text-[20px] font-semibold">TIẾN HÀNH BẦU CỬ</h3>
+      </div>
+      <div class="bg-white pt-7 pb-3 px-5 mb-10 rounded-lg shadow-shadow-timeword">
+          <ng-container >
+            <form [formGroup]="form" class="grid grid-cols-3 items-center gap-x-4">
+              <mat-form-field class="custom-input" appearance="outline">
+                <mat-label>Tên cuộc bầu cử</mat-label>
+                <input formControlName="name" matInput />
+              </mat-form-field>
+              <mat-form-field class="custom-input" appearance="outline">
+                  <mat-label>Trạng thái</mat-label>
+                  <mat-select formControlName="status">
+                    <mat-option *ngFor="let status of listStatus" [value]="status.value">
+                      {{ status.label }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              <div class="custom-input flex w-full gap-3 items-start">
+                  <button (click)="handleSearch()"
+                  class="bg-primary w-full h-10 px-4 hover:bg-[#10c39f] rounded text-white"
+                    >Tìm kiếm
+                  </button>
+                  <button (click)="handleCancel()"
+                    class="bg-[#EDEDED] w-full h-10 px-4 rounded text-[#000]"
+                    >Huỷ bỏ
+                  </button>
+              </div>
+            </form>
+          </ng-container>
+        </div>
+      <div class="mb-8 flex justify-start items-center">
+        <h3 class="text-primary text-[20px] font-medium">Danh sách cuộc bầu cử 
+          <span class="text-[14px] text-[#999]">(mà bạn là cử tri)</span>
+        </h3>
+      </div>
+      <ng-container  *ngIf="listVote.length > 0; else noVotes">
+        <ng-container *ngFor="let slection of listVote, let i = index">
+            <div class="flex flex-col w-full mb-10 bg-white shadow-shadow-timeword">
+                <div class="w-full flex gap-2 justify-between">
+                  <div class="text-center flex-1 py-2 text-[18px] bg-primary text-white font-medium uppercase">{{slection.voteName}}</div>
+                </div>
+                <div class="flex bg-[#e9ecef] gap-3">
+                    <div class="w-[40%] flex flex-col justify-center pb-3 px-2 bg-white">
+                        <div class="w-full text-center py-2 border-b font-medium border-[#ccc]">Thông tin chung</div>
+                        <ul class="w-full *:text-[14px] py-1">
+                            <li class="mb-1">Thời gian bắt đầu bầu cử: {{slection.startDate | date: 'dd/MM/yyyy'}}</li>
+                            <li class="mb-1">Thời gian kết thúc bầu cử: {{slection.expiredDate | date: 'dd/MM/yyyy'}}</li>
+                            <li class="mb-1">Số ứng viên tối đa cử tri được bầu: {{slection.maxCandidateVote}}</li>
+                            <li class="mb-1">Trạng thái: 
+                              <span [ngClass]="{'text-green-500': slection.status === '1', 'text-red-500': slection.status === '2', 'text-orange-400': slection.status === '0'}">
+                                {{slection.status === '1' ? 'Đang diễn ra' : slection.status === '2' ? 'Đã kết thúc' : slection.status === '0' ? 'Chưa bắt đầu' : ''}}
+                              </span>
+                          </li>
+                        </ul>
+                        <div class="w-full text-center py-2 border-t font-medium border-b border-[#ccc]">Thông tin nhiệm kỳ</div>
+                        <ul class="w-full *:text-[14px] py-1">
+                            <li class="mb-1">Tên nhiệm kỳ: <span class="font-semibold">{{slection.tenure}}</span></li>
+                            <li class="mb-1">Thời gian bắt đầu nhiệm kỳ: {{slection.startDateTenure | date: 'dd/MM/yyyy'}}</li>
+                            <li class="mb-1">Thời gian kết thúc nhiệm kỳ: {{slection.endDateTenure | date: 'dd/MM/yyyy'}}</li>
+                        </ul>
+                        <div class="w-full text-center py-2 border-t font-medium border-b border-[#ccc]">Thông tin ứng viên đã bỏ phiếu</div>
+                        <div class="w-full py-2 font-normal text-myRed text-center">{{ slection.selectedCandidates?.join(', ') }}</div>
+                        <div *ngIf="slection.selectedCandidates.length === 0" class="w-full py-2 font-normal text-[#999] text-center">Chưa bỏ phiếu cho ứng viên nào</div>
+                    </div>
+    
+                    <div class="w-[60%] h-auto bg-white px-2 pb-3">
+                        <div class="text-center w-full font-medium border-b py-2 border-[#ccc]">
+                          Danh sách ứng viên
+                        </div>
+                        <div class="media-scroller snaps-inline">
+                            <div *ngFor="let array of slection.candidates, let i2 = index" class="media-element mt-2 flex flex-col items-center">
+                              <img *ngIf="array.imageUrl === null" class="rounded-[50%] object-cover h-[50px] w-[50px]" src="https://images.unsplash.com/photo-1641353989082-9b15fa661805?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODcyOA&ixlib=rb-1.2.1&q=80&w=400" alt="">
+                              <img *ngIf="array.imageUrl !== null" class="rounded-[50%] object-cover h-[50px] w-[50px]" [src]="array.imageUrl" alt="">
+                              <div class="flex flex-col items-center gap-1">
+                                <div class="text-center text-[16px] font-medium">{{array.fullname}}</div>
+                                <div class="text-center text-[14px] font-normal">{{array.userName}}</div>
+                                <div class="text-center text-[14px] font-normal">{{array.newEmail === null ? array.email.substring(0, 25) + '...' : array.newEmail.substring(0, 25) + '...'}}</div>
+                                <div class="text-center text-[14px] font-normal">SĐT: {{array.cellPhone}}</div>
+                                <div class="text-center text-[14px] font-normal">Ngày sinh: {{array.birthday | date: 'dd/MM/yyyy'}}</div>
+                                <div class="text-center text-[14px] font-normal">Sinh sống: {{array?.address?.split(', ').pop()}}</div>
+                              </div>
+                              <div (click)="openDetailPopup(array.id)" class="w-full border-t text-[12px] hover:scale-110 text-myRed hover:cursor-pointer pt-2 text-center">Xem chi tiết</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full flex items-center gap-4 border-t border-primary justify-center py-2">
+                  <div (click)="openResult(slection.id)" class="border-none rounded-lg bg-green-500 text-white font-medium py-2 px-4 cursor-pointer hover:scale-105">Xem kết quả</div>
+                  <div (click)="openEvotingPopup(slection.id, slection?.voteName, slection?.maxCandidateVote, slection?.status)" 
+                  [ngClass]="{'bg-slate-400': slection.status === '2', 'bg-slate-500': slection.status === '0'}"
+                  class="border-none rounded-lg bg-primary text-white font-medium py-2 px-4 cursor-pointer hover:scale-105">Tiến hành bầu cử</div>
+                </div>
+            </div>
+        </ng-container>
+      </ng-container>
+      <ng-template #noVotes>
+        <div class="text-center text-[16px] text-gray-500 mt-10">
+          Bạn không là cử tri của cuộc bầu cử nào
+        </div>
+      </ng-template>
+    </nz-spin>
+</div>
+
+<app-detail-ctv [isVisibleDetail]="isVisibleDetail" [idCtv]="idCtv" (visiblePopUpDetail)="handleChangeDetailVisible($event)"></app-detail-ctv>
+
+<app-proceed-evoting [isVisibleEvoting]="isVisibleEvoting" [nameEvoting]="nameEvoting" [idEvoting]="idEvoting" [numberVote]="numberVote" (visiblePopUpEvoting)="handleChangeVotingVisible($event)"></app-proceed-evoting>
