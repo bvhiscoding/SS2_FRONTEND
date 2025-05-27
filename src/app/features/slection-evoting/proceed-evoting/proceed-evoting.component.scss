@@ -1,0 +1,22 @@
+.scrollable-list {
+  max-height: 300px; /* Adjust height as needed */
+  overflow-y: auto;
+}
+
+.scrollable-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollable-list::-webkit-scrollbar-thumb {
+  background-color: #cccccc;
+  border-radius: 4px;
+}
+
+.scrollable-list::-webkit-scrollbar-track {
+  background-color: #f0f0f0; /* Adjust track color */
+  border-radius: 4px;
+}
+
+.scrollable-list {
+  scrollbar-width: thin;
+}
