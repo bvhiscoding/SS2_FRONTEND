@@ -11,6 +11,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalComponent, NzModalModule, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { ManagermentService } from '../../../core/api/managerment.service';
 import { rePassValidator } from '../../../shared/validate/check-repass.directive';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -34,7 +35,8 @@ import * as forge from 'node-forge';
     NzButtonModule,
     NzPopconfirmModule,
     ReactiveFormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    NzSpinModule
   ],
   templateUrl: './proceed-evoting.component.html',
   styleUrl: './proceed-evoting.component.scss'
@@ -82,8 +84,19 @@ export class ProceedEvotingComponent implements OnInit, OnChanges{
       this.viewListVote();
     }
   }
-
   handleOk(): void {
+    if (this.selectedCandidates.length === 0) {
+      this.message.warning('Vui lòng chọn ít nhất một ứng viên trước khi bầu cử.');
+      return;
+    }
+
+    if (this.form.invalid) {
+      this.message.warning('Vui lòng nhập khóa bí mật để tiếp tục.');
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    this.isLoading = true;
     const payload = {
       VoteId: this.idEvoting,
       BitcoinAddress: '',
@@ -91,24 +104,30 @@ export class ProceedEvotingComponent implements OnInit, OnChanges{
       Candidates: this.selectedCandidates.map(candidate => candidate.id), 
       PrivateKey: this.form.get('privateKey')?.value, 
     };
+    
     const payloadJson = JSON.stringify(payload);
     var rsa = forge.pki.publicKeyFromPem(this.publicKey);
     var encryptedPayload = window.btoa(rsa.encrypt(payloadJson));  
+    
     console.log("Encrypted payload: ", encryptedPayload);
+    
     this.voteService.submitVote({encruptData: encryptedPayload}).subscribe({
       next: res => {
-        this.message.success("Bầu cử thành công.");
+        this.isLoading = false;
+        this.message.success("Bầu cử thành công! Cảm ơn bạn đã tham gia.");
         this.visiblePopUpEvoting.emit(false);
+        this.resetForm();
       },
       error: err => {
+        this.isLoading = false;
         const errorMessage = err?.error || err || '';
 
         if (errorMessage.includes('This vote already exists')) {
-          this.message.error('Bạn đã bầu cử, không thể bầu cử lần nữa');
+          this.message.error('Bạn đã bầu cử trước đó, không thể bầu cử lần nữa!');
         } else if (errorMessage.includes('The provided private key is not in a valid Base64 format')) {
-          this.message.error('Khoá bí mật không chính xác!');
+          this.message.error('Khóa bí mật không hợp lệ! Vui lòng kiểm tra lại.');
         } else {
-          this.message.error('Đã xảy ra lỗi, vui lòng thử lại!');
+          this.message.error('Đã xảy ra lỗi trong quá trình bầu cử. Vui lòng thử lại!');
         }
       }
     });
@@ -116,6 +135,13 @@ export class ProceedEvotingComponent implements OnInit, OnChanges{
 
   handleCancel(): void {
     this.visiblePopUpEvoting.emit(false);
+    this.resetForm();
+  }
+
+  private resetForm(): void {
+    this.selectedCandidates = [];
+    this.form.reset();
+    this.form.markAsUntouched();
   }
 
   viewListVote() {
@@ -133,13 +159,13 @@ export class ProceedEvotingComponent implements OnInit, OnChanges{
       }
     });
 }
-
   toggleCandidateSelection(candidate: any) {
     if (this.selectedCandidates.includes(candidate)) {
       this.removeCandidate(candidate);
     } else {
       if (this.selectedCandidates.length < this.numberVote) {
         this.selectedCandidates.push(candidate);
+        this.message.success(`Đã chọn ứng viên: ${candidate.fullname}`);
       } else {
         this.message.warning(`Bạn chỉ có thể bầu chọn tối đa ${this.numberVote} ứng viên.`);
       }
@@ -148,11 +174,12 @@ export class ProceedEvotingComponent implements OnInit, OnChanges{
 
   removeCandidate(candidate: any) {
     this.selectedCandidates = this.selectedCandidates.filter((c: any) => c.id !== candidate.id);
+    this.message.info(`Đã bỏ chọn ứng viên: ${candidate.fullname}`);
   }
 
   handleMaxSelection(candidate: any) {
     if (this.selectedCandidates.length >= this.numberVote && !this.selectedCandidates.includes(candidate)) {
-      this.message.warning(`Bạn chỉ có thể bầu chọn tối đa ${this.numberVote} ứng viên.`);
+      this.message.warning(`Bạn chỉ có thể bầu chọn tối đa ${this.numberVote} ứng viên. Hãy bỏ chọn ứng viên khác trước.`);
     }
   }
 }
