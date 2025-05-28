@@ -46,11 +46,11 @@ export class SlectionManagementAddComponent implements OnInit, OnChanges{
   @Input() mode: 'create' | 'edit';
   @Output() visiblePopUpAddSlectionManagement = new EventEmitter<boolean>();
   public edit: boolean = false;
-  public listCandidate: any[] = [];
-  public listVoter: any[] = [];
-  public listLevel: any[] = [];
-  public candidateNames: string[] = [];
-  public voterNames: string[] = [];
+  public listCandidate: any = [];
+  public listVoter: any = [];
+  public listLevel: any = [];
+  public candidateNames: any = [];
+  public voterNames: any = [];
   public statusBolean: boolean = false;
   public statusValue: any;
 
@@ -105,49 +105,22 @@ export class SlectionManagementAddComponent implements OnInit, OnChanges{
   }
 
   viewListUser() {
-    this.managermentService.getAllCandidateVoter(1, 999).subscribe({
-      next: (res) => {
-        if (res && Array.isArray(res)) {
-          this.listCandidate = res;
-          this.listVoter = res;
-          this.filteredCandidates = [...this.listCandidate];
-          this.filteredVoters = [...this.listVoter];
-          this.updateFilteredLists();
-          this.cdr.detectChanges();
-        } else {
-          this.listCandidate = [];
-          this.listVoter = [];
-          this.filteredCandidates = [];
-          this.filteredVoters = [];
-          this.message.error('Không thể lấy danh sách người dùng');
-        }
-      },
-      error: (err) => {
-        console.error('Error loading users:', err);
-        this.listCandidate = [];
-        this.listVoter = [];
-        this.filteredCandidates = [];
-        this.filteredVoters = [];
-        this.message.error('Lỗi khi tải danh sách người dùng');
-      }
+    this.managermentService.getAllCandidateVoter(1, 999).subscribe(res => {
+      this.listCandidate = res;
+      this.listVoter = res;
+      this.updateFilteredLists();
     });
   }
-
-  filteredCandidates: any[] = [];
-  filteredVoters: any[] = [];
-
+  filteredCandidates: any = [];
+  filteredVoters: any = [];
   setupFormListeners() {
     this.form.get('candidates')?.valueChanges.subscribe((selectedIds: number[]) => {
-      if (selectedIds) {
-        this.updateFilteredLists();
-        this.updateCandidateNames(selectedIds);
-      }
+      this.updateFilteredLists();
+      this.updateCandidateNames(selectedIds); 
     });
     this.form.get('voters')?.valueChanges.subscribe((selectedIds: number[]) => {
-      if (selectedIds) {
-        this.updateFilteredLists();
-        this.updateVotersNames(selectedIds);
-      }
+      this.updateFilteredLists();
+      this.updateVotersNames(selectedIds); 
     });
   }
 
@@ -155,30 +128,22 @@ export class SlectionManagementAddComponent implements OnInit, OnChanges{
     const selectedCandidates = this.form.get('candidates')?.value || [];
     const selectedVoters = this.form.get('voters')?.value || [];
 
-    this.filteredCandidates = this.listCandidate.filter((candidate: any) => 
-      candidate && candidate.id && !selectedVoters.includes(candidate.id)
-    );
-    this.filteredVoters = this.listVoter.filter((voter: any) => 
-      voter && voter.id && !selectedCandidates.includes(voter.id)
-    );
+    this.filteredCandidates = this.listCandidate.filter((candidate: any) => !selectedVoters.includes(candidate.id));
+    this.filteredVoters = this.listVoter.filter((voter: any) => !selectedCandidates.includes(voter.id));
 
-    this.cdr.detectChanges();
+    this.cdr.markForCheck();
   }
 
   updateCandidateNames(selectedIds: number[]) {
-    if (selectedIds && Array.isArray(selectedIds)) {
-      this.candidateNames = this.listCandidate
-        .filter((candidate: any) => candidate && candidate.id && selectedIds.includes(candidate.id))
-        .map((candidate: any) => candidate.userName || '');
-    }
+    this.candidateNames = this.listCandidate
+      .filter((candidate: any) => selectedIds.includes(candidate.id))
+      .map((candidate: any) => candidate.userName);
   }
 
   updateVotersNames(selectedIds: number[]) {
-    if (selectedIds && Array.isArray(selectedIds)) {
-      this.voterNames = this.listVoter
-        .filter((voter: any) => voter && voter.id && selectedIds.includes(voter.id))
-        .map((voter: any) => voter.userName || '');
-    }
+    this.voterNames = this.listVoter
+      .filter((voter: any) => selectedIds.includes(voter.id))
+      .map((voter: any) => voter.userName);
   }
 
   viewPosition() {
@@ -188,11 +153,25 @@ export class SlectionManagementAddComponent implements OnInit, OnChanges{
   }
 
   handleOk(): void {
+    const currentDate = new Date();
+    const startDate = new Date(this.form.get('startDateSlection')?.value);
+    const endDate = new Date(this.form.get('endDateSlection')?.value);
+    
+    // Tự động set status dựa trên thời gian
+    let status: string;
+    if (currentDate < startDate) {
+      status = '0'; // Chưa bắt đầu
+    } else if (currentDate >= startDate && currentDate <= endDate) {
+      status = '1'; // Đang diễn ra
+    } else {
+      status = '2'; // Đã kết thúc
+    }
+
     const body = {
       voteName: this.form.get('name')?.value,
       maxCandidateVote: Number(this.form.get('number')?.value),
       createDate: new Date(),
-      status: null,
+      status: status,
       extraData: 'String',
       startDate: this.form.get('startDateSlection')?.value,
       expiredDate: this.form.get('endDateSlection')?.value,
@@ -221,29 +200,24 @@ export class SlectionManagementAddComponent implements OnInit, OnChanges{
   viewDetailVote(): void {
     this.voteService.detailVote(this.idSlectionManagement).subscribe({
       next: (res) => {
-        if (res && res.data) {
-          if (res.status !== undefined) {
-            this.setFormState(res.data.status); 
-          }
-          this.form.patchValue({
-            name: res.data.voteName,
-            position: res.data.positionId,
-            number: res.data.maxCandidateVote,
-            startDateSlection: res.data.startDate,
-            endDateSlection: res.data.expiredDate,
-            term: res.data.tenure,
-            startDateTerm: res.data.startDateTenure,
-            endDateTerm: res.data.endDateTenure,
-            candidates: res.data.candidates || [],
-            voters: res.data.voters || [],
-          });
-          this.updateFilteredLists();
-          this.cdr.detectChanges();
+        if (res && res.status !== undefined) {
+          this.setFormState(res.data.status); 
         }
+        this.form.patchValue({
+          name: res.data.voteName,
+          position: res.data.positionId,
+          number: res.data.maxCandidateVote,
+          startDateSlection: res.data.startDate,
+          endDateSlection: res.data.expiredDate,
+          term: res.data.tenure,
+          startDateTerm: res.data.startDateTenure,
+          endDateTerm: res.data.endDateTenure,
+          candidates: res.data.candidates,
+          voters: res.data.voters,
+        });
       },
       error: (err) => {
-        console.error('Error loading vote details:', err);
-        this.message.error('Đã xảy ra lỗi khi tải thông tin cuộc bầu cử!');
+        this.message.error('Đã xảy ra lỗi!');
       },
     });
   }
@@ -267,12 +241,26 @@ export class SlectionManagementAddComponent implements OnInit, OnChanges{
   }
 
   handleEdit(): void {
+    const currentDate = new Date();
+    const startDate = new Date(this.form.get('startDateSlection')?.value);
+    const endDate = new Date(this.form.get('endDateSlection')?.value);
+    
+    // Tự động set status dựa trên thời gian
+    let status: string;
+    if (currentDate < startDate) {
+      status = '0'; // Chưa bắt đầu
+    } else if (currentDate >= startDate && currentDate <= endDate) {
+      status = '1'; // Đang diễn ra
+    } else {
+      status = '2'; // Đã kết thúc
+    }
+
     const body = {
       id: this.idSlectionManagement,
       voteName: this.form.get('name')?.value,
       maxCandidateVote: Number(this.form.get('number')?.value),
       createDate: new Date(),
-      status: null,
+      status: status,
       extraData: 'String',
       startDate: this.form.get('startDateSlection')?.value,
       expiredDate: this.form.get('endDateSlection')?.value,
