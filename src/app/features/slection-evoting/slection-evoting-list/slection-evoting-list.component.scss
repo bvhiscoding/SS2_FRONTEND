@@ -1,6 +1,294 @@
 @import "https://unpkg.com/open-props";
 @import "https://unpkg.com/open-props/normalize.min.css";
 
+// Ensure primary color is applied correctly
+:host {
+  --primary-color: #0EAF8F;
+  --primary-dark: #0a9579;
+  --blue-500: #3b82f6;
+  --green-500: #10b981;
+  --green-600: #059669;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+}
+
+// Form styling improvements
+.custom-input {
+  .mat-mdc-form-field {
+    width: 100%;
+    
+    .mat-mdc-form-field-outline {
+      border-radius: 12px !important;
+    }
+    
+    .mat-mdc-form-field-focus-overlay {
+      border-radius: 12px !important;
+    }
+    
+    .mat-mdc-floating-label {
+      font-weight: 500;
+    }
+  }
+  
+  // Fix for icon alignment
+  .mat-mdc-form-field-icon-suffix {
+    padding-left: 8px;
+  }
+  
+  // Enhanced focus styles
+  &.mat-focused {
+    .mat-mdc-form-field-outline-thick {
+      border-color: #3b82f6 !important;
+    }
+  }
+}
+
+// Search form styling
+.search-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  
+  .form-fields-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+  }
+  
+  .form-field {
+    width: 100%;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    
+    @media (max-width: 640px) {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  }
+}
+
+// Button styles
+.btn-primary, .btn-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem 2rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  min-width: 140px;
+  min-height: 48px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  &:hover::before {
+    left: 100%;
+  }
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+  
+  &:active {
+    transform: scale(0.98);
+  }
+  
+  i {
+    font-size: 1rem;
+  }
+  
+  @media (max-width: 640px) {
+    font-size: 0.875rem;
+    padding: 0.75rem 1.5rem;
+    min-width: auto;
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  
+  &:hover {
+    background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+}
+
+.btn-secondary {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  
+  &:hover {
+    background: #e5e7eb;
+    border-color: #9ca3af;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+}
+
+// Election card actions styling
+.election-actions {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  border-top: 2px solid #f3f4f6;
+  justify-content: center;
+  padding: 1.5rem;
+  background: linear-gradient(to right, #f9fafb, #dbeafe);
+}
+
+// Result button styling
+.btn-result {
+  background: linear-gradient(135deg, var(--green-500), var(--green-600)) !important;
+  color: white;
+  font-weight: bold;
+  padding: 0.75rem 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  cursor: pointer;
+  
+  &:hover {
+    background: linear-gradient(135deg, var(--green-600), var(--green-500)) !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transform: scale(1.05);
+  }
+  
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// Vote button styling
+.btn-vote {
+  color: white;
+  font-weight: bold;
+  padding: 0.75rem 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  &:hover::before {
+    left: 100%;
+  }
+  
+  // Active state (election is ongoing)
+  &--active {
+    background: linear-gradient(135deg, var(--primary-color), var(--blue-500)) !important;
+    
+    &:hover {
+      background: linear-gradient(135deg, var(--blue-500), var(--primary-color)) !important;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      transform: scale(1.05);
+    }
+    
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+  
+  // Disabled state (election not started or ended)
+  &--disabled {
+    background: linear-gradient(135deg, var(--gray-400), var(--gray-500)) !important;
+    cursor: not-allowed;
+    
+    &:hover {
+      background: linear-gradient(135deg, var(--gray-400), var(--gray-500)) !important;
+      transform: none;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    &::before {
+      display: none;
+    }
+  }
+}
+
+// Enhanced candidate scroll container
+.candidates-scroll-container {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 8px;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    border-radius: 10px;
+    
+    &:hover {
+      background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+    }
+  }
+}
+
+// Enhanced candidate card styles
+.candidate-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    transform: translateY(-4px) scale(1.02);
+  }
+}
+
+// Legacy media scroller (keeping for compatibility)
 .media-scroller {
   --_spacer: var(--size-3);
   display: grid;
@@ -42,22 +330,127 @@
   scroll-snap-align: start;
 }
 
-/* general styling */
-
-.container {
-  inline-size: min(100% - 4rem, 70rem);
-  margin-inline: auto;
+// Animation for cards
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.flow {
-  display: grid;
-  gap: var(--size-3);
+// Floating animation for empty state particles
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
 
-.page-header {
-  padding-block: var(--size-9);
-  margin-block-end: var(--size-9);
-  background: var(--gradient-16);
-  color: var(--gray-0);
-  box-shadow: var(--shadow-2);
+// Empty state animations
+.text-center {
+  .bg-white {
+    animation: fadeInUp 0.8s ease-out;
+  }
+  
+  .fa-ballot-check {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .animate-bounce {
+    animation: bounce 2s infinite;
+  }
+  
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}
+
+// Enhanced card animations
+.flex.flex-col.w-full.mb-8 {
+  animation: fadeInUp 0.6s ease-out;
+  
+  &:nth-child(odd) {
+    animation-delay: 0.1s;
+  }
+  
+  &:nth-child(even) {
+    animation-delay: 0.2s;
+  }
+}
+
+// Improved hover effects for election cards
+.flex.flex-col.w-full.mb-8 {
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+    transition: left 0.5s ease;
+    z-index: 10;
+  }
+  
+  &:hover::before {
+    left: 0;
+  }
+}
+
+// Enhanced responsive design
+@media (max-width: 768px) {
+  .bg-gradient-to-br {
+    padding: 1rem;
+  }
+  
+  .flex.flex-col.w-full.mb-8 {
+    margin-bottom: 1.5rem;
+    
+    .flex.bg-gradient-to-r {
+      flex-direction: column;
+      padding: 1rem;
+      gap: 1rem;
+      
+      .w-2\/5, .w-3\/5 {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// Loading state improvements
+.nz-spin-container {
+  min-height: 400px;
+}
+
+// Additional utility classes
+.election-card {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  &:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
 }

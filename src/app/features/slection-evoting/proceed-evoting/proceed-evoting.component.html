@@ -1,33 +1,56 @@
-<nz-modal nzWidth="800px" [(nzVisible)]="isVisibleEvoting" nzCentered [nzContent]="modalContent"
+<nz-modal nzWidth="900px" [(nzVisible)]="isVisibleEvoting" nzCentered [nzContent]="modalContent"
           [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()">
     <ng-template #modalContent>
-        <div class="text-start border-b border-primary pb-2 text-primary uppercase font-medium text-[22px]">
-            {{nameEvoting}}
+        <div class="bg-gradient-to-r from-primary to-blue-500 text-white p-6 rounded-t-lg -m-6 mb-6">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-vote-yea text-white text-xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold uppercase tracking-wide">{{nameEvoting}}</h2>
+                    <p class="text-blue-100 text-sm">Cuộc bầu cử trực tuyến</p>
+                </div>
+            </div>
         </div>
-        <div class="text-sm text-center w-full py-2 text-orange-400">
-            <i class="fa-solid fa-triangle-exclamation text-orange-400"></i> Bạn chỉ có thể bầu cho 
-            <span class="text-myRed font-semibold">{{numberVote}}</span>
-            người trong cuộc bầu cử này
-        </div>
-        <div class="flex mt-5 gap-4 w-full">
+        
+        <div class="bg-gradient-to-r from-orange-50 to-yellow-50 border-l-4 border-orange-400 p-4 mb-6 rounded-r-lg">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <i class="fa-solid fa-triangle-exclamation text-orange-500 text-xl"></i>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-orange-700">
+                        <span class="font-semibold">Lưu ý quan trọng:</span> Bạn chỉ có thể bầu cho 
+                        <span class="font-bold text-red-600 text-lg">{{numberVote}}</span>
+                        người trong cuộc bầu cử này
+                    </p>
+                </div>
+            </div>
+        </div>        <div class="flex mt-6 gap-6 w-full">
             <!-- Candidate List -->
-            <div class="w-1/2 border-r px-2">
-                <div class="text-center font-medium text-[18px] pb-2">Danh sách ứng viên</div>
-                <ul [ngClass]="{'scrollable-list': candidates.length > 5}">
+            <div class="w-1/2 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200">
+                <div class="flex items-center justify-center mb-4">
+                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3">
+                        <i class="fa-solid fa-users text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800">Danh sách ứng viên</h3>
+                </div>
+                <ul class="space-y-3" [ngClass]="{'scrollable-list': candidates.length > 5}">
                     <li *ngFor="let candidate of candidates" 
-                    [ngClass]="{'opacity-50 cursor-not-allowed': selectedCandidates.length >= numberVote && !selectedCandidates.includes(candidate)}"
-                    class="flex items-center border rounded-lg py-1 gap-2 mb-3"
-                    (click)="handleMaxSelection(candidate)"
-                    >
-                        <mat-checkbox [checked]="selectedCandidates.includes(candidate)" 
-                                      (change)="toggleCandidateSelection(candidate)"
-                                      [disabled]="selectedCandidates.length >= numberVote && !selectedCandidates.includes(candidate)"
-                        >
-                        </mat-checkbox>
-                        <div>
-                            <div>{{ candidate?.fullname }}</div>
-                            <div class="text-sm text-gray-500">
-                               {{candidate?.userName}} ({{ candidate?.birthday | date: 'dd/MM/yyyy'}})
+                        [ngClass]="{'opacity-50 cursor-not-allowed': selectedCandidates.length >= numberVote && !selectedCandidates.includes(candidate)}"
+                        class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm hover:shadow-md transition-all duration-200"
+                        (click)="handleMaxSelection(candidate)">
+                        <div class="flex items-center space-x-3">
+                            <mat-checkbox [checked]="selectedCandidates.includes(candidate)" 
+                                          (change)="toggleCandidateSelection(candidate)"
+                                          [disabled]="selectedCandidates.length >= numberVote && !selectedCandidates.includes(candidate)"
+                                          class="flex-shrink-0">
+                            </mat-checkbox>
+                            <div class="flex-1 min-w-0">
+                                <div class="text-base font-semibold text-gray-900 truncate">{{ candidate?.fullname }}</div>
+                                <div class="text-sm text-gray-600">
+                                   {{candidate?.userName}} • {{ candidate?.birthday | date: 'dd/MM/yyyy'}}
+                                </div>
                             </div>
                         </div>
                     </li>
@@ -35,45 +58,84 @@
             </div>
 
             <!-- Selected Candidates -->
-            <div class="w-1/2 px-2">
-                <div class="text-center font-medium text-[18px] pb-2">Danh sách ứng viên bầu chọn</div>
-                <ul>
-                    <li *ngFor="let candidate of selectedCandidates" class="flex items-center justify-between border border-green-500 rounded-lg gap-2 py-1 mb-3">
-                        <div>
-                            <div>{{ candidate.fullname }}</div>
-                            <div class="text-sm text-gray-500">
-                                {{candidate?.userName}} ({{ candidate?.birthday | date: 'dd/MM/yyyy'}})
+            <div class="w-1/2 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200">
+                <div class="flex items-center justify-center mb-4">
+                    <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3">
+                        <i class="fa-solid fa-check-circle text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800">Ứng viên đã chọn</h3>
+                </div>
+                <ul class="space-y-3">
+                    <li *ngFor="let candidate of selectedCandidates" 
+                        class="bg-white rounded-lg border-2 border-green-300 p-4 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1 min-w-0">
+                                <div class="text-base font-semibold text-gray-900 truncate">{{ candidate.fullname }}</div>
+                                <div class="text-sm text-gray-600">
+                                    {{candidate?.userName}} • {{ candidate?.birthday | date: 'dd/MM/yyyy'}}
+                                </div>
                             </div>
+                            <button class="ml-3 p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full transition-colors duration-200" 
+                                    (click)="removeCandidate(candidate)">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </button>
                         </div>
-                        <button nz-button nzType="link" nzDanger (click)="removeCandidate(candidate)">
-                            <i class="fa-regular fa-trash-can text-myRed"></i>
-                        </button>
+                    </li>
+                    <li *ngIf="selectedCandidates.length === 0" 
+                        class="text-center py-8 text-gray-500">
+                        <i class="fa-solid fa-inbox text-2xl text-gray-300 mb-2 block"></i>
+                        <p>Chưa chọn ứng viên nào</p>
                     </li>
                 </ul>
             </div>
-        </div>
-
-        <form [formGroup]="form">
-            <div class="flex flex-col w-full flex-1 mt-4 mb-24">
-                <span class="font-medium">Khoá bí mật<span class="text-red-500">*</span></span>
-                <mat-form-field class="custom-input " appearance="outline">
-                    <textarea matInput formControlName="privateKey" rows="6"></textarea>
+        </div>        <form [formGroup]="form" class="mt-6">
+            <div class="bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl p-6 border border-gray-200">
+                <div class="flex items-center mb-4">
+                    <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center mr-3">
+                        <i class="fa-solid fa-key text-white"></i>
+                    </div>
+                    <span class="text-lg font-bold text-gray-800">
+                        Khóa bí mật <span class="text-red-500">*</span>
+                    </span>
+                </div>
+                <mat-form-field class="custom-input w-full" appearance="outline">
+                    <mat-label>Nhập khóa bí mật của bạn</mat-label>
+                    <textarea matInput formControlName="privateKey" rows="4" 
+                              placeholder="Vui lòng nhập khóa bí mật để xác thực danh tính"
+                              class="font-mono text-sm"></textarea>
+                    <mat-icon matPrefix class="text-gray-400">lock</mat-icon>
                     <mat-error
-                        *ngIf="form.get('privateKey')?.errors?.['required']&& (form.get('privateKey')?.dirty || form.get('privateKey')?.touched)"
+                        *ngIf="form.get('privateKey')?.errors?.['required'] && (form.get('privateKey')?.dirty || form.get('privateKey')?.touched)"
                         class="text-red-600">
-                        {{'PopUpRegister.noEmty'|translate}}
+                        Khóa bí mật không được để trống
                     </mat-error>
-                </mat-form-field>   
+                </mat-form-field>
+                <div class="text-xs text-gray-600 mt-2 flex items-start space-x-2">
+                    <i class="fa-solid fa-info-circle text-blue-500 mt-0.5"></i>
+                    <p>Khóa bí mật được sử dụng để đảm bảo tính bảo mật và xác thực của phiếu bầu. Vui lòng giữ bí mật thông tin này.</p>
+                </div>
             </div>
         </form>
     </ng-template>
 
     <ng-template #modalFooter>
-        <div class="flex gap-3 justify-center">
-            <button class="!bg-primary w-[120px] py-2 text-white border-none hover:scale-105 rounded-lg"
-                    (click)="handleOk()">Bầu chọn</button>
-            <button class="!bg-[#969696] w-[120px] py-2 border-none hover:scale-105 rounded-lg text-white"
-                    (click)="handleCancel()">Huỷ bỏ</button>
+        <div class="flex gap-4 justify-center pt-4">
+            <button class="bg-gradient-to-r from-primary to-blue-500 hover:from-blue-500 hover:to-primary 
+                          w-36 py-3 text-white border-none rounded-xl font-bold
+                          transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl
+                          flex items-center justify-center space-x-2"
+                    (click)="handleOk()">
+                <i class="fa-solid fa-vote-yea"></i>
+                <span>Bầu chọn</span>
+            </button>
+            <button class="bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-400 
+                          w-36 py-3 border-none rounded-xl text-white font-bold
+                          transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl
+                          flex items-center justify-center space-x-2"
+                    (click)="handleCancel()">
+                <i class="fa-solid fa-times"></i>
+                <span>Hủy bỏ</span>
+            </button>
         </div>
     </ng-template>
 </nz-modal>
