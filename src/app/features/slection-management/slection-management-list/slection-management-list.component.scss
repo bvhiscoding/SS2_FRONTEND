@@ -63,67 +63,416 @@ $shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 
 .election-header {
   display: flex;
   align-items: stretch;
-  
-  .status-badge {
-    padding: 0.75rem 1rem;
-    border-radius: 0.75rem;
-    font-size: 0.875rem;
-    font-weight: 600;
+  border-radius: 1rem 1rem 0 0;
+  overflow: hidden;
+  position: relative;    // Enhanced header main section with teal color scheme
+  .election-header-main {
+    flex: 1;
+    background: linear-gradient(135deg, $primary-dark 0%, $primary 50%, $primary-light 100%);
+    position: relative;
+    overflow: hidden;
+    
+    // Decorative background effects
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(255,255,255,0.15) 0%, transparent 50%, rgba(255,255,255,0.08) 100%);
+      pointer-events: none;
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+      opacity: 0.8;
+    }
+  }
+    .header-content {
+    padding: 1.25rem 1.5rem;
+    position: relative;
+    z-index: 2;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-left: 1rem;
-    backdrop-filter: blur(10px);
+    justify-content: space-between;
+    gap: 2rem;
+    min-height: auto;
+  }
+  
+  // Election info section
+  .election-info {
+    flex: 1;
+    color: white;
     
-    &.status-active {
-      background: rgba(16, 185, 129, 0.9);
-      color: white;
-      animation: pulse 2s infinite;
+    .election-title-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+      
+      .election-title {
+        font-size: 1.375rem;
+        font-weight: 700;
+        margin: 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        line-height: 1.2;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          transform: scale(1.02);
+          text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+      }        .election-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255,255,255,0.9);
+        color: $primary-dark;
+        padding: 0.375rem 0.625rem;
+        border-radius: 0.75rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.6);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        
+        &:hover {
+          transform: scale(1.05);
+          background: rgba(255,255,255,1);
+          box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        i {
+          font-size: 0.875rem;
+          color: $primary;
+          animation: bounceIn 0.8s ease-out;
+        }
+      }
     }
     
-    &.status-completed {
-      background: rgba(107, 114, 128, 0.9);
-      color: white;
-    }
-    
-    &.status-pending {
-      background: rgba(245, 158, 11, 0.9);
-      color: white;
+    .election-details {
+      display: flex;
+      gap: 1.5rem;
+      
+      @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      
+      .detail-item {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;          .detail-icon {
+          width: 32px;
+          height: 32px;
+          background: rgba(255,255,255,0.85);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255,255,255,0.6);
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          
+          &:hover {
+            transform: scale(1.1) rotate(5deg);
+            background: rgba(255,255,255,1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+          }
+          
+          i {
+            font-size: 0.875rem;
+            color: $primary-dark;
+            transition: all 0.3s ease;
+          }
+        }
+        
+        .detail-content {
+          display: flex;
+          flex-direction: column;
+          
+          .detail-label {
+            font-size: 0.7rem;
+            opacity: 0.9;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+          
+          .detail-value {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.125rem;
+          }
+        }
+      }
     }
   }
   
-  .action-btn {
+  // Header right section with status and actions
+  .header-right-section {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 60px;
-    padding: 1rem;
-    background: white;
+    gap: 1rem;
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  }
+    // Enhanced status badge container
+  .status-badge-container {
+    display: flex;
+    align-items: center;
+  }
+    .status-badge {
+    background: rgba(255,255,255,0.98);
+    border-radius: 0.875rem;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    min-width: 140px;
+    position: relative;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.8);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.12);
+      backdrop-filter: blur(25px);
+    }
+    
+    .status-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.1) rotate(5deg);
+      }
+    }
+    
+    .status-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      
+      .status-label {
+        font-size: 0.7rem;
+        color: #6b7280;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      
+      .status-text {
+        font-size: 0.8rem;
+        font-weight: 700;
+        margin-top: 0.125rem;
+      }
+    }
+    
+    .status-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      animation: pulse 2s infinite;
+      transition: all 0.3s ease;
+      
+      &.indicator-active {
+        animation: glow-pulse 2s infinite;
+      }
+      
+      &.indicator-pending {
+        animation: glow-pulse 1.5s infinite;
+      }
+    }
+      // Status variants with better contrast
+    &.status-active {
+      .status-icon {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        box-shadow: 0 3px 15px rgba(16, 185, 129, 0.3);
+      }
+      
+      .status-text {
+        color: #065f46;
+        font-weight: 700;
+      }
+      
+      .indicator-active {
+        background: #10b981;
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+      }
+    }
+    
+    &.status-completed {
+      .status-icon {
+        background: linear-gradient(135deg, #6b7280, #4b5563);
+        color: white;
+        box-shadow: 0 3px 15px rgba(107, 114, 128, 0.3);
+      }
+      
+      .status-text {
+        color: #374151;
+        font-weight: 700;
+      }
+      
+      .indicator-completed {
+        background: #6b7280;
+      }
+    }
+    
+    &.status-pending {
+      .status-icon {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: white;
+        box-shadow: 0 3px 15px rgba(245, 158, 11, 0.3);
+      }
+      
+      .status-text {
+        color: #92400e;
+        font-weight: 700;
+      }
+      
+      .indicator-pending {
+        background: #f59e0b;
+        animation: pulse 1.5s infinite;
+      }
+    }}
+  
+  // Compact action buttons integrated in header
+  .compact-action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    
+    @media (max-width: 768px) {
+      flex-direction: row;
+      gap: 0.375rem;
+    }
+  }
+    .compact-action-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     border: none;
     cursor: pointer;
-    transition: $transition-normal;
-    font-size: 1.125rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
     
     &:hover {
       transform: scale(1.1);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+      
+      &::before {
+        transform: translateX(100%);
+      }
     }
     
-    &.edit-btn {
-      color: $secondary;
-      border-right: 1px solid $gray-200;
+    &:active {
+      transform: scale(0.95);
+    }
+    
+    .btn-icon {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      position: relative;
+      transition: all 0.3s ease;
+      
+      i {
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+      
+      &::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+        transform: scale(0);
+        transition: transform 0.3s ease;
+      }
+      
+      &:hover::after {
+        transform: scale(1);
+      }
+    }
+      &.edit-btn {
+      background: rgba(14, 175, 143, 0.15);
+      
+      .btn-icon {
+        color: $primary-dark;
+      }
       
       &:hover {
-        background: rgba($secondary, 0.1);
-        color: darken($secondary, 10%);
+        background: $primary;
+        box-shadow: 0 4px 20px rgba(14, 175, 143, 0.3);
+        
+        .btn-icon {
+          color: white;
+        }
       }
     }
     
     &.delete-btn {
-      color: $danger;
+      background: rgba(239, 68, 68, 0.15);
+      
+      .btn-icon {
+        color: #dc2626;
+      }
       
       &:hover {
-        background: rgba($danger, 0.1);
-        color: darken($danger, 10%);
+        background: #ef4444;
+        box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3);
+        
+        .btn-icon {
+          color: white;
+        }
       }
     }
   }
@@ -142,9 +491,10 @@ $shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 
     padding-bottom: 0.5rem;
     border-bottom: 2px solid $gray-100;
   }
-  
-  .info-list {
-    space-y: 0.75rem;
+    .info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
   }
   
   .info-item {
@@ -338,117 +688,554 @@ $shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 
   }
 }
 
-// Animations
-@keyframes pulse {
+// Enhanced animations and micro-interactions for header section
+// ===============================================================
+
+// Enhanced floating animation with more complex movement
+@keyframes float {
   0%, 100% {
-    opacity: 1;
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-8px) rotate(2deg) scale(1.05);
   }
   50% {
-    opacity: 0.8;
+    transform: translateY(-15px) rotate(0deg) scale(1.1);
+  }
+  75% {
+    transform: translateY(-8px) rotate(-2deg) scale(1.05);
   }
 }
 
-@keyframes fadeInUp {
-  from {
+// Shimmer effect for header background
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+// Glow pulse animation for status indicators
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 5px currentColor;
+  }
+  50% {
+    box-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+}
+
+// Bounce in animation for icons
+@keyframes bounceIn {
+  0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: scale(0.3) rotate(-10deg);
   }
-  to {
+  50% {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1.05) rotate(5deg);
+  }
+  70% {
+    transform: scale(0.9) rotate(-2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
   }
 }
 
-.participant-card {
-  animation: fadeInUp 0.3s ease-out;
-}
-
-// Loading spinner
-.animate-spin {
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-// Responsive design
-@media (max-width: 1024px) {
-  .grid.lg\\:grid-cols-3 {
-    grid-template-columns: 1fr;
+// Enhanced header interactions
+.election-header {
+  // Enhanced header main section with shimmer effect
+  .election-header-main {
+    // Add shimmer effect on hover
+    &:hover {
+      &::before {
+        background: linear-gradient(
+          90deg,
+          rgba(255,255,255,0) 0%,
+          rgba(255,255,255,0.2) 20%,
+          rgba(255,255,255,0.5) 40%,
+          rgba(255,255,255,0.2) 60%,
+          rgba(255,255,255,0) 80%,
+          rgba(255,255,255,0) 100%
+        );
+        background-size: 1000px 100%;
+        animation: shimmer 2s infinite;
+      }
+    }
   }
   
-  .election-header {
-    flex-direction: column;
+  // Enhanced election info with improved animations
+  .election-info {
+    .election-title {
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.02);
+        text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      }
+    }
     
-    .action-btn {
-      width: auto;
-      padding: 0.75rem 1rem;
+    .election-badge {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      
+      &:hover {
+        transform: scale(1.05);
+        background: rgba(255,255,255,0.3);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      }
+      
+      i {
+        animation: bounceIn 0.8s ease-out;
+      }
+    }
+    
+    .detail-icon {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      
+      &:hover {
+        transform: scale(1.1) rotate(5deg);
+        background: rgba(255,255,255,0.3);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      }
+    }
+  }
+  
+  // Enhanced status badge with improved visual feedback
+  .status-badge {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+      backdrop-filter: blur(25px);
+    }
+    
+    .status-icon {
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.1) rotate(5deg);
+      }
+    }
+    
+    .status-indicator {
+      transition: all 0.3s ease;
+      
+      &.indicator-active {
+        animation: glow-pulse 2s infinite;
+      }
+      
+      &.indicator-pending {
+        animation: glow-pulse 1.5s infinite;
+      }
+    }
+  }
+  
+  // Enhanced action buttons with improved micro-interactions
+  .action-btn {
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+    
+    &:hover {
+      &::before {
+        transform: translateX(100%);
+      }
+    }
+    
+    &:active {
+      transform: translateX(-3px) scale(0.98);
+    }
+    
+    .btn-icon {
+      position: relative;
+      overflow: hidden;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+        transform: scale(0);
+        transition: transform 0.3s ease;
+      }
+      
+      &:hover::after {
+        transform: scale(1);
+      }
+    }
+    
+    .btn-tooltip {
+      position: relative;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: currentColor;
+        transition: width 0.3s ease;
+      }
+      
+      &:hover::after {
+        width: 100%;
+      }
     }
   }
 }
 
-@media (max-width: 768px) {
-  .min-h-screen {
-    padding: 1rem;
-  }
+// Advanced visual effects and performance optimizations
+// ====================================================
+
+// Parallax effect for header elements
+.election-header {
+  perspective: 1000px;
   
-  .flex.flex-wrap {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+  .election-header-main {
+    transform-style: preserve-3d;
+    
+    &:hover {
+      .decoration-orb {
+        &.orb-1 {
+          transform: translateZ(20px) scale(1.1);
+        }
+        &.orb-2 {
+          transform: translateZ(15px) scale(1.05);
+        }
+        &.orb-3 {
+          transform: translateZ(10px) scale(1.02);
+        }
+      }
+    }
   }
-  
-  .grid.md\\:grid-cols-3 {
-    grid-template-columns: 1fr;
+}
+
+// Advanced gradient animations
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
   }
-  
-  .text-2xl.md\\:text-3xl {
-    font-size: 1.5rem;
+  50% {
+    background-position: 100% 50%;
   }
 }
 
-// Utility classes
-.primary-bg {
-  background-color: $primary;
-}
-
-.primary-light-bg {
-  background-color: $primary-light;
-}
-
-.primary-dark-bg {
-  background-color: $primary-dark;
-}
-
-.text-primary {
-  color: $primary;
-}
-
-.border-primary {
-  border-color: $primary;
-}
-
-// Custom scrollbar
-.participants-grid::-webkit-scrollbar {
-  width: 6px;
-}
-
-.participants-grid::-webkit-scrollbar-track {
-  background: $gray-100;
-  border-radius: 3px;
-}
-
-.participants-grid::-webkit-scrollbar-thumb {
-  background: $gray-400;
-  border-radius: 3px;
+.election-header-main {
+  background-size: 400% 400%;
   
   &:hover {
-    background: $gray-500;
+    animation: gradient-shift 4s ease infinite;
+  }
+}
+
+// Magnetic button effect
+.action-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    .btn-icon {
+      transform: scale(1.1) translateY(-2px);
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));
+    }
+  }
+  
+  &:active {
+    .btn-icon {
+      transform: scale(0.95) translateY(1px);
+    }
+  }
+}
+
+// Enhanced text effects
+.election-title {
+  background: linear-gradient(45deg, white, rgba(255,255,255,0.8), white);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  
+  &:hover {
+    animation: gradient-shift 2s ease infinite;
+  }
+}
+
+// Morphing status indicators
+.status-indicator {
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  &.indicator-active {
+    &:hover {
+      transform: scale(1.5) rotate(180deg);
+      border-radius: 20%;
+    }
+  }
+  
+  &.indicator-pending {
+    &:hover {
+      transform: scale(1.3) rotate(90deg);
+      border-radius: 30%;
+    }
+  }
+  
+  &.indicator-completed {
+    &:hover {
+      transform: scale(1.2);
+      border-radius: 10%;
+    }
+  }
+}
+
+// Dynamic shadow effects
+.status-badge {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    background: inherit;
+    filter: blur(20px);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+  }
+  
+  &:hover::before {
+    opacity: 0.3;
+  }
+}
+
+// Liquid animation for badges
+.election-badge {
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  &:hover::before {
+    left: 100%;
+  }
+}
+
+// Particle effect for icons
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-30px) scale(1);
+    opacity: 0;
+  }
+}
+
+.detail-icon {
+  &:hover {
+    &::after {
+      content: '✨';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: particle-float 1s ease-out;
+      pointer-events: none;
+    }
+  }
+}
+
+// Enhanced card entry animation
+@keyframes card-slide-in {
+  0% {
+    transform: translateY(30px) scale(0.95);
+    opacity: 0;
+    filter: blur(5px);
+  }
+  50% {
+    transform: translateY(-5px) scale(1.02);
+    opacity: 0.8;
+    filter: blur(2px);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.bg-white.rounded-xl.shadow-lg {
+  animation: card-slide-in 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:nth-child(2n) {
+    animation-delay: 0.1s;
+  }
+  
+  &:nth-child(3n) {
+    animation-delay: 0.2s;
+  }
+  
+  &:nth-child(4n) {
+    animation-delay: 0.3s;
+  }
+}
+
+// Glass morphism enhancement
+.status-badge {
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    border: 1px solid rgba(255,255,255,0.2);
+    pointer-events: none;
+  }
+}
+
+// Interactive glow effects
+.action-btn {
+  &.edit-btn:hover {
+    box-shadow: 
+      0 0 20px rgba($secondary, 0.3),
+      0 0 40px rgba($secondary, 0.2),
+      0 0 80px rgba($secondary, 0.1);
+  }
+  
+  &.delete-btn:hover {
+    box-shadow: 
+      0 0 20px rgba($danger, 0.3),
+      0 0 40px rgba($danger, 0.2),
+      0 0 80px rgba($danger, 0.1);
+  }
+}
+
+// Breathing animation for status indicators
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.status-indicator {
+  &.indicator-active {
+    animation: breathe 3s ease-in-out infinite, glow-pulse 2s infinite;
+  }
+  
+  &.indicator-pending {
+    animation: breathe 2s ease-in-out infinite, glow-pulse 1.5s infinite;
+  }
+}
+
+// Performance optimizations
+.election-header {
+  contain: layout style;
+  
+  * {
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+}
+
+// Smooth scroll behavior for long lists
+.election-cards-container {
+  scroll-behavior: smooth;
+}
+
+// Enhanced focus management
+.action-btn:focus-visible {
+  .btn-icon {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 3px rgba($primary, 0.3);
+  }
+}
+
+// Reduced motion preferences
+@media (prefers-reduced-motion: reduce) {
+  .decoration-orb,
+  .badge-glow,
+  .icon-ripple,
+  .status-icon-glow,
+  .indicator-pulse,
+  .btn-ripple {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .election-header-main:hover {
+    animation: none !important;
+  }
+  
+  .election-title:hover {
+    animation: none !important;
+  }
+}
+
+// Print styles
+@media print {
+  .election-header {
+    .decoration-orb,
+    .badge-glow,
+    .icon-ripple,
+    .status-icon-glow,
+    .indicator-pulse,
+    .btn-icon-bg,
+    .btn-ripple {
+      display: none;
+    }
+    
+    .election-header-main {
+      background: #f8f9fa !important;
+      color: #000 !important;
+      
+      &::before,
+      &::after {
+        display: none;
+      }
+    }
+    
+    .status-badge {
+      background: #fff !important;
+      border: 2px solid #000 !important;
+      color: #000 !important;
+    }
+    
+    .action-btn {
+      background: #fff !important;
+      border: 1px solid #000 !important;
+      color: #000 !important;
+    }
   }
 }
