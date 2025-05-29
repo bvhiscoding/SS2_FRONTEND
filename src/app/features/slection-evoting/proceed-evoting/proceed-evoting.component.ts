@@ -189,14 +189,13 @@ export class ProceedEvotingComponent implements OnInit, OnChanges {
         console.error('Error fetching candidates: ', err);
       },
     });
-  }
-  toggleCandidateSelection(candidate: any) {
+  }  toggleCandidateSelection(candidate: any) {
     if (this.selectedCandidates.includes(candidate)) {
       this.removeCandidate(candidate);
     } else {
       if (this.selectedCandidates.length < this.numberVote) {
         this.selectedCandidates.push(candidate);
-        this.message.success(`Đã chọn ứng viên: ${candidate.fullname}`);
+        this.message.success(`Đã chọn ứng viên: ${candidate.fullName}`);
       } else {
         this.message.warning(
           `Bạn chỉ có thể bầu chọn tối đa ${this.numberVote} ứng viên.`,
@@ -204,12 +203,11 @@ export class ProceedEvotingComponent implements OnInit, OnChanges {
       }
     }
   }
-
   removeCandidate(candidate: any) {
     this.selectedCandidates = this.selectedCandidates.filter(
       (c: any) => c.id !== candidate.id,
     );
-    this.message.info(`Đã bỏ chọn ứng viên: ${candidate.fullname}`);
+    this.message.info(`Đã bỏ chọn ứng viên: ${candidate.fullName}`);
   }
 
   handleMaxSelection(candidate: any) {
