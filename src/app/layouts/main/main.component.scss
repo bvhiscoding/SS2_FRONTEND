@@ -11,13 +11,15 @@ $shadow-color: rgba(0, 0, 0, 0.1);
 
 // Sidebar Styles
 .main-sidebar {
-  position: fixed;
-  height: 100vh;
+  position: fixed !important;
+  height: 100vh !important;
   overflow-y: auto;
   overflow-x: hidden;
   background: linear-gradient(to bottom, white, #f8f9fa);
-  z-index: 1000;
+  z-index: 999 !important; // Lower than modal mask (1000) to allow dimming effect
   transition: $transition;
+  left: 0 !important;
+  top: 0 !important;
   
   &::-webkit-scrollbar {
     width: 5px;
@@ -242,6 +244,39 @@ $shadow-color: rgba(0, 0, 0, 0.1);
 nz-layout.bg-gray-50 {
   margin-left: 280px; // Fixed margin for sidebar width
   transition: $transition;
+}
+
+// Ensure sidebar stays fixed even when modals are open
+:host ::ng-deep {
+  // Allow modal mask to overlay sidebar for dimming effect
+  .ant-modal-mask {
+    z-index: 1000; // Higher than sidebar (999) for dimming effect
+  }
+  
+  .ant-modal-wrap {
+    z-index: 1001; // Above mask
+  }
+  
+  .ant-modal {
+    z-index: 1002; // Above wrap
+  }
+  
+  // Ensure sidebar remains fixed but allows dimming
+  .main-sidebar {
+    z-index: 999 !important;
+    position: fixed !important;
+  }
+}
+
+// Override any global modal styles that might affect layout
+:host ::ng-deep body.ant-modal-open {
+  .main-sidebar {
+    position: fixed !important;
+    z-index: 999 !important; // Lower than modal mask for dimming
+    left: 0 !important;
+    top: 0 !important;
+    transform: none !important;
+  }
 }
 
 // Cải thiện responsive design
