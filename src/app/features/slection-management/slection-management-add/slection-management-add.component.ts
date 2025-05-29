@@ -44,7 +44,7 @@ export class SlectionManagementAddComponent implements OnInit, OnChanges{
   @Input() isVisiblePopUpAddSlectionManagement: boolean = true;
   @Input() idSlectionManagement: any;
   @Input() mode: 'create' | 'edit';
-  @Output() visiblePopUpAddSlectionManagement = new EventEmitter<boolean>();
+  @Output() visiblePopUpAddSlectionManagement = new EventEmitter<{visible: boolean, reload: boolean}>();
   public edit: boolean = false;
   public listCandidate: any = [];
   public listVoter: any = [];
@@ -185,11 +185,10 @@ export class SlectionManagementAddComponent implements OnInit, OnChanges{
       voterNames: this.voterNames
     };
     this.voteService.createVote(body).pipe(
-      switchMap(() => this.voteService.sendEmail(body))
-    ).subscribe({
+      switchMap(() => this.voteService.sendEmail(body))    ).subscribe({
       next: () => {
         this.message.success('Tạo cuộc bầu cử và gửi email thành công');
-        this.visiblePopUpAddSlectionManagement.emit(false);
+        this.visiblePopUpAddSlectionManagement.emit({visible: false, reload: true});
       },
       error: (err) => {
         this.message.error('Đã xảy ra lỗi!');
@@ -272,19 +271,17 @@ export class SlectionManagementAddComponent implements OnInit, OnChanges{
       candidateNames:  this.candidateNames,
       voters: this.form.get('voters')?.value,
       voterNames: this.voterNames
-    };
-    this.voteService.updateVote(body).subscribe({
+    };    this.voteService.updateVote(body).subscribe({
       next: (res) => {
         this.message.success('Chỉnh sửa cuộc bầu cử thành công');
-        this.visiblePopUpAddSlectionManagement.emit(false);
+        this.visiblePopUpAddSlectionManagement.emit({visible: false, reload: true});
       },
       error: (err) => {
         this.message.error('Đã xảy ra lỗi!');
       },
     });
   }
-
   handleCancel(): void {
-    this.visiblePopUpAddSlectionManagement.emit(false);
+    this.visiblePopUpAddSlectionManagement.emit({visible: false, reload: false});
   }
 }
