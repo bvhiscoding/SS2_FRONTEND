@@ -1,5 +1,4 @@
 <div class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen w-full p-8">
-    <nz-spin [nzSpinning]="isLoadingOK" nzSize="large">
       <div class="mb-10 flex justify-between items-center">
           <div class="flex items-center space-x-4">
             <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center shadow-lg">
@@ -7,7 +6,7 @@
             </div>
             <h3 class="uppercase text-primary text-2xl font-bold tracking-wide">TIẾN HÀNH BẦU CỬ</h3>
           </div>
-      </div>      <div class="bg-white pt-8 pb-8 px-8 mb-12 rounded-2xl shadow-xl border border-gray-100">
+      </div><div class="bg-white pt-8 pb-8 px-8 mb-12 rounded-2xl shadow-xl border border-gray-100">
           <div class="mb-8">
             <div class="flex items-center space-x-3 mb-3">
               <div class="w-8 h-8 bg-gradient-to-r from-primary to-blue-500 rounded-lg flex items-center justify-center">
@@ -49,8 +48,7 @@
               </div>
             </form>
           </ng-container></div>
-        
-      <!-- Elections List Header -->
+          <!-- Elections List Header -->
       <div class="mb-8 flex justify-start items-center">
         <div class="flex items-center space-x-4">
           <div class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-500 rounded-xl flex items-center justify-center shadow-lg">
@@ -63,8 +61,17 @@
         </div>
       </div>
       
+      <!-- Loading State -->
+      <div *ngIf="isLoadingOK" class="py-24 flex justify-center items-center">
+          <div class="flex flex-col items-center">
+              <div class="h-16 w-16 rounded-full border-4 border-t-primary border-r-primary border-b-gray-200 border-l-gray-200 animate-spin mb-4"></div>
+              <p class="text-gray-500 animate-pulse">Đang tải danh sách cuộc bầu cử...</p>
+          </div>
+      </div>
+      
       <!-- Elections List Content -->
-      <ng-container *ngIf="listVote.length > 0; else noVotes"><ng-container *ngFor="let slection of listVote, let i = index">
+      <ng-container *ngIf="!isLoadingOK">
+        <ng-container *ngIf="listVote.length > 0; else noVotes"><ng-container *ngFor="let slection of listVote, let i = index">
             <div class="flex flex-col w-full mb-8 bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-100 hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1">
                 <div class="w-full flex gap-2 justify-between">
                   <div class="text-center flex-1 py-4 text-xl bg-gradient-to-r from-primary to-blue-500 text-white font-bold uppercase tracking-wide">
@@ -191,9 +198,10 @@
                     <span>Tiến hành bầu cử</span>
                   </button>
                 </div>
-            </div>
-        </ng-container>
-      </ng-container>      <ng-template #noVotes>
+            </div>        </ng-container>
+      </ng-container>      
+
+      <ng-template #noVotes>
         <div class="text-center py-16">
           <div class="bg-white rounded-3xl shadow-2xl p-16 max-w-lg mx-auto border border-gray-100 relative overflow-hidden">
             <!-- Background decoration -->
@@ -230,10 +238,7 @@
               </p>
             </div>
           </div>
-        </div>
-      </ng-template>
-    </nz-spin>
-</div>
+        </div>      </ng-template>
 
 <app-detail-ctv [isVisibleDetail]="isVisibleDetail" [idCtv]="idCtv" (visiblePopUpDetail)="handleChangeDetailVisible($event)"></app-detail-ctv>
 
