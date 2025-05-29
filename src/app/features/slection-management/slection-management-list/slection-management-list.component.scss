@@ -117,7 +117,8 @@ $shadow-xl:
       animation: float 6s ease-in-out infinite;
       opacity: 0.8;
     }
-  }  .header-content {
+  }
+  .header-content {
     padding: 0.875rem 1.25rem;
     position: relative;
     z-index: 2;
@@ -364,7 +365,8 @@ $shadow-xl:
       flex-direction: row;
       gap: 0.375rem;
     }
-  }  .compact-action-btn {
+  }
+  .compact-action-btn {
     width: 42px;
     height: 42px;
     border-radius: 50%;
@@ -440,15 +442,21 @@ $shadow-xl:
       &:hover::after {
         transform: scale(1);
       }
-    }    &.edit-btn {
-      background: linear-gradient(135deg, rgba(14, 175, 143, 0.2), rgba(16, 185, 129, 0.15));
+    }
+    &.edit-btn {
+      background: linear-gradient(
+        135deg,
+        rgba(14, 175, 143, 0.2),
+        rgba(16, 185, 129, 0.15)
+      );
       border: 1px solid rgba(14, 175, 143, 0.3);
 
       .btn-icon {
         color: $primary-dark;
         background: rgba(255, 255, 255, 0.9);
         border-radius: 50%;
-      }      &:hover {
+      }
+      &:hover {
         background: linear-gradient(135deg, #06b6d4, #0891b2);
         box-shadow: 0 6px 25px rgba(6, 182, 212, 0.4);
         border: 1px solid #06b6d4;
@@ -461,7 +469,11 @@ $shadow-xl:
     }
 
     &.delete-btn {
-      background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.15));
+      background: linear-gradient(
+        135deg,
+        rgba(239, 68, 68, 0.2),
+        rgba(220, 38, 38, 0.15)
+      );
       border: 1px solid rgba(239, 68, 68, 0.3);
 
       .btn-icon {
@@ -549,6 +561,7 @@ $shadow-xl:
     color: $gray-600;
     cursor: pointer;
     transition: $transition-normal;
+    position: relative;
 
     &:hover {
       background: rgba($primary, 0.1);
@@ -565,12 +578,51 @@ $shadow-xl:
     i {
       font-size: 1rem;
     }
+
+    .scroll-hint {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: $primary;
+      color: white;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      animation: pulse-hint 2s infinite;
+    }
   }
 }
 
 // Participants grid
 .participants-grid {
   min-height: 300px;
+  position: relative;
+
+  // Add shadow overlay for horizontal scroll hint
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 30px;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0.8), transparent);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+  }
+
+  // Show shadow when cards overflow
+  &:has(.participant-cards-horizontal::-webkit-scrollbar) {
+    &::after {
+      opacity: 1;
+    }
+  }
 }
 
 .participant-cards {
@@ -580,6 +632,99 @@ $shadow-xl:
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
+  }
+
+  // Horizontal scrolling layout for participant cards
+  &.participant-cards-horizontal {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 1.5rem;
+    padding-bottom: 0.75rem;
+    scroll-behavior: smooth;
+    position: relative;
+
+    // Custom scrollbar styling
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, $primary, $primary-dark);
+      border-radius: 10px;
+
+      &:hover {
+        background: linear-gradient(135deg, $primary-dark, $primary);
+      }
+    }
+
+    // Firefox scrollbar
+    scrollbar-width: thin;
+    scrollbar-color: $primary #f1f5f9;
+
+    .participant-card {
+      flex: 0 0 280px; // Fixed width for horizontal scroll
+      min-width: 280px;
+      max-width: 280px;
+    }
+
+    // Smooth scroll behavior on hover
+    &:hover {
+      &::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, $primary-light, $primary);
+        box-shadow: 0 2px 10px rgba($primary, 0.3);
+      }
+    }
+
+    // Add scroll snap for better UX
+    scroll-snap-type: x mandatory;
+
+    .participant-card {
+      scroll-snap-align: start;
+
+      // Enhanced hover effect for horizontal cards
+      &:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow:
+          0 10px 30px rgba(0, 0, 0, 0.15),
+          0 0 20px rgba($primary, 0.2);
+      }
+    }
+
+  // Show scroll indicators when there are more than 3 cards
+  &.has-overflow::before {
+    content: "➤";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    color: $primary;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+    animation: pulse-scroll 2s infinite;
+  }
+
+  // Only show scroll indicator when scrollable and has overflow
+  &.has-overflow:hover::before {
+    opacity: 1;
+  }
   }
 }
 
@@ -691,6 +836,19 @@ $shadow-xl:
       border-color: $primary;
       transform: translateY(-1px);
     }
+  }
+}
+
+// Animation keyframes for scroll effects
+@keyframes pulse-hint {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
   }
 }
 
@@ -1269,3 +1427,27 @@ $shadow-xl:
     }
   }
 }
+
+// Pulse animation for scroll indicator
+@keyframes pulse-scroll {
+  0%, 100% {
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.1);
+  }
+}
+
+// Pulse animation for scroll hint in tab
+@keyframes pulse-hint {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+}
+
+

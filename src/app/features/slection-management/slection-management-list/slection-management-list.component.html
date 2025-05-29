@@ -150,7 +150,8 @@
           </div>
           <div class="header-content">
             <!-- Election Info Section -->
-            <div class="election-info">              <div class="election-title-wrapper">
+            <div class="election-info">
+              <div class="election-title-wrapper">
                 <h3 class="election-title" [title]="election.voteName">
                   {{ election.voteName }}
                 </h3>
@@ -338,16 +339,18 @@
           <!-- Participants Section -->
           <div class="lg:col-span-2">
             <!-- Tab Navigation -->
-            <div class="tab-navigation">
-              <button
+            <div class="tab-navigation">              <button
                 (click)="selectView('candidate')"
                 class="tab-btn"
                 [class.active]="selectedView === 'candidate'"
+                [title]="election.candidates?.length > 3 ? 'Cuộn ngang để xem tất cả ứng viên' : ''"
               >
                 <i class="fas fa-user-tie"></i>
                 <span>Ứng viên ({{ election.candidates?.length || 0 }})</span>
-              </button>
-              <button
+                <small *ngIf="shouldShowScrollIndicator(election.candidates)" class="scroll-hint">
+                  <i class="fas fa-arrows-alt-h"></i>
+                </small>
+              </button>              <button
                 (click)="selectView('voters')"
                 class="tab-btn"
                 [class.active]="selectedView === 'voters'"
@@ -355,14 +358,12 @@
                 <i class="fas fa-users"></i>
                 <span>Cử tri ({{ election.voters?.length || 0 }})</span>
               </button>
-            </div>
-
-            <!-- Participants Grid -->
-            <div class="participants-grid">
-              <!-- Candidates -->
+            </div>            <!-- Participants Grid -->
+            <div class="participants-grid">              <!-- Candidates -->
               <div
                 *ngIf="selectedView === 'candidate'"
-                class="participant-cards"
+                class="participant-cards participant-cards-horizontal"
+                [class.has-overflow]="shouldShowScrollIndicator(election.candidates)"
               >
                 <div
                   *ngFor="let candidate of election.candidates; let i2 = index"
@@ -423,10 +424,8 @@
                     </button>
                   </div>
                 </div>
-              </div>
-
-              <!-- Voters -->
-              <div *ngIf="selectedView === 'voters'" class="participant-cards">
+              </div>              <!-- Voters -->
+              <div *ngIf="selectedView === 'voters'" class="participant-cards participant-cards-horizontal">
                 <div
                   *ngFor="let voter of election.voters; let i2 = index"
                   class="participant-card"

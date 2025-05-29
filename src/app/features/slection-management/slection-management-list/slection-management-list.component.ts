@@ -237,4 +237,14 @@ export class SlectionManagementListComponent implements OnInit{
   handleSearch() {
 
   }
+
+  // Check if there are more than 3 participants to show scroll indicator
+  public shouldShowScrollIndicator(participants: any[]): boolean {
+    return participants && participants.length > 3;
+  }
+
+  // Get display count for participants (max 3 for initial view)
+  public getDisplayCount(participants: any[]): number {
+    return participants ? Math.min(participants.length, 3) : 0;
+  }
 }
