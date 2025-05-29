@@ -131,11 +131,10 @@
                   selectedCandidates.length >= numberVote &&
                   !selectedCandidates.includes(candidate)
               }"
-              class="candidate-card bg-white rounded-xl border-2 border-gray-200 p-5 mb-4 shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
+              class="candidate-card bg-white rounded-3xl border-2 border-gray-200 p-5 mb-4 shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
               (click)="handleMaxSelection(candidate)"
             >
-              <div class="flex items-center space-x-4">
-                <mat-checkbox
+              <div class="flex items-center space-x-4">                <mat-checkbox
                   [checked]="selectedCandidates.includes(candidate)"
                   (change)="toggleCandidateSelection(candidate)"
                   [disabled]="
@@ -146,11 +145,12 @@
                 >
                 </mat-checkbox>
 
-                <div
-                  class="w-12 h-12 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md"
-                >
-                  {{ i + 1 }}
-                </div>                <div class="flex-1 min-w-0">
+                <app-user-avatar
+                  [fullName]="candidate?.fullName"
+                  [imageUrl]="candidate?.imageUrl"
+                  size="md"
+                  class="flex-shrink-0"
+                ></app-user-avatar><div class="flex-1 min-w-0">
                   <div class="text-lg font-bold text-gray-900 truncate mb-1">
                     {{ candidate?.fullName }}
                   </div>
@@ -219,15 +219,15 @@
           <div class="selected-candidates space-y-4">
             <div
               *ngFor="let candidate of selectedCandidates; let i = index"
-              class="selected-card bg-white rounded-xl border-2 border-green-300 p-5 shadow-sm animate-slideIn"
-            >
-              <div class="flex items-center justify-between">
+              class="selected-card bg-white rounded-3xl border-2 border-green-300 p-5 shadow-sm animate-slideIn"
+            >              <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
-                  <div
-                    class="w-10 h-10 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center text-white font-bold shadow-md"
-                  >
-                    {{ i + 1 }}
-                  </div>                  <div class="flex-1 min-w-0">
+                  <app-user-avatar
+                    [fullName]="candidate?.fullName"
+                    [imageUrl]="candidate?.imageUrl"
+                    size="md"
+                    class="flex-shrink-0"
+                  ></app-user-avatar><div class="flex-1 min-w-0">
                     <div class="text-lg font-bold text-gray-900 truncate">
                       {{ candidate.fullName }}
                     </div>

@@ -36,6 +36,7 @@ import { ManagermentService } from '../../../core/api/managerment.service';
 import { rePassValidator } from '../../../shared/validate/check-repass.directive';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { VoteService } from '../../../core/api/vote.service';
+import { UserAvatarComponent } from '../../../shared/components/user-avatar/user-avatar.component';
 import * as forge from 'node-forge';
 
 @Component({
@@ -53,10 +54,10 @@ import * as forge from 'node-forge';
     MatSelectModule,
     TranslateModule,
     NzButtonModule,
-    NzPopconfirmModule,
-    ReactiveFormsModule,
+    NzPopconfirmModule,    ReactiveFormsModule,
     MatCheckboxModule,
     NzSpinModule,
+    UserAvatarComponent,
   ],
   templateUrl: './proceed-evoting.component.html',
   styleUrl: './proceed-evoting.component.scss',

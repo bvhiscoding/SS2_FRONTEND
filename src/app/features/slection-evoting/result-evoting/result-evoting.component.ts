@@ -12,6 +12,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { PagiComponent } from '../../../shared/components/pagi/pagi.component';
 import { VoteService } from '../../../core/api/vote.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { UserAvatarComponent } from '../../../shared/components/user-avatar/user-avatar.component';
 
 @Component({
   selector: 'app-result-evoting',
@@ -22,10 +23,10 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     FormsModule,
     ReactiveFormsModule,
     PagiComponent,
-    NzIconModule,
-    RouterModule,
+    NzIconModule,    RouterModule,
     ChartEvotingComponent,
-    ChartCircleEvotingComponent
+    ChartCircleEvotingComponent,
+    UserAvatarComponent
   ],
   templateUrl: './result-evoting.component.html',
   styleUrl: './result-evoting.component.scss'

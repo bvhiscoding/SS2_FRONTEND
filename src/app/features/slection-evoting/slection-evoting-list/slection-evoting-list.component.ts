@@ -15,6 +15,7 @@ import { ProceedEvotingComponent } from '../proceed-evoting/proceed-evoting.comp
 import { VoteService } from '../../../core/api/vote.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { UserAvatarComponent } from '../../../shared/components/user-avatar/user-avatar.component';
 
 @Component({
   selector: 'app-slection-evoting-list',
@@ -31,10 +32,10 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
     TranslateModule,
     MatInputModule,
     MatFormFieldModule,
-    MatDatepickerModule,
-    MatSelectModule,
+    MatDatepickerModule,    MatSelectModule,
     DetailCtvComponent,
-    ProceedEvotingComponent
+    ProceedEvotingComponent,
+    UserAvatarComponent
   ],
   templateUrl: './slection-evoting-list.component.html',
   styleUrl: './slection-evoting-list.component.scss'

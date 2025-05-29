@@ -57,15 +57,13 @@
                     <h4 class="text-xl font-bold text-gray-800">Người dẫn đầu</h4>
                 </div>
                 <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-6">
-                    <div class="flex items-center justify-between">
-                        <div class="flex flex-col items-center">
-                            <div class="relative">
-                                <img *ngIf="leadingCandidate.imageUrl === null" 
-                                     src="../../../assets/img/Logo-Hoc-Vien-Ky-Thuat-Mat-Ma-ACTVN.webp" 
-                                     class="w-24 h-24 object-cover rounded-full border-4 border-yellow-400 shadow-lg" />
-                                <img *ngIf="leadingCandidate.imageUrl !== null" 
-                                     [src]="leadingCandidate.imageUrl" 
-                                     class="w-24 h-24 object-cover rounded-full border-4 border-yellow-400 shadow-lg" />
+                    <div class="flex items-center justify-between">                        <div class="flex flex-col items-center">
+                            <div class="relative">                                <app-user-avatar 
+                                    [imageUrl]="leadingCandidate?.imageUrl"
+                                    [fullName]="leadingCandidate?.fullName"
+                                    size="xl"
+                                    customClass="border-4 border-yellow-400 shadow-lg">
+                                </app-user-avatar>
                                 <div class="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
                                     <i class="fa-solid fa-trophy text-white text-sm"></i>
                                 </div>

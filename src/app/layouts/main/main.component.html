@@ -6,15 +6,14 @@
     class="main-sidebar shadow-xl border-r overflow-hidden">
     
     <!-- Logo & Profile Section -->
-    <div class="sidebar-profile-section">
-      <!-- Profile Section - Always Expanded -->
-      <div class="flex flex-col items-center pt-8 pb-6">
-        <div class="relative">
-          <!-- Profile Image with Status Indicator -->
-          <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg mb-3">
-            <img src="../../../assets/img/Hanu.jpeg" alt="logo" class="w-full h-full object-cover">
-          </div>
-          <div class="absolute bottom-3 right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white"></div>
+    <div class="sidebar-profile-section">      <!-- Profile Section - Always Expanded -->
+      <div class="flex flex-col items-center pt-8 pb-6">        <div class="relative">          <!-- Profile Image with Status Indicator -->
+          <app-user-avatar
+            [fullName]="userName"
+            [imageUrl]="null"
+            size="xl"
+            customClass="border-4 border-white shadow-lg">
+          </app-user-avatar>
         </div>
         
         <!-- User Info -->

@@ -1,0 +1,110 @@
+// Variables
+$primary: #0EAF8F;
+$primary-light: #31c9ab;
+$primary-dark: #0a9579;
+
+.relative {
+  display: inline-block;
+}
+
+// Avatar container styles
+.rounded-full {
+  position: relative;
+  
+  &:hover {
+    transform: translateY(-1px);
+  }
+  
+  // Size variants
+  &.w-6 {
+    width: 1.5rem;
+    height: 1.5rem;
+    
+    .text-xs {
+      font-size: 0.625rem;
+    }
+  }
+  
+  &.w-8 {
+    width: 2rem;
+    height: 2rem;
+    
+    .text-sm {
+      font-size: 0.75rem;
+    }
+  }
+  
+  &.w-12 {
+    width: 3rem;
+    height: 3rem;
+    
+    .text-base {
+      font-size: 0.875rem;
+    }
+  }
+  
+  &.w-16 {
+    width: 4rem;
+    height: 4rem;
+    
+    .text-lg {
+      font-size: 1rem;
+    }
+  }
+  
+  &.w-24 {
+    width: 6rem;
+    height: 6rem;
+    
+    .text-xl {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+// Edit button styles
+button {
+  transition: all 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// Online status indicator
+.bg-green-500 {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+// Hover effects for clickable avatars
+.cursor-pointer {
+  &:hover {
+    .border-white {
+      border-color: $primary;
+    }
+  }
+}
+
+// Initials container
+.flex.items-center.justify-center {
+  background: linear-gradient(135deg, var(--bg-color, #6b7280), var(--bg-color-light, #9ca3af));
+  
+  // Add subtle text shadow for better readability
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}

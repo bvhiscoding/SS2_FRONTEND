@@ -32,6 +32,7 @@ import { edit } from '../../shared/components/iconAntd/iconAddOnAntd.component';
 import { AccountService } from '../../core/api/account.service';
 import { ChangePasswordComponent } from '../../features/setting/change-password/change-password.component';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { UserAvatarComponent } from '../../shared/components/user-avatar/user-avatar.component';
 
 
 @Component({
@@ -55,7 +56,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     MatSelectModule,
     FormsModule,
     TranslateModule,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    UserAvatarComponent
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',

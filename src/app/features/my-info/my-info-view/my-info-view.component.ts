@@ -15,6 +15,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { AddressService } from '../../../core/api/address.service';
 import { AccountService } from '../../../core/api/account.service';
 import { ManagermentService } from '../../../core/api/managerment.service';
+import { UserAvatarComponent } from '../../../shared/components/user-avatar/user-avatar.component';
 
 
 @Component({
@@ -29,6 +30,7 @@ import { ManagermentService } from '../../../core/api/managerment.service';
     MatFormFieldModule,
     NzSelectModule,
     TranslateModule,
+    UserAvatarComponent,
     NzButtonModule,
     MatInputModule,
     MatSelectModule,
@@ -149,6 +151,13 @@ export class MyInfoViewComponent implements OnInit {
         this.message.error('Lỗi không hiển thị thông tin');
       },
     })
+  }
+
+  triggerFileInput(): void {
+    const fileInput = document.getElementById('avatarImage') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
   }
 
   handleFileChange(event: Event, type: 'avatar' | 'identityCard'): void {

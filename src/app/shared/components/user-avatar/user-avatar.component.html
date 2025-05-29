@@ -1,0 +1,39 @@
+<div class="relative inline-block">
+  <!-- Avatar Container -->
+  <div 
+    class="rounded-full overflow-hidden border-2 border-white shadow-lg cursor-pointer transition-all duration-300 hover:shadow-xl"
+    [ngClass]="[getSizeClass(), isClickable ? 'hover:scale-105' : '']"
+    (click)="onAvatarClick()">
+    
+    <!-- User Image -->
+    <img 
+      *ngIf="imageUrl" 
+      [src]="imageUrl" 
+      [alt]="fullName"
+      class="w-full h-full object-cover"
+      (error)="onImageError()">
+    
+    <!-- Default Avatar with Initials -->
+    <div 
+      *ngIf="!imageUrl"
+      class="w-full h-full flex items-center justify-center text-white font-semibold"
+      [style.background-color]="getBackgroundColor()">
+      {{ getInitials() }}
+    </div>
+  </div>
+
+  <!-- Edit Button -->
+  <button 
+    *ngIf="showEditButton"
+    class="absolute -bottom-1 -right-1 w-6 h-6 bg-primary rounded-full border-2 border-white shadow-md hover:bg-primary-dark transition-colors duration-200 flex items-center justify-center text-white text-xs"
+    (click)="onEditClick($event)"
+    type="button">
+    <i class="fas fa-camera"></i>
+  </button>
+
+  <!-- Online Status Indicator (optional) -->
+  <div 
+    *ngIf="size === 'lg' || size === 'xl'"
+    class="absolute bottom-1 right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white">
+  </div>
+</div>

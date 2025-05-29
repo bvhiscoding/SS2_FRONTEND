@@ -16,6 +16,7 @@ import { DetailCtvComponent } from './detail-ctv/detail-ctv.component';
 import { VoteService } from '../../../core/api/vote.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { UserAvatarComponent } from '../../../shared/components/user-avatar/user-avatar.component';
 
 @Component({
   selector: 'app-slection-management-list',
@@ -33,10 +34,10 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
     MatInputModule,
     MatFormFieldModule,
     MatDatepickerModule,
-    MatSelectModule,
-    SlectionManagementAddComponent,
+    MatSelectModule,    SlectionManagementAddComponent,
     PopupDeleteComponent,
-    DetailCtvComponent
+    DetailCtvComponent,
+    UserAvatarComponent
   ],
   templateUrl: './slection-management-list.component.html',
   styleUrl: './slection-management-list.component.scss'

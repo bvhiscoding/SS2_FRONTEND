@@ -5,11 +5,13 @@
         <div class="text-start border-b border-primary pb-2 text-primary font-medium text-[20px]">
             <span>Thông tin chi tiết</span>
         </div>
-        <div class="flex flex-col py-2 px-2">
-            <div class="flex items-start py-2 border-b w-full">
+        <div class="flex flex-col py-2 px-2">            <div class="flex items-start py-2 border-b w-full">
                 <div class="w-[40%] text-[16px] font-medium">Ảnh đại diện:</div>
-                <img *ngIf="viewInfo?.imageUrl === null" class="rounded-[50%] object-cover h-[80px] w-[80px]"  src="../../../../../assets/img/Logo-Hoc-Vien-Ky-Thuat-Mat-Ma-ACTVN.webp" alt="">
-                <img *ngIf="viewInfo?.imageUrl !== null" class="rounded-[50%] object-cover h-[80px] w-[80px]"  [src]="viewInfo.imageUrl" alt="">
+                <app-user-avatar
+                    [fullName]="viewInfo?.fullname"
+                    [imageUrl]="viewInfo?.imageUrl"
+                    size="lg">
+                </app-user-avatar>
             </div>
             <div class="flex items-center py-2 border-b w-full">
                 <div class="w-[40%] text-[16px] font-medium">Họ và tên:</div>

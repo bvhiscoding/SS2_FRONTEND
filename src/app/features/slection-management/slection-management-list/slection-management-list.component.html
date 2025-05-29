@@ -368,22 +368,20 @@
                 <div
                   *ngFor="let candidate of election.candidates; let i2 = index"
                   class="participant-card"
-                >
-                  <div class="participant-avatar">
-                    <img
-                      [src]="
-                        candidate.imageUrl ||
-                        '../../../../assets/img/Logo-Hoc-Vien-Ky-Thuat-Mat-Ma-ACTVN.webp'
-                      "
-                      [alt]="candidate.fullname"
+                >                  <div class="participant-avatar">
+                    <!-- Debug: {{candidate.fullname}} -->
+                    <app-user-avatar
+                      [fullName]="candidate.fullName"
+                      [imageUrl]="candidate.imageUrl"
+                      size="lg"
                       class="avatar-img"
-                    />
+                    ></app-user-avatar>
                     <div class="candidate-badge">
                       <i class="fas fa-medal text-yellow-500"></i>
                     </div>
                   </div>
                   <div class="participant-info">
-                    <h5 class="participant-name">{{ candidate.fullname }}</h5>
+                    <h5 class="participant-name">{{ candidate.fullName }}</h5>
                     <p class="participant-username">{{ candidate.userName }}</p>
                     <div class="participant-details">
                       <div class="detail-item">
@@ -429,16 +427,14 @@
                 <div
                   *ngFor="let voter of election.voters; let i2 = index"
                   class="participant-card"
-                >
-                  <div class="participant-avatar">
-                    <img
-                      [src]="
-                        voter.imageUrl ||
-                        '../../../../assets/img/Logo-Hoc-Vien-Ky-Thuat-Mat-Ma-ACTVN.webp'
-                      "
-                      [alt]="voter.fullname"
+                >                  <div class="participant-avatar">
+                    <!-- Debug voter: {{voter.fullname}} -->
+                    <app-user-avatar
+                      [fullName]="voter.fullname"
+                      [imageUrl]="voter.imageUrl"
+                      size="lg"
                       class="avatar-img"
-                    />
+                    ></app-user-avatar>
                     <div class="voter-badge">
                       <i class="fas fa-vote-yea text-blue-500"></i>
                     </div>

@@ -13,6 +13,7 @@ import { NzModalComponent, NzModalModule, NzModalRef, NzModalService } from 'ng-
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ManagermentService } from '../../../../core/api/managerment.service';
+import { UserAvatarComponent } from '../../../../shared/components/user-avatar/user-avatar.component';
 
 @Component({
   selector: 'app-detail-ctv',
@@ -26,11 +27,11 @@ import { ManagermentService } from '../../../../core/api/managerment.service';
     MatFormFieldModule,
     MatDatepickerModule,
     MatSelectModule,
-    TranslateModule,
-    NzButtonModule,
+    TranslateModule,    NzButtonModule,
     NzPopconfirmModule,
     ReactiveFormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    UserAvatarComponent
   ],
   templateUrl: './detail-ctv.component.html',
   styleUrl: './detail-ctv.component.scss'
