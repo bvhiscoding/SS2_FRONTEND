@@ -1,74 +1,73 @@
-<div class="min-h-screen bg-gradient-to-br from-teal-50 to-blue-50 p-6">
-    <!-- Page Header -->
-    <div class="flex items-center mb-8">
-        <div class="bg-primary p-3 rounded-xl shadow-lg mr-4">
-            <i class="fas fa-user-circle text-white text-xl"></i>
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-4 lg:p-6">
+    <!-- Enhanced Page Header -->
+    <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-4">
+            <div class="bg-gradient-to-r from-primary to-primary-light p-3 rounded-xl shadow-lg">
+                <i class="fas fa-user-circle text-white text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-2xl lg:text-3xl font-bold text-gray-800">Thông tin cá nhân</h1>
+                <p class="text-gray-500 mt-1 text-sm lg:text-base">Quản lý và cập nhật thông tin tài khoản của bạn</p>
+            </div>
         </div>
-        <div>
-            <h1 class="text-2xl font-bold text-gray-800">Thông tin cá nhân</h1>
-            <p class="text-gray-500 mt-1">Quản lý và cập nhật thông tin tài khoản của bạn</p>
+          <!-- Status Indicator -->
+        <div class="hidden md:flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm border status-indicator">
+            <div class="w-2 h-2 bg-green-500 rounded-full status-dot"></div>
+            <span class="text-sm text-gray-600 font-medium">Đang hoạt động</span>
         </div>
-    </div>
-
-    <!-- Main Content Card -->
-    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-        <!-- Profile Header Section -->        <div class="relative bg-gradient-to-r from-primary to-primary-light p-8">
-            <div class="flex flex-col md:flex-row items-center gap-6">
-                <!-- Avatar Section -->
-                <div class="relative">
-                    <app-user-avatar
-                        [imageUrl]="avatarPreview"
-                        [fullName]="fullName"
-                        size="xl"
-                        [showEditButton]="true"
-                        (editClick)="triggerFileInput()">
-                    </app-user-avatar>
-                </div>
-                
-                <!-- User Basic Info -->
-                <div class="text-center md:text-left text-white">
-                    <h2 class="text-3xl font-bold mb-2">{{fullName}}</h2>
-                    <div class="flex items-center justify-center md:justify-start gap-2 mb-3">
-                        <i class="fas fa-at text-lg opacity-90"></i>
-                        <span class="text-lg opacity-90">{{nameOwner}}</span>
+    </div><!-- Main Content Card -->
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">        <!-- Compact Profile Header Section -->
+        <div class="compact-header relative bg-gradient-to-r from-primary to-primary-light">
+            <div class="flex items-center justify-between px-6 py-4">
+                <!-- Left: Avatar and User Info -->
+                <div class="flex items-center gap-4">
+                    <!-- Compact Avatar -->
+                    <div class="relative">
+                        <app-user-avatar
+                            [imageUrl]="avatarPreview"
+                            [fullName]="fullName"
+                            size="lg"
+                            [showEditButton]="false"
+                            [showOnlineStatus]="false"
+                            (editClick)="triggerFileInput()">
+                        </app-user-avatar>
                     </div>
                     
-                    <!-- Avatar Upload Button -->
-                    <form [formGroup]="avatarChangeForm">
-                        <label for="avatarImage" 
-                               class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-4 py-2 rounded-lg cursor-pointer transition-all duration-300 hover:scale-105">
-                            <i class="fas fa-edit text-sm"></i>
-                            <span>Thay đổi ảnh đại diện</span>
-                        </label>
-                        <input type="file" 
-                               id="avatarImage" 
-                               name="avatarImage" 
-                               class="hidden" 
-                               formControlName="image"
-                               (change)="handleFileChange($event, 'avatar')">
-                    </form>
+                    <!-- Compact User Info -->
+                    <div class="text-white">
+                        <h2 class="text-xl font-bold leading-tight">{{fullName}}</h2>
+                        <div class="flex items-center gap-1.5 mt-1">
+                            <i class="fas fa-at text-sm opacity-80"></i>
+                            <span class="text-sm opacity-90">{{nameOwner}}</span>
+                        </div>
+                    </div>
+                </div>                  <!-- Right: Edit Button -->                <div class="flex-shrink-0 flex gap-2">                    <button *ngIf="!isEdit" 
+                            (click)="handleEdit()"
+                            type="button"
+                            class="bg-white/15 hover:bg-white/25 backdrop-blur-sm text-white px-6 py-3 m-2 rounded-lg transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 border border-white/20 cursor-pointer min-h-[48px] min-w-[120px] touch-manipulation relative overflow-hidden group">
+                        <span class="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-all duration-300 rounded-lg"></span>
+                        <i class="fas fa-edit text-sm relative z-10"></i>
+                        <span class="text-sm font-medium relative z-10">Chỉnh sửa</span>
+                    </button>
+                    
+
                 </div>
             </div>
             
-            <!-- Edit Toggle Button -->
-            <div class="absolute top-6 right-6">
-                <button *ngIf="!isEdit" 
-                        (click)="handleEdit()"
-                        class="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 flex items-center gap-2">
-                    <i class="fas fa-edit"></i>
-                    <span>Chỉnh sửa thông tin</span>
-                </button>
+            <!-- Decorative Elements -->
+            <div class="absolute top-0 right-0 opacity-10">
+                <div class="w-32 h-32 rounded-full bg-white/20 transform translate-x-16 -translate-y-16"></div>
             </div>
-        </div>
-
-        <!-- Form Content -->
-        <div class="p-8">
-            <form [formGroup]="form" class="space-y-8">
-                <!-- Personal Information Section -->
-                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center gap-3">
-                        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                            <i class="fas fa-user text-white text-sm"></i>
+            <div class="absolute bottom-0 left-0 opacity-10">
+                <div class="w-24 h-24 rounded-full bg-white/20 transform -translate-x-12 translate-y-12"></div>
+            </div>
+        </div>        <!-- Enhanced Form Content -->
+        <div class="p-6 lg:p-8">
+            <form [formGroup]="form" class="space-y-6">                <!-- Personal Information Section -->
+                <div class="form-section-enhanced bg-gradient-to-r from-blue-50/80 to-indigo-50/80 rounded-xl p-5 border border-blue-100">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-5 flex items-center gap-3">
+                        <div class="w-7 h-7 bg-primary rounded-lg flex items-center justify-center">
+                            <i class="fas fa-user text-white text-xs"></i>
                         </div>
                         <span>Thông tin cá nhân</span>
                     </h3>
@@ -156,14 +155,11 @@
                                 </mat-error>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Contact Information Section -->
-                <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center gap-3">
-                        <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-address-book text-white text-sm"></i>
+                    </div>                </div>                <!-- Contact Information Section -->
+                <div class="form-section-enhanced bg-gradient-to-r from-green-50/80 to-emerald-50/80 rounded-xl p-5 border border-green-100">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-5 flex items-center gap-3">
+                        <div class="w-7 h-7 bg-green-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-address-book text-white text-xs"></i>
                         </div>
                         <span>Thông tin liên hệ</span>
                     </h3>
@@ -227,14 +223,11 @@
                                 </mat-error>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Identity Card Information Section -->
-                <div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl p-6">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center gap-3">
-                        <div class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-id-card text-white text-sm"></i>
+                    </div>                </div>                <!-- Identity Card Information Section -->
+                <div class="form-section-enhanced bg-gradient-to-r from-purple-50/80 to-indigo-50/80 rounded-xl p-5 border border-purple-100">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-5 flex items-center gap-3">
+                        <div class="w-7 h-7 bg-purple-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-id-card text-white text-xs"></i>
                         </div>
                         <span>Thông tin CCCD/CMND</span>
                     </h3>
@@ -336,20 +329,17 @@
                         </div>
                     </div>
                 </div>
-            </form>
-
-            <!-- Action Buttons -->
-            <div class="flex justify-center mt-8 pt-6 border-t border-gray-200">
-                <div *ngIf="isEdit" class="flex gap-4">
-                    <button type="button" 
+            </form>            <!-- Enhanced Action Buttons -->
+            <div class="flex justify-center mt-6 pt-6 border-t border-gray-100">
+                <div *ngIf="isEdit" class="flex gap-3">                    <button type="button" 
                             (click)="handleEdit()"
-                            class="btn-secondary">
+                            class="btn-enhanced btn-secondary px-6 py-2.5 text-sm">
                         <i class="fas fa-times mr-2"></i>
                         <span>{{"Button.cancel"|translate}}</span>
                     </button>
                     <button type="button" 
                             (click)="handleSubmit()"
-                            class="btn-primary">
+                            class="btn-enhanced btn-primary px-6 py-2.5 text-sm shadow-lg">
                         <i class="fas fa-save mr-2"></i>
                         <span>{{"Button.save"|translate}}</span>
                     </button>

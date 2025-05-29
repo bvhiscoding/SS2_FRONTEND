@@ -92,16 +92,30 @@ export class MyInfoViewComponent implements OnInit {
       this.getCity();
       this.getViewInfo();
   }
-  
-  handleEdit(): void {
-      this.isEdit = !this.isEdit
+    handleEdit(): void {
+      console.log('Edit button clicked! Current isEdit state:', this.isEdit);
+      this.isEdit = !this.isEdit;
+      console.log('New isEdit state:', this.isEdit);
+      
       if( this.isEdit ){
-          this.form.enable()
+          console.log('Enabling form for editing');
+          this.form.enable();
           this.form.get('email')?.disable();
           this.form.get('userName')?.disable();
       } else {
+          console.log('Disabling form');
           this.form.disable();
       }
+      
+      // Force change detection
+      this.cdr.detectChanges();
+      console.log('Change detection triggered');
+  }
+
+  // Test method for debugging
+  testClick(): void {
+      console.log('Test button clicked! This confirms click events are working.');
+      alert('Test button clicked! Click events are working.');
   }
   public form: FormGroup = this.fb.group({
       fullName: [null, Validators.required],

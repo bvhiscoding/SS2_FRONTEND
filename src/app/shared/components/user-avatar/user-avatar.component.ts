@@ -8,12 +8,12 @@ import { CommonModule } from '@angular/common';
   templateUrl: './user-avatar.component.html',
   styleUrl: './user-avatar.component.scss'
 })
-export class UserAvatarComponent {
-  @Input() imageUrl: string | null = null;
+export class UserAvatarComponent {  @Input() imageUrl: string | null = null;
   @Input() fullName: string = '';
   @Input() userName: string = ''; // Thêm userName property
   @Input() size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
   @Input() showEditButton: boolean = false;
+  @Input() showOnlineStatus: boolean = true; // Control online status indicator visibility
   @Input() isClickable: boolean = false;
   @Input() customClass: string = ''; // Thêm customClass property
   @Output() avatarClick = new EventEmitter<void>();
