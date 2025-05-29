@@ -6,13 +6,18 @@
         <i class="fas fa-vote-yea text-white text-xl"></i>
       </div>
       <div>
-        <h1 class="text-2xl md:text-3xl font-bold text-gray-800">Quản lý Cuộc bầu cử</h1>
-        <p class="text-gray-500 mt-1">Tạo và quản lý các cuộc bầu cử trong hệ thống</p>
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-800">
+          Quản lý Cuộc bầu cử
+        </h1>
+        <p class="text-gray-500 mt-1">
+          Tạo và quản lý các cuộc bầu cử trong hệ thống
+        </p>
       </div>
     </div>
-    <button 
-      (click)="handelOpenPopUpAddSlectionManagement()" 
-      class="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-2 hover:-translate-y-1 font-medium">
+    <button
+      (click)="handelOpenPopUpAddSlectionManagement()"
+      class="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-2 hover:-translate-y-1 font-medium"
+    >
       <i class="fas fa-plus-circle"></i>
       <span>Tạo cuộc bầu cử mới</span>
     </button>
@@ -24,32 +29,41 @@
       <i class="fas fa-search text-primary mr-2"></i>
       <span>Tìm kiếm & Lọc</span>
     </h2>
-    
-    <form [formGroup]="form" class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+
+    <form
+      [formGroup]="form"
+      class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end"
+    >
       <!-- Search by name -->
       <div class="form-group">
-        <label class="block text-sm font-medium text-gray-700 mb-1">Tên cuộc bầu cử</label>
+        <label class="block text-sm font-medium text-gray-700 mb-1"
+          >Tên cuộc bầu cử</label
+        >
         <div class="relative">
           <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
             <i class="fas fa-signature"></i>
           </span>
-          <input 
-            formControlName="name" 
-            class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors" 
-            placeholder="Nhập tên cuộc bầu cử...">
+          <input
+            formControlName="name"
+            class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+            placeholder="Nhập tên cuộc bầu cử..."
+          />
         </div>
       </div>
 
       <!-- Status filter -->
       <div class="form-group">
-        <label class="block text-sm font-medium text-gray-700 mb-1">Trạng thái</label>
+        <label class="block text-sm font-medium text-gray-700 mb-1"
+          >Trạng thái</label
+        >
         <div class="relative">
           <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
             <i class="fas fa-flag"></i>
           </span>
-          <select 
+          <select
             formControlName="status"
-            class="w-full pl-10 pr-10 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary appearance-none transition-colors">
+            class="w-full pl-10 pr-10 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary appearance-none transition-colors"
+          >
             <option value="">Tất cả trạng thái</option>
             <option *ngFor="let status of listStatus" [value]="status.value">
               {{ status.label }}
@@ -63,15 +77,17 @@
 
       <!-- Action buttons -->
       <div class="form-group flex gap-3">
-        <button 
+        <button
           (click)="handleSearch()"
-          class="flex-1 bg-primary hover:bg-primary-dark text-white px-4 py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2 font-medium">
+          class="flex-1 bg-primary hover:bg-primary-dark text-white px-4 py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2 font-medium"
+        >
           <i class="fas fa-search"></i>
           <span>Tìm kiếm</span>
         </button>
-        <button 
+        <button
           (click)="handleCancel()"
-          class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2 font-medium">
+          class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2 font-medium"
+        >
           <i class="fas fa-times"></i>
           <span>Huỷ bỏ</span>
         </button>
@@ -82,7 +98,9 @@
   <!-- Loading State -->
   <div *ngIf="isLoadingOK" class="flex justify-center items-center py-20">
     <div class="text-center">
-      <div class="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent mb-4"></div>
+      <div
+        class="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent mb-4"
+      ></div>
       <p class="text-gray-600 text-lg">Đang tải dữ liệu cuộc bầu cử...</p>
     </div>
   </div>
@@ -90,22 +108,38 @@
   <!-- Elections List -->
   <div *ngIf="!isLoadingOK" class="space-y-6">
     <!-- Empty State -->
-    <div *ngIf="!listVote || listVote.length === 0" class="bg-white rounded-xl shadow-lg p-12 text-center">
-      <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+    <div
+      *ngIf="!listVote || listVote.length === 0"
+      class="bg-white rounded-xl shadow-lg p-12 text-center"
+    >
+      <div
+        class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4"
+      >
         <i class="fas fa-vote-yea text-gray-400 text-3xl"></i>
       </div>
-      <h3 class="text-xl font-semibold text-gray-600 mb-2">Chưa có cuộc bầu cử nào</h3>
+      <h3 class="text-xl font-semibold text-gray-600 mb-2">
+        Chưa có cuộc bầu cử nào
+      </h3>
       <p class="text-gray-500 mb-6">Hãy tạo cuộc bầu cử đầu tiên để bắt đầu</p>
-      <button 
-        (click)="handelOpenPopUpAddSlectionManagement()" 
-        class="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-medium">
+      <button
+        (click)="handelOpenPopUpAddSlectionManagement()"
+        class="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-medium"
+      >
         Tạo cuộc bầu cử mới
       </button>
     </div>
 
     <!-- Election Cards -->
-    <div *ngFor="let election of listVote; let i = index" class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">      <!-- Card Header -->
-      <div class="election-header" role="banner" [attr.aria-label]="'Thông tin cuộc bầu cử ' + election.voteName">
+    <div
+      *ngFor="let election of listVote; let i = index"
+      class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
+    >
+      <!-- Card Header -->
+      <div
+        class="election-header"
+        role="banner"
+        [attr.aria-label]="'Thông tin cuộc bầu cử ' + election.voteName"
+      >
         <!-- Enhanced Header with modern gradient and shadow effects -->
         <div class="election-header-main">
           <!-- Decorative floating elements -->
@@ -114,112 +148,151 @@
             <div class="decoration-orb orb-2"></div>
             <div class="decoration-orb orb-3"></div>
           </div>
-            <div class="header-content">
+          <div class="header-content">
             <!-- Election Info Section -->
-            <div class="election-info">
-              <div class="election-title-wrapper">
-                <h3 class="election-title" [title]="election.voteName">{{election.voteName}}</h3>
-                <div class="election-badge" 
-                     role="badge" 
-                     aria-label="Loại: Cuộc bầu cử"
-                     tabindex="0">
-                  <i class="fas fa-vote-yea" aria-hidden="true"></i>
-                  <span>Cuộc bầu cử</span>
-                  <div class="badge-glow"></div>
-                </div>
+            <div class="election-info">              <div class="election-title-wrapper">
+                <h3 class="election-title" [title]="election.voteName">
+                  {{ election.voteName }}
+                </h3>
               </div>
-              
-              <div class="election-details" role="list" aria-label="Chi tiết cuộc bầu cử">
+
+              <div
+                class="election-details"
+                role="list"
+                aria-label="Chi tiết cuộc bầu cử"
+              >
                 <div class="detail-item" role="listitem">
-                  <div class="detail-icon" 
-                       [attr.aria-label]="'Thời gian từ ' + (election.startDate | date: 'dd/MM/yyyy') + ' đến ' + (election.expiredDate | date: 'dd/MM/yyyy')">
+                  <div
+                    class="detail-icon"
+                    [attr.aria-label]="
+                      'Thời gian từ ' +
+                      (election.startDate | date: 'dd/MM/yyyy') +
+                      ' đến ' +
+                      (election.expiredDate | date: 'dd/MM/yyyy')
+                    "
+                  >
                     <i class="fas fa-calendar-alt" aria-hidden="true"></i>
                     <div class="icon-ripple"></div>
                   </div>
                   <div class="detail-content">
                     <span class="detail-label">Thời gian</span>
-                    <span class="detail-value">{{election.startDate | date: 'dd/MM/yyyy'}} - {{election.expiredDate | date: 'dd/MM/yyyy'}}</span>
+                    <span class="detail-value"
+                      >{{ election.startDate | date: "dd/MM/yyyy" }} -
+                      {{ election.expiredDate | date: "dd/MM/yyyy" }}</span
+                    >
                   </div>
                 </div>
-                
+
                 <div class="detail-item" role="listitem">
-                  <div class="detail-icon" 
-                       [attr.aria-label]="'Tối đa ' + election.maxCandidateVote + ' ứng viên'">
+                  <div
+                    class="detail-icon"
+                    [attr.aria-label]="
+                      'Tối đa ' + election.maxCandidateVote + ' ứng viên'
+                    "
+                  >
                     <i class="fas fa-users" aria-hidden="true"></i>
                     <div class="icon-ripple"></div>
                   </div>
                   <div class="detail-content">
                     <span class="detail-label">Số ứng viên tối đa</span>
-                    <span class="detail-value">{{election.maxCandidateVote}} ứng viên</span>
+                    <span class="detail-value"
+                      >{{ election.maxCandidateVote }} ứng viên</span
+                    >
                   </div>
                 </div>
               </div>
             </div>
-            
+
             <!-- Compact Header Right Section -->
             <div class="header-right-section">
               <!-- Enhanced Status Badge -->
               <div class="status-badge-container">
-                <div class="status-badge" 
-                     role="status"
-                     [attr.aria-label]="'Trạng thái cuộc bầu cử: ' + (election.status === '1' ? 'Đang diễn ra' : election.status === '2' ? 'Đã kết thúc' : 'Chưa bắt đầu')"
-                     tabindex="0"
-                     [ngClass]="{
-                       'status-active': election.status === '1',
-                       'status-completed': election.status === '2', 
-                       'status-pending': election.status === '0'
-                     }">
+                <div
+                  class="status-badge"
+                  role="status"
+                  [attr.aria-label]="
+                    'Trạng thái cuộc bầu cử: ' +
+                    (election.status === '1'
+                      ? 'Đang diễn ra'
+                      : election.status === '2'
+                        ? 'Đã kết thúc'
+                        : 'Chưa bắt đầu')
+                  "
+                  tabindex="0"
+                  [ngClass]="{
+                    'status-active': election.status === '1',
+                    'status-completed': election.status === '2',
+                    'status-pending': election.status === '0'
+                  }"
+                >
                   <div class="status-icon">
-                    <i class="fas" 
-                       [ngClass]="{
-                         'fa-play-circle': election.status === '1',
-                         'fa-check-circle': election.status === '2',
-                         'fa-clock': election.status === '0'
-                       }"
-                       aria-hidden="true"></i>
+                    <i
+                      class="fas"
+                      [ngClass]="{
+                        'fa-play-circle': election.status === '1',
+                        'fa-check-circle': election.status === '2',
+                        'fa-clock': election.status === '0'
+                      }"
+                      aria-hidden="true"
+                    ></i>
                     <div class="status-icon-glow"></div>
                   </div>
                   <div class="status-content">
                     <span class="status-label">Trạng thái</span>
                     <span class="status-text">
-                      {{election.status === '1' ? 'Đang diễn ra' : 
-                        election.status === '2' ? 'Đã kết thúc' : 'Chưa bắt đầu'}}
+                      {{
+                        election.status === "1"
+                          ? "Đang diễn ra"
+                          : election.status === "2"
+                            ? "Đã kết thúc"
+                            : "Chưa bắt đầu"
+                      }}
                     </span>
                   </div>
-                  
+
                   <!-- Status indicator dots with enhanced animations -->
-                  <div class="status-indicator" 
-                       [ngClass]="{
-                         'indicator-active': election.status === '1',
-                         'indicator-completed': election.status === '2', 
-                         'indicator-pending': election.status === '0'
-                       }"
-                       [attr.aria-hidden]="true">
+                  <div
+                    class="status-indicator"
+                    [ngClass]="{
+                      'indicator-active': election.status === '1',
+                      'indicator-completed': election.status === '2',
+                      'indicator-pending': election.status === '0'
+                    }"
+                    [attr.aria-hidden]="true"
+                  >
                     <div class="indicator-pulse"></div>
                   </div>
                 </div>
               </div>
-              
+
               <!-- Compact Action Buttons -->
-              <div class="compact-action-buttons" role="group" aria-label="Hành động cho cuộc bầu cử">
-                <button 
-                  (click)="handelOpenPopUpSlectionManagement(election?.id)" 
+              <div
+                class="compact-action-buttons"
+                role="group"
+                aria-label="Hành động cho cuộc bầu cử"
+              >
+                <button
+                  (click)="handelOpenPopUpSlectionManagement(election?.id)"
                   class="compact-action-btn edit-btn"
                   type="button"
-                  [attr.aria-label]="'Chỉnh sửa cuộc bầu cử ' + election.voteName"
-                  title="Chỉnh sửa cuộc bầu cử">
+                  [attr.aria-label]="
+                    'Chỉnh sửa cuộc bầu cử ' + election.voteName
+                  "
+                  title="Chỉnh sửa cuộc bầu cử"
+                >
                   <div class="btn-icon">
                     <i class="fas fa-edit" aria-hidden="true"></i>
                     <div class="btn-icon-bg"></div>
                   </div>
                   <div class="btn-ripple"></div>
                 </button>
-                <button 
-                  (click)="openDeletePopup(election?.id, election?.voteName)" 
+                <button
+                  (click)="openDeletePopup(election?.id, election?.voteName)"
                   class="compact-action-btn delete-btn"
                   type="button"
                   [attr.aria-label]="'Xóa cuộc bầu cử ' + election.voteName"
-                  title="Xóa cuộc bầu cử">
+                  title="Xóa cuộc bầu cử"
+                >
                   <div class="btn-icon">
                     <i class="fas fa-trash-alt" aria-hidden="true"></i>
                     <div class="btn-icon-bg"></div>
@@ -228,7 +301,8 @@
                 </button>
               </div>
             </div>
-          </div>        </div>
+          </div>
+        </div>
       </div>
 
       <!-- Card Content -->
@@ -243,15 +317,20 @@
             <div class="info-list">
               <div class="info-item">
                 <span class="info-label">Nhiệm kỳ:</span>
-                <span class="info-value font-semibold">{{election.tenure}}</span>
+                <span class="info-value font-semibold">{{
+                  election.tenure
+                }}</span>
               </div>
               <div class="info-item">
                 <span class="info-label">Thời gian nhiệm kỳ:</span>
-                <span class="info-value">{{election.startDateTenure | date: 'dd/MM/yyyy'}} - {{election.endDateTenure | date: 'dd/MM/yyyy'}}</span>
+                <span class="info-value"
+                  >{{ election.startDateTenure | date: "dd/MM/yyyy" }} -
+                  {{ election.endDateTenure | date: "dd/MM/yyyy" }}</span
+                >
               </div>
               <div class="info-item">
                 <span class="info-label">Số ứng viên tối đa:</span>
-                <span class="info-value">{{election.maxCandidateVote}}</span>
+                <span class="info-value">{{ election.maxCandidateVote }}</span>
               </div>
             </div>
           </div>
@@ -260,60 +339,85 @@
           <div class="lg:col-span-2">
             <!-- Tab Navigation -->
             <div class="tab-navigation">
-              <button 
-                (click)="selectView('candidate')" 
+              <button
+                (click)="selectView('candidate')"
                 class="tab-btn"
-                [class.active]="selectedView === 'candidate'">
+                [class.active]="selectedView === 'candidate'"
+              >
                 <i class="fas fa-user-tie"></i>
-                <span>Ứng viên ({{election.candidates?.length || 0}})</span>
+                <span>Ứng viên ({{ election.candidates?.length || 0 }})</span>
               </button>
-              <button 
-                (click)="selectView('voters')" 
+              <button
+                (click)="selectView('voters')"
                 class="tab-btn"
-                [class.active]="selectedView === 'voters'">
+                [class.active]="selectedView === 'voters'"
+              >
                 <i class="fas fa-users"></i>
-                <span>Cử tri ({{election.voters?.length || 0}})</span>
+                <span>Cử tri ({{ election.voters?.length || 0 }})</span>
               </button>
             </div>
 
             <!-- Participants Grid -->
             <div class="participants-grid">
               <!-- Candidates -->
-              <div *ngIf="selectedView === 'candidate'" class="participant-cards">
-                <div *ngFor="let candidate of election.candidates; let i2 = index" 
-                     class="participant-card">
+              <div
+                *ngIf="selectedView === 'candidate'"
+                class="participant-cards"
+              >
+                <div
+                  *ngFor="let candidate of election.candidates; let i2 = index"
+                  class="participant-card"
+                >
                   <div class="participant-avatar">
-                    <img [src]="candidate.imageUrl || '../../../../assets/img/Logo-Hoc-Vien-Ky-Thuat-Mat-Ma-ACTVN.webp'" 
-                         [alt]="candidate.fullname"
-                         class="avatar-img">
+                    <img
+                      [src]="
+                        candidate.imageUrl ||
+                        '../../../../assets/img/Logo-Hoc-Vien-Ky-Thuat-Mat-Ma-ACTVN.webp'
+                      "
+                      [alt]="candidate.fullname"
+                      class="avatar-img"
+                    />
                     <div class="candidate-badge">
                       <i class="fas fa-medal text-yellow-500"></i>
                     </div>
                   </div>
                   <div class="participant-info">
-                    <h5 class="participant-name">{{candidate.fullname}}</h5>
-                    <p class="participant-username">{{candidate.userName}}</p>
+                    <h5 class="participant-name">{{ candidate.fullname }}</h5>
+                    <p class="participant-username">{{ candidate.userName }}</p>
                     <div class="participant-details">
                       <div class="detail-item">
                         <i class="fas fa-envelope text-gray-400"></i>
-                        <span>{{(candidate.newEmail || candidate.email) | slice:0:20}} {{(candidate.newEmail || candidate.email).length > 20 ? '...' : ''}}</span>
+                        <span
+                          >{{
+                            candidate.newEmail || candidate.email
+                              | slice: 0 : 20
+                          }}
+                          {{
+                            (candidate.newEmail || candidate.email).length > 20
+                              ? "..."
+                              : ""
+                          }}</span
+                        >
                       </div>
                       <div class="detail-item">
                         <i class="fas fa-phone text-gray-400"></i>
-                        <span>{{candidate.cellPhone}}</span>
+                        <span>{{ candidate.cellPhone }}</span>
                       </div>
                       <div class="detail-item">
                         <i class="fas fa-birthday-cake text-gray-400"></i>
-                        <span>{{candidate.birthday | date: 'dd/MM/yyyy'}}</span>
+                        <span>{{
+                          candidate.birthday | date: "dd/MM/yyyy"
+                        }}</span>
                       </div>
                       <div class="detail-item">
                         <i class="fas fa-map-marker-alt text-gray-400"></i>
-                        <span>{{candidate.address?.split(', ').pop()}}</span>
+                        <span>{{ candidate.address?.split(", ").pop() }}</span>
                       </div>
                     </div>
-                    <button 
-                      (click)="openDetailPopup(candidate.id)" 
-                      class="detail-btn">
+                    <button
+                      (click)="openDetailPopup(candidate.id)"
+                      class="detail-btn"
+                    >
                       <i class="fas fa-eye"></i>
                       <span>Xem chi tiết</span>
                     </button>
@@ -323,40 +427,55 @@
 
               <!-- Voters -->
               <div *ngIf="selectedView === 'voters'" class="participant-cards">
-                <div *ngFor="let voter of election.voters; let i2 = index" 
-                     class="participant-card">
+                <div
+                  *ngFor="let voter of election.voters; let i2 = index"
+                  class="participant-card"
+                >
                   <div class="participant-avatar">
-                    <img [src]="voter.imageUrl || '../../../../assets/img/Logo-Hoc-Vien-Ky-Thuat-Mat-Ma-ACTVN.webp'" 
-                         [alt]="voter.fullname"
-                         class="avatar-img">
+                    <img
+                      [src]="
+                        voter.imageUrl ||
+                        '../../../../assets/img/Logo-Hoc-Vien-Ky-Thuat-Mat-Ma-ACTVN.webp'
+                      "
+                      [alt]="voter.fullname"
+                      class="avatar-img"
+                    />
                     <div class="voter-badge">
                       <i class="fas fa-vote-yea text-blue-500"></i>
                     </div>
                   </div>
                   <div class="participant-info">
-                    <h5 class="participant-name">{{voter.fullname}}</h5>
-                    <p class="participant-username">{{voter.userName}}</p>
+                    <h5 class="participant-name">{{ voter.fullname }}</h5>
+                    <p class="participant-username">{{ voter.userName }}</p>
                     <div class="participant-details">
                       <div class="detail-item">
                         <i class="fas fa-envelope text-gray-400"></i>
-                        <span>{{(voter.newEmail || voter.email) | slice:0:20}} {{(voter.newEmail || voter.email).length > 20 ? '...' : ''}}</span>
+                        <span
+                          >{{ voter.newEmail || voter.email | slice: 0 : 20 }}
+                          {{
+                            (voter.newEmail || voter.email).length > 20
+                              ? "..."
+                              : ""
+                          }}</span
+                        >
                       </div>
                       <div class="detail-item">
                         <i class="fas fa-phone text-gray-400"></i>
-                        <span>{{voter.cellPhone}}</span>
+                        <span>{{ voter.cellPhone }}</span>
                       </div>
                       <div class="detail-item">
                         <i class="fas fa-birthday-cake text-gray-400"></i>
-                        <span>{{voter.birthday | date: 'dd/MM/yyyy'}}</span>
+                        <span>{{ voter.birthday | date: "dd/MM/yyyy" }}</span>
                       </div>
                       <div class="detail-item">
                         <i class="fas fa-map-marker-alt text-gray-400"></i>
-                        <span>{{voter.address?.split(', ').pop()}}</span>
+                        <span>{{ voter.address?.split(", ").pop() }}</span>
                       </div>
                     </div>
-                    <button 
-                      (click)="openDetailPopup(voter.id)" 
-                      class="detail-btn">
+                    <button
+                      (click)="openDetailPopup(voter.id)"
+                      class="detail-btn"
+                    >
                       <i class="fas fa-eye"></i>
                       <span>Xem chi tiết</span>
                     </button>
@@ -373,22 +492,27 @@
 
 <!-- Modals -->
 <app-slection-management-add
-  *ngIf="isVisiblePopUpAddSlectionManagement" 
+  *ngIf="isVisiblePopUpAddSlectionManagement"
   [mode]="mode"
   [idSlectionManagement]="idSlectionManagement"
   [isVisiblePopUpAddSlectionManagement]="isVisiblePopUpAddSlectionManagement"
-  (visiblePopUpAddSlectionManagement)="handelVisiblePopUpAddSlectionManagement($event)">
+  (visiblePopUpAddSlectionManagement)="
+    handelVisiblePopUpAddSlectionManagement($event)
+  "
+>
 </app-slection-management-add>
 
-<app-popup-delete 
-  [isVisible]="isVisible" 
-  [nameSlection]="nameSlection" 
-  [idSlectionManagement]="idSlectionManagement" 
-  (changeVisibleDelete)="handleChangeVisible($event)">
+<app-popup-delete
+  [isVisible]="isVisible"
+  [nameSlection]="nameSlection"
+  [idSlectionManagement]="idSlectionManagement"
+  (changeVisibleDelete)="handleChangeVisible($event)"
+>
 </app-popup-delete>
 
-<app-detail-ctv 
-  [isVisibleDetail]="isVisibleDetail" 
-  [idCtv]="idCtv" 
-  (visiblePopUpDetail)="handleChangeDetailVisible($event)">
+<app-detail-ctv
+  [isVisibleDetail]="isVisibleDetail"
+  [idCtv]="idCtv"
+  (visiblePopUpDetail)="handleChangeDetailVisible($event)"
+>
 </app-detail-ctv>
