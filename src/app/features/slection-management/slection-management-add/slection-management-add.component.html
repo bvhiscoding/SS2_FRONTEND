@@ -1,119 +1,230 @@
-<nz-modal nzWidth="750px" [(nzVisible)]="isVisiblePopUpAddSlectionManagement" nzCentered [nzContent]="modalContent"
-    [nzFooter]="null" (nzOnCancel)="handleCancel()">
+<nz-modal
+  nzWidth="750px"
+  [(nzVisible)]="isVisiblePopUpAddSlectionManagement"
+  nzCentered
+  [nzContent]="modalContent"
+  [nzFooter]="null"
+  (nzOnCancel)="handleCancel()"
+>
+  <ng-template #modalContent>
+    <!-- Loading overlay for edit mode -->
+    <div
+      *ngIf="isLoadingDetail && edit"
+      class="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50 rounded-lg"
+    >
+      <div class="flex flex-col items-center">
+        <div
+          class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"
+        ></div>
+        <span class="text-gray-600 font-medium"
+          >Đang tải thông tin cuộc bầu cử...</span
+        >
+      </div>
+    </div>
 
-    <ng-template #modalContent>
-        <div class="text-start border-b border-primary pb-2 text-primary font-medium text-[22px]">
-            <span>{{edit === true ? 'Chỉnh sửa cuộc bầu cử' : 'Thêm mới cuộc bầu cử'}}</span>
-        </div>
+    <div
+      class="text-start border-b border-primary pb-2 text-primary font-medium text-[22px]"
+    >
+      <span>{{
+        edit === true ? "Chỉnh sửa cuộc bầu cử" : "Thêm mới cuộc bầu cử"
+      }}</span>
+    </div>
 
-        <div class="flex flex-col mt-5 gap-1 h-fit w-full pb-2 overflow-auto">
-            <form [formGroup]="form"
-                class="flex flex-col w-full h-fit pb-2 overflow-auto">
-                <div class="flex flex-col w-full flex-1">
-                    <span class="font-medium">Tên cuộc bầu cử</span>
-                    <mat-form-field class="custom-input " appearance="outline">
-                        <input matInput formControlName="name" />
-                    </mat-form-field>
-                </div>
-                <div class="flex gap-3 w-full">
-                    <div class="flex flex-col flex-1">
-                        <span class="font-medium">Chức vụ</span>
-                        <mat-form-field class="custom-input " appearance="outline">
-                            <mat-select formControlName="position">
-                                <mat-option *ngFor="let level of listLevel" [value]="level.id">
-                                  {{ level.positionName }}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div class="flex flex-col flex-1">
-                        <span class="font-medium">Số ứng viên tối đa được bầu</span>
-                        <mat-form-field class="custom-input " appearance="outline">
-                            <input matInput formControlName="number" />
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="flex gap-3 w-full">
-                    <div class="flex flex-col flex-1">
-                        <span class="font-medium">Ngày bắt đầu cuộc bầu cử</span>
-                        <mat-form-field class="custom-input " appearance="outline">
-                            <input formControlName="startDateSlection" matInput [matDatepicker]="picker1" />
-                            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
-                            <mat-datepicker #picker1></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                    <div class="flex flex-col flex-1">
-                        <span class="font-medium">Ngày kết thúc cuộc bầu cử</span>
-                        <mat-form-field class="custom-input " appearance="outline">
-                            <input formControlName="endDateSlection" matInput [matDatepicker]="picker2" />
-                            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
-                            <mat-datepicker #picker2></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="flex flex-col w-full flex-1">
-                    <span class="font-medium">Tên nhiệm kỳ</span>
-                    <mat-form-field class="custom-input " appearance="outline">
-                        <input matInput formControlName="term" />
-                    </mat-form-field>
-                </div>
-                <div class="flex gap-3 w-full">
-                    <div class="flex flex-col flex-1">
-                        <span class="font-medium">Ngày bắt đầu nhiệm kỳ</span>
-                        <mat-form-field class="custom-input " appearance="outline">
-                            <input formControlName="startDateTerm" matInput [matDatepicker]="picker3" />
-                            <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
-                            <mat-datepicker #picker3></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                    <div class="flex flex-col flex-1">
-                        <span class="font-medium">Ngày kết thúc nhiệm kỳ</span>
-                        <mat-form-field class="custom-input " appearance="outline">
-                            <input formControlName="endDateTerm" matInput [matDatepicker]="picker4" />
-                            <mat-datepicker-toggle matIconSuffix [for]="picker4"></mat-datepicker-toggle>
-                            <mat-datepicker #picker4></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="flex flex-col w-full">
-                    <span class="font-medium">Danh sách các ứng viên thâm gia</span>
-                    <mat-form-field class="custom-input " appearance="outline">
-                        <mat-select formControlName="candidates" multiple>
-                            <mat-option *ngFor="let candidate of filteredCandidates" [value]="candidate.id">
-                              {{ candidate.userName }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="flex flex-col w-full">
-                    <span class="font-medium">Danh sách các cử tri tham gia</span>
-                    <mat-form-field class="custom-input " appearance="outline">
-                        <mat-select formControlName="voters" multiple>
-                            <mat-option *ngFor="let voter of filteredVoters" [value]="voter.id">
-                              {{ voter.userName }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div *ngIf="statusBolean" class="text-orange-400 flex gap-2 items-center">
-                    <i class="fa-solid fa-triangle-exclamation text-orange-400"></i>
-                    <span  *ngIf="statusValue === '1'">Cuộc bầu cử đang diễn ra, không thể chỉnh sửa</span>
-                    <span  *ngIf="statusValue === '2'">Cuộc bầu cử đã kết thúc, không thể chỉnh sửa</span>
-                </div>
-            </form>
+    <div
+      class="flex flex-col mt-5 gap-1 h-fit w-full pb-2 overflow-auto relative"
+      [class.opacity-50]="isLoadingDetail && edit"
+    >
+      <form
+        [formGroup]="form"
+        class="flex flex-col w-full h-fit pb-2 overflow-auto"
+      >
+        <div class="flex flex-col w-full flex-1">
+          <span class="font-medium">Tên cuộc bầu cử</span>
+          <mat-form-field class="custom-input" appearance="outline">
+            <input matInput formControlName="name" />
+          </mat-form-field>
         </div>
-        <div class="flex gap-3 justify-center">
-            <button *ngIf="!edit" nz-button nzType="primary"
-                class="!bg-primary w-[120px] border-none rounded-lg hover:opacity-60 hover:bg-primary text-white hover:text-black"
-                (click)="handleOk()">Thêm mới</button>
-            <button *ngIf="edit && !statusBolean" nz-button nzType="primary"
-                class="!bg-primary w-[120px] border-none rounded-lg hover:opacity-60 hover:bg-primary text-white hover:text-black"
-                (click)="handleEdit()">Chỉnh sửa</button>
-            <button nz-button
-                class="!bg-[#969696] font-medium w-[120px] border-none rounded-lg hover:opacity-60 text-white"
-                (click)="handleCancel()">Huỷ bỏ</button>
+        <div class="flex gap-3 w-full">
+          <div class="flex flex-col flex-1">
+            <span class="font-medium">Chức vụ</span>
+            <mat-form-field class="custom-input" appearance="outline">
+              <mat-select formControlName="position">
+                <div
+                  *ngIf="isLoadingPositions"
+                  class="flex items-center justify-center p-4"
+                >
+                  <div
+                    class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"
+                  ></div>
+                  <span class="ml-2 text-gray-600">Đang tải chức vụ...</span>
+                </div>
+                <mat-option *ngFor="let level of listLevel" [value]="level.id">
+                  {{ level.positionName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="flex flex-col flex-1">
+            <span class="font-medium">Số ứng viên tối đa được bầu</span>
+            <mat-form-field class="custom-input" appearance="outline">
+              <input matInput formControlName="number" />
+            </mat-form-field>
+          </div>
         </div>
-    </ng-template>
+        <div class="flex gap-3 w-full">
+          <div class="flex flex-col flex-1">
+            <span class="font-medium">Ngày bắt đầu cuộc bầu cử</span>
+            <mat-form-field class="custom-input" appearance="outline">
+              <input
+                formControlName="startDateSlection"
+                matInput
+                [matDatepicker]="picker1"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker1"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="flex flex-col flex-1">
+            <span class="font-medium">Ngày kết thúc cuộc bầu cử</span>
+            <mat-form-field class="custom-input" appearance="outline">
+              <input
+                formControlName="endDateSlection"
+                matInput
+                [matDatepicker]="picker2"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker2"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="flex flex-col w-full flex-1">
+          <span class="font-medium">Tên nhiệm kỳ</span>
+          <mat-form-field class="custom-input" appearance="outline">
+            <input matInput formControlName="term" />
+          </mat-form-field>
+        </div>
+        <div class="flex gap-3 w-full">
+          <div class="flex flex-col flex-1">
+            <span class="font-medium">Ngày bắt đầu nhiệm kỳ</span>
+            <mat-form-field class="custom-input" appearance="outline">
+              <input
+                formControlName="startDateTerm"
+                matInput
+                [matDatepicker]="picker3"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker3"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker3></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="flex flex-col flex-1">
+            <span class="font-medium">Ngày kết thúc nhiệm kỳ</span>
+            <mat-form-field class="custom-input" appearance="outline">
+              <input
+                formControlName="endDateTerm"
+                matInput
+                [matDatepicker]="picker4"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker4"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker4></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="flex flex-col w-full">
+          <span class="font-medium">Danh sách các ứng viên thâm gia</span>
+          <mat-form-field class="custom-input" appearance="outline">
+            <mat-select formControlName="candidates" multiple>
+              <div
+                *ngIf="isLoadingUsers"
+                class="flex items-center justify-center p-4"
+              >
+                <div
+                  class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"
+                ></div>
+                <span class="ml-2 text-gray-600">Đang tải danh sách...</span>
+              </div>
+              <mat-option
+                *ngFor="let candidate of filteredCandidates"
+                [value]="candidate.id"
+              >
+                {{ candidate.userName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="flex flex-col w-full">
+          <span class="font-medium">Danh sách các cử tri tham gia</span>
+          <mat-form-field class="custom-input" appearance="outline">
+            <mat-select formControlName="voters" multiple>
+              <div
+                *ngIf="isLoadingUsers"
+                class="flex items-center justify-center p-4"
+              >
+                <div
+                  class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"
+                ></div>
+                <span class="ml-2 text-gray-600">Đang tải danh sách...</span>
+              </div>
+              <mat-option
+                *ngFor="let voter of filteredVoters"
+                [value]="voter.id"
+              >
+                {{ voter.userName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div
+          *ngIf="statusBolean"
+          class="text-orange-400 flex gap-2 items-center"
+        >
+          <i class="fa-solid fa-triangle-exclamation text-orange-400"></i>
+          <span *ngIf="statusValue === '1'"
+            >Cuộc bầu cử đang diễn ra, không thể chỉnh sửa</span
+          >
+          <span *ngIf="statusValue === '2'"
+            >Cuộc bầu cử đã kết thúc, không thể chỉnh sửa</span
+          >
+        </div>
+      </form>
+    </div>
+    <div class="flex gap-3 justify-center">
+      <button
+        *ngIf="!edit"
+        nz-button
+        nzType="primary"
+        class="!bg-primary w-[120px] border-none rounded-lg hover:opacity-60 hover:bg-primary text-white hover:text-black"
+        (click)="handleOk()"
+      >
+        Thêm mới
+      </button>
+      <button
+        *ngIf="edit && !statusBolean"
+        nz-button
+        nzType="primary"
+        class="!bg-primary w-[120px] border-none rounded-lg hover:opacity-60 hover:bg-primary text-white hover:text-black"
+        (click)="handleEdit()"
+      >
+        Chỉnh sửa
+      </button>
+      <button
+        nz-button
+        class="!bg-[#969696] font-medium w-[120px] border-none rounded-lg hover:opacity-60 text-white"
+        (click)="handleCancel()"
+      >
+        Huỷ bỏ
+      </button>
+    </div>
+  </ng-template>
 </nz-modal>
-
-
