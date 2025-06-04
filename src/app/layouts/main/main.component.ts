@@ -32,7 +32,6 @@ import { edit } from '../../shared/components/iconAntd/iconAddOnAntd.component';
 import { AccountService } from '../../core/api/account.service';
 import { ChangePasswordComponent } from '../../features/setting/change-password/change-password.component';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { UserAvatarComponent } from '../../shared/components/user-avatar/user-avatar.component';
 
 
 @Component({
@@ -56,8 +55,7 @@ import { UserAvatarComponent } from '../../shared/components/user-avatar/user-av
     MatSelectModule,
     FormsModule,
     TranslateModule,
-    ChangePasswordComponent,
-    UserAvatarComponent
+    ChangePasswordComponent
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
@@ -128,7 +126,8 @@ export class MainComponent implements OnInit, OnChanges {
     localStorage.getItem('id_token_claims_obj') || '{}',
   );
   ngOnChanges(changes: SimpleChanges): void {
-  }  ngOnInit(): void {
+  }
+  ngOnInit(): void {
     // Xem quyền người dùng để hiển thị menu
     this.idOwner = JSON.parse(
       localStorage.getItem('id_token_claims_obj') || '{}',
@@ -150,9 +149,6 @@ export class MainComponent implements OnInit, OnChanges {
     setInterval(() => {
       this.OauthService.refreshToken()
     }, 1800000000)
-
-    // Initialize sidebar position monitoring
-    this.initializeSidebarPositionMonitoring();
 
     if (this.getDeviceType() === 'mobile') {
       this.isCollapsed = true;
@@ -355,79 +351,12 @@ export class MainComponent implements OnInit, OnChanges {
       this.tenants.unshift(pinnedTenant);
     }
   }
+
   handleToggleVisibilityTenant(tenantId: number): void {
     if (this.hiddenTenantIds.has(tenantId)) {
         this.hiddenTenantIds.delete(tenantId); 
     } else {
         this.hiddenTenantIds.add(tenantId); 
-    }
-  }
-
-  /**
-   * Initialize monitoring for sidebar position to ensure it stays fixed when modals open
-   */
-  private initializeSidebarPositionMonitoring(): void {
-    // Monitor for modal state changes
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-          this.ensureSidebarPosition();
-        }
-        // Check for new modal elements being added
-        if (mutation.type === 'childList') {
-          mutation.addedNodes.forEach((node) => {
-            if (node.nodeType === Node.ELEMENT_NODE) {
-              const element = node as Element;
-              if (element.classList?.contains('ant-modal-mask') || 
-                  element.classList?.contains('ant-modal-wrap') ||
-                  element.classList?.contains('ant-modal')) {
-                this.ensureSidebarPosition();
-              }
-            }
-          });
-        }
-      });
-    });
-
-    // Start observing the document body for changes
-    observer.observe(document.body, {
-      attributes: true,
-      childList: true,
-      subtree: true,
-      attributeFilter: ['class', 'style']
-    });
-
-    // Also monitor window resize to maintain position
-    window.addEventListener('resize', () => {
-      this.ensureSidebarPosition();
-    });
-
-    // Initial position check
-    setTimeout(() => {
-      this.ensureSidebarPosition();
-    }, 100);
-  }
-  /**
-   * Ensure the sidebar maintains its fixed position regardless of modal state
-   */
-  private ensureSidebarPosition(): void {
-    const sidebar = document.querySelector('.main-sidebar');
-    if (sidebar) {
-      const sidebarElement = sidebar as HTMLElement;
-      
-      // Force fixed positioning with correct z-index for modal dimming
-      sidebarElement.style.position = 'fixed';
-      sidebarElement.style.zIndex = '999'; // Lower than modal mask (1000) for dimming
-      sidebarElement.style.left = '0px';
-      sidebarElement.style.top = '0px';
-      sidebarElement.style.transform = 'none';
-      sidebarElement.style.width = '280px';
-      sidebarElement.style.height = '100vh';
-      
-      // Remove any conflicting styles that might be applied by modal overlays
-      sidebarElement.style.removeProperty('margin-left');
-      sidebarElement.style.removeProperty('margin-right');
-      sidebarElement.style.removeProperty('translateX');
     }
   }
 
