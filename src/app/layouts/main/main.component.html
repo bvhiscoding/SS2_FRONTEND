@@ -14,10 +14,10 @@
           <!-- Online Status Indicator -->
           <div class="absolute bottom-1 right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white shadow-sm animate-pulse"></div>
         </div>
-        
-        <div class="text-center">
+          <div class="text-center">
           <h3 class="text-lg font-semibold text-gray-800 mb-1">{{userName}}</h3>
-          <p class="text-sm text-gray-500">Administrator</p>
+          <p class="text-sm text-gray-500" *ngIf="canActive">Administrator</p>
+          <p class="text-sm text-gray-500" *ngIf="!canActive">User</p>
         </div>
       </div>
       
@@ -36,16 +36,10 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Menu Container with Categories -->
+    </div>    <!-- Menu Container -->
     <div class="sidebar-menu-container">
       <!-- Admin Menu Section -->
       <div *ngIf="canActive">
-        <div class="menu-category">
-          <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">QUẢN TRỊ HỆ THỐNG</h4>
-        </div>
-        
         <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" class="custom-menu">
           <li nz-menu-item [routerLink]="['/', 'statistical']" nzMatchRouter>
             <div class="menu-item-content">
@@ -91,8 +85,7 @@
               <span class="menu-text">Quản lý cuộc bầu cử</span>
             </div>
           </li>
-          
-          <li nz-menu-item [routerLink]="['/', 'level-management']" nzMatchRouter>
+            <li nz-menu-item [routerLink]="['/', 'level-management']" nzMatchRouter>
             <div class="menu-item-content">
               <div class="menu-icon">
                 <i class="fa-solid fa-book-open-reader"></i>
@@ -102,33 +95,29 @@
           </li>
           
           <!-- Settings Submenu -->
-          <ul nz-submenu nzTitle="{{'Menu.setting'| translate }}" nzIcon="setting">
-            <li nz-menu-item [routerLink]="['/', 'user-infor',userInfor.sub]" nzMatchRouter>
-              <div class="menu-item-content">
-                <div class="menu-icon">
-                  <i class="fa-regular fa-circle-user"></i>
+          <li nz-submenu nzTitle="{{'Menu.setting'| translate }}" nzIcon="setting">
+            <ul>
+              <li nz-menu-item [routerLink]="['/', 'user-infor',userInfor.sub]" nzMatchRouter>
+                <div class="menu-item-content">
+                  <div class="menu-icon">
+                    <i class="fa-regular fa-circle-user"></i>
+                  </div>
+                  <span class="menu-text">{{'Menu.userInfor'| translate }}</span>
                 </div>
-                <span class="menu-text">{{'Menu.userInfor'| translate }}</span>
-              </div>
-            </li>
-            <li nz-menu-item [routerLink]="['/', 'setting']" nzMatchRouter>
-              <div class="menu-item-content">
-                <div class="menu-icon">
-                  <i class="fa-solid fa-bullhorn"></i>
+              </li>
+              <li nz-menu-item [routerLink]="['/', 'setting']" nzMatchRouter>
+                <div class="menu-item-content">
+                  <div class="menu-icon">
+                    <i class="fa-solid fa-bullhorn"></i>
+                  </div>
+                  <span class="menu-text">Cài đặt hệ thống</span>
                 </div>
-                <span class="menu-text">Cài đặt hệ thống</span>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </li>
         </ul>
-      </div>
-
-      <!-- User Menu Section -->
+      </div>      <!-- User Menu Section -->
       <div *ngIf="!canActive">
-        <div class="menu-category">
-          <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">NGƯỜI DÙNG</h4>
-        </div>
-        
         <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" class="custom-menu">
           <li nz-menu-item [routerLink]="['/', 'statistical']" nzMatchRouter>
             <div class="menu-item-content">
@@ -147,8 +136,7 @@
               <span class="menu-text">Tiến hành bầu cử</span>
             </div>
           </li>
-          
-          <li nz-menu-item [routerLink]="['/', 'slection-follow']" nzMatchRouter>
+            <li nz-menu-item [routerLink]="['/', 'slection-follow']" nzMatchRouter>
             <div class="menu-item-content">
               <div class="menu-icon">
                 <i class="fa-solid fa-magnifying-glass-chart"></i>
@@ -158,24 +146,26 @@
           </li>
           
           <!-- Settings Submenu -->
-          <ul nz-submenu nzTitle="{{'Menu.setting'| translate }}" nzIcon="setting">
-            <li nz-menu-item [routerLink]="['/', 'user-infor',userInfor.sub]" nzMatchRouter>
-              <div class="menu-item-content">
-                <div class="menu-icon">
-                  <i class="fa-regular fa-circle-user"></i>
+          <li nz-submenu nzTitle="{{'Menu.setting'| translate }}" nzIcon="setting">
+            <ul>
+              <li nz-menu-item [routerLink]="['/', 'user-infor',userInfor.sub]" nzMatchRouter>
+                <div class="menu-item-content">
+                  <div class="menu-icon">
+                    <i class="fa-regular fa-circle-user"></i>
+                  </div>
+                  <span class="menu-text">{{'Menu.userInfor'| translate }}</span>
                 </div>
-                <span class="menu-text">{{'Menu.userInfor'| translate }}</span>
-              </div>
-            </li>
-            <li nz-menu-item [routerLink]="['/', 'setting']" nzMatchRouter>
-              <div class="menu-item-content">
-                <div class="menu-icon">
-                  <i class="fa-solid fa-bullhorn"></i>
+              </li>
+              <li nz-menu-item [routerLink]="['/', 'setting']" nzMatchRouter>
+                <div class="menu-item-content">
+                  <div class="menu-icon">
+                    <i class="fa-solid fa-bullhorn"></i>
+                  </div>
+                  <span class="menu-text">Cài đặt hệ thống</span>
                 </div>
-                <span class="menu-text">Cài đặt hệ thống</span>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </li>
         </ul>
       </div>
     </div>

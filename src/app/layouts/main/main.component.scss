@@ -79,10 +79,10 @@ $shadow-color: rgba(0, 0, 0, 0.1);
 }
 
 .sidebar-menu-container {
-  height: calc(100vh - 250px); // Điều chỉnh để dành chỗ cho footer
+  height: calc(100vh - 200px); // Điều chỉnh để dành chỗ cho footer và profile
   overflow-y: auto;
   overflow-x: hidden;
-  padding-bottom: 20px; // Thêm padding bottom để tránh bị che bởi footer
+  padding: 20px 0 20px 0; // Thêm padding top để cân bằng
   
   &::-webkit-scrollbar {
     width: 3px;
@@ -191,8 +191,7 @@ $shadow-color: rgba(0, 0, 0, 0.1);
       }
     }
   }
-  
-  .ant-menu-submenu {
+    .ant-menu-submenu {
     margin: 8px 12px !important;
     border-radius: 12px !important;
     
@@ -200,9 +199,16 @@ $shadow-color: rgba(0, 0, 0, 0.1);
       border-radius: 12px !important;
       height: 48px !important;
       line-height: 48px !important;
-      padding-left: 0 !important;
-      padding-right: 0 !important;
+      padding-left: 16px !important;
+      padding-right: 16px !important;
       transition: all 0.3s ease !important;
+      display: flex !important;
+      align-items: center !important;
+      
+      .ant-menu-submenu-expand-icon,
+      .ant-menu-submenu-arrow {
+        margin-left: auto !important;
+      }
       
       &:hover {
         background: linear-gradient(135deg, rgba($primary, 0.08), rgba($primary-light, 0.05)) !important;
