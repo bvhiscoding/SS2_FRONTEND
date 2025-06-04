@@ -9,20 +9,22 @@ $primary-light: #10c39f;
 $transition: all 0.3s ease;
 $shadow-color: rgba(0, 0, 0, 0.1);
 
-// Sidebar Styles
+// Sidebar Styles - Enhanced
 .main-sidebar {
   position: fixed !important;
   height: 100vh !important;
   overflow-y: auto;
   overflow-x: hidden;
-  background: linear-gradient(to bottom, white, #f8f9fa);
-  z-index: 999 !important; // Lower than modal mask (1000) to allow dimming effect
+  background: linear-gradient(to bottom, #ffffff, #f8fafc);
+  z-index: 999 !important;
   transition: $transition;
   left: 0 !important;
   top: 0 !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
   
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 4px;
   }
   
   &::-webkit-scrollbar-track {
@@ -30,19 +32,22 @@ $shadow-color: rgba(0, 0, 0, 0.1);
   }
   
   &::-webkit-scrollbar-thumb {
-    background: $shadow-color;
+    background: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-  }
-  
-  &:hover::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2);
+    
+    &:hover {
+      background: rgba(0, 0, 0, 0.2);
+    }
   }
 }
 
-// Sidebar Sections
+// Sidebar Sections - Enhanced
 .sidebar-profile-section {
   transition: $transition;
   position: relative;
+  background: linear-gradient(135deg, rgba(14, 175, 143, 0.05), rgba(16, 195, 159, 0.02));
+  border-radius: 0 0 20px 20px;
+  margin-bottom: 20px;
   
   &::after {
     content: '';
@@ -51,7 +56,25 @@ $shadow-color: rgba(0, 0, 0, 0.1);
     left: 10%;
     right: 10%;
     height: 1px;
-    background: linear-gradient(to right, transparent, $shadow-color, transparent);
+    background: linear-gradient(to right, transparent, rgba(14, 175, 143, 0.2), transparent);
+  }
+  
+  // Profile image enhancements
+  img {
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(14, 175, 143, 0.3);
+    }
+  }
+  
+  // Enhanced typography
+  h3 {
+    background: linear-gradient(135deg, #1f2937, #374151);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
 
@@ -75,70 +98,132 @@ $shadow-color: rgba(0, 0, 0, 0.1);
   }
 }
 
-// Menu Category Titles
+// Menu Category Titles - Enhanced
 .menu-category {
-  opacity: 0.8;
+  opacity: 0.7;
   transition: $transition;
-  padding: 0 0.5rem;
-  margin: 0.5rem 0;
+  padding: 0 1rem;
+  margin: 1rem 0 0.5rem 0;
+  
+  h4 {
+    position: relative;
+    padding-left: 12px;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 12px;
+      background: linear-gradient(to bottom, $primary, $primary-light);
+      border-radius: 2px;
+    }
+  }
 }
 
-// Custom Menu Items
+// Custom Menu Items - Enhanced
 :host ::ng-deep .custom-menu {
   background: transparent !important;
   border-right: none !important;
   
   .ant-menu-item {
-    margin: 5px 0 !important;
-    border-radius: 10px !important;
+    margin: 8px 12px !important;
+    border-radius: 12px !important;
     height: 48px !important;
     line-height: 48px !important;
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-    transition: $transition !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border: 1px solid transparent !important;
+    position: relative !important;
+    overflow: hidden !important;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
     
     &:hover {
-      background-color: rgba($primary, 0.05) !important;
+      background: linear-gradient(135deg, rgba($primary, 0.08), rgba($primary-light, 0.05)) !important;
       color: $primary !important;
+      border-color: rgba($primary, 0.2) !important;
+      transform: translateX(4px) !important;
+      box-shadow: 0 4px 12px rgba($primary, 0.15) !important;
+      
+      &::before {
+        left: 100%;
+      }
+      
+      .menu-icon i {
+        transform: scale(1.1);
+        color: $primary !important;
+      }
     }
     
     &.ant-menu-item-selected, &.active-menu-item {
-      background: linear-gradient(to right, $primary, $primary-light) !important;
+      background: linear-gradient(135deg, $primary, $primary-light) !important;
       color: white !important;
-      font-weight: 500 !important;
-      box-shadow: 0 4px 10px rgba($primary, 0.3) !important;
+      font-weight: 600 !important;
+      box-shadow: 0 6px 20px rgba($primary, 0.4) !important;
+      border-color: $primary-dark !important;
+      transform: translateX(6px) !important;
       
       .ant-menu-title-content {
         color: white !important;
       }
       
-      .menu-icon {
+      .menu-icon i {
         color: white !important;
+        transform: scale(1.1);
+      }
+      
+      .menu-text {
+        color: white !important;
+        font-weight: 600 !important;
       }
     }
   }
   
   .ant-menu-submenu {
-    border-radius: 8px !important;
+    margin: 8px 12px !important;
+    border-radius: 12px !important;
     
     &-title {
-      border-radius: 8px !important;
+      border-radius: 12px !important;
       height: 48px !important;
       line-height: 48px !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      transition: all 0.3s ease !important;
       
       &:hover {
-        background-color: rgba($primary, 0.05) !important;
+        background: linear-gradient(135deg, rgba($primary, 0.08), rgba($primary-light, 0.05)) !important;
         color: $primary !important;
+        transform: translateX(4px) !important;
       }
     }
     
     &-arrow {
       color: currentColor !important;
+      transition: transform 0.3s ease !important;
     }
     
     &.ant-menu-submenu-open {
       > .ant-menu-submenu-title {
         color: $primary !important;
+        background: rgba($primary, 0.05) !important;
+        
+        .ant-menu-submenu-arrow {
+          transform: rotate(180deg) !important;
+        }
       }
     }
   }
@@ -146,30 +231,43 @@ $shadow-color: rgba(0, 0, 0, 0.1);
   // Submenu styles
   .ant-menu-sub {
     background: transparent !important;
+    margin-left: 12px !important;
+    border-left: 2px solid rgba($primary, 0.1) !important;
     
     .ant-menu-item {
-      padding-left: 50px !important;
+      margin: 4px 8px !important;
       height: 40px !important;
       line-height: 40px !important;
+      border-radius: 8px !important;
+      
+      &:hover {
+        transform: translateX(2px) !important;
+      }
     }
   }
 }
 
-// Menu Item Content
+// Menu Item Content - Enhanced
 .menu-item-content {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
+  padding: 0 16px;
+  width: 100%;
   
   .menu-icon {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-width: 24px;
+    min-width: 28px;
+    height: 28px;
     font-size: 16px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
     
     i {
-      transition: $transition;
+      transition: all 0.3s ease;
     }
   }
   
@@ -179,6 +277,7 @@ $shadow-color: rgba(0, 0, 0, 0.1);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    transition: all 0.3s ease;
   }
 }
 

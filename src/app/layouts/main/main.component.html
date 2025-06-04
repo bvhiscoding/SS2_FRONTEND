@@ -1,108 +1,198 @@
 <nz-layout class="min-h-full">
   <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [class.hidden]="isCollapsed" [class.lg:block]="isCollapsed"
     [nzWidth]="width" nzTheme="light" [nzTrigger]="null" [nzReverseArrow]="isReverseArrow"
-    class="!fixed px-4 left-0  z-10 !h-screen overflow-y-auto !overflow-x-hidden bg-primaryBG border-r-2 border-solid text-textColor shadow-[2px_0px_7px_0px_rgba(1,87,155,0.30)]">
-    <div class="relative">
+    class="main-sidebar">
+    
+    <!-- Profile Section with Enhanced Design -->
+    <div class="sidebar-profile-section p-6">
       <div [routerLink]="['/']" routerLinkActive="router-link-active"
-        class="cursor-pointer logo mb-8 mt-8  m-auto flex flex-col h-10 items-center justify-center  rounded-md">
-        <div class="text-[20px] flex flex-col justify-center gap-3 items-center">
-          <img src="../../../assets/img/Hanu.jpeg" alt="logo" class="w-[50px] h-[50px] rounded-[50%]">
-          <span>{{userName}}</span>
+        class="cursor-pointer flex flex-col items-center justify-center transition-all duration-300 hover:scale-105">
+        
+        <div class="relative mb-4">
+          <img src="../../../assets/img/Hanu.jpeg" alt="User Avatar" 
+               class="w-16 h-16 rounded-full border-4 border-white shadow-lg object-cover">
+          <!-- Online Status Indicator -->
+          <div class="absolute bottom-1 right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white shadow-sm animate-pulse"></div>
+        </div>
+        
+        <div class="text-center">
+          <h3 class="text-lg font-semibold text-gray-800 mb-1">{{userName}}</h3>
+          <p class="text-sm text-gray-500">Administrator</p>
         </div>
       </div>
-      <div
-        class="absolute top-0 right-0 rounded-[50%] size-[25px] text-[12px] cursor-pointer border-[#1C274C] border bg-[#FFF] flex justify-center items-center">
-        <span *ngIf="language==='vi'" (click)="changeLanguage('en')" class="select-none">VN</span>
-        <span *ngIf="language==='en'" (click)="changeLanguage('vi')" class="select-none">EN</span>
+      
+      <!-- Language Toggle with Enhanced Design -->
+      <div class="absolute top-4 right-4">
+        <div class="relative group">
+          <div class="w-8 h-8 rounded-full bg-white shadow-md flex items-center justify-center cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-110">
+            <span *ngIf="language==='vi'" (click)="changeLanguage('en')" 
+                  class="text-xs font-bold text-blue-600 select-none">VN</span>
+            <span *ngIf="language==='en'" (click)="changeLanguage('vi')" 
+                  class="text-xs font-bold text-red-600 select-none">EN</span>
+          </div>
+          <!-- Tooltip -->
+          <div class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+            {{ language === 'vi' ? 'Switch to English' : 'Chuyển sang Tiếng Việt' }}
+          </div>
+        </div>
       </div>
     </div>
-    <div
-      class="absolute z-50 bottom-0 left-0 right-0 flex justify-center p-3 gap-2 items-center bg-[#DAF4FF] logoutBTN cursor-pointer "
-      (click)="handleLogout()">
-      <span nz-icon nzType="logoutIcon:antd" class="icon" nzTheme="outline"></span>
-      <span class="select-none">Đăng xuất</span>
-    </div>
-    <!-- Admin -->
-    <div *ngIf="canActive">
-      <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" class="border-none">
-        <li nz-menu-item [routerLink]="['/', 'statistical']" nzMatchRouter class="menu-item">
-          <i class="fa-solid fa-chart-simple"></i>
-          <span class="ml-3">Thống kê</span>
-        </li>
-        <li nz-menu-item [routerLink]="['/', 'user-management']" nzMatchRouter class="menu-item">
-          <i class="fa-solid fa-users"></i>
-          <span class="ml-3">{{'Menu.userManagement'| translate }}</span>
-        </li>
-        <li nz-menu-item [routerLink]="['/', 'slection-ticket']" nzMatchRouter class="menu-item">
-          <i class="fa-solid fa-check-to-slot"></i>
-          <span class="ml-3">Tiến hành bầu cử</span>
-        </li>
-        <li nz-menu-item [routerLink]="['/', 'slection-follow']" nzMatchRouter class="menu-item">
-          <!-- <i class="fa-solid fa-person-chalkboard"></i> -->
-          <i class="fa-solid fa-magnifying-glass-chart"></i>
-          <span class="ml-3">Theo dõi bầu cử</span>
-        </li>
-        <li nz-menu-item [routerLink]="['/', 'slection-management']" nzMatchRouter class="menu-item">
-          <i class="fa-solid fa-sitemap"></i>
-          <span class="ml-3">Quản lý cuộc bầu cử</span>
-        </li>
-        <li nz-menu-item [routerLink]="['/', 'level-management']" nzMatchRouter class="menu-item">
-          <i class="fa-solid fa-book-open-reader"></i>
-          <span class="ml-3">Quản lý chức vụ</span>
-        </li>
-        <!-- <li nz-menu-item [routerLink]="['/', 'notify']" nzMatchRouter class="menu-item">
-          <i class="fa-regular fa-bell"></i>
-          <span class="ml-3">Thông báo</span>
-        </li> -->
-        <ul nz-submenu nzTitle="{{'Menu.setting'| translate }}" nzIcon="setting" class="menu-item">
-          <li nz-menu-item [routerLink]="['/', 'user-infor',userInfor.sub]" nzMatchRouter>
-            <i class="fa-regular fa-circle-user"></i>
-            <span class="ml-3">{{'Menu.userInfor'| translate }}</span>
+
+    <!-- Menu Container with Categories -->
+    <div class="sidebar-menu-container">
+      <!-- Admin Menu Section -->
+      <div *ngIf="canActive">
+        <div class="menu-category">
+          <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">QUẢN TRỊ HỆ THỐNG</h4>
+        </div>
+        
+        <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" class="custom-menu">
+          <li nz-menu-item [routerLink]="['/', 'statistical']" nzMatchRouter>
+            <div class="menu-item-content">
+              <div class="menu-icon">
+                <i class="fa-solid fa-chart-simple"></i>
+              </div>
+              <span class="menu-text">Thống kê</span>
+            </div>
           </li>
-          <li nz-menu-item [routerLink]="['/', 'setting']" nzMatchRouter class="menu-item">
-            <i class="fa-solid fa-bullhorn"></i>
-            <span class="ml-3">Cài đặt hệ thống</span>
+          
+          <li nz-menu-item [routerLink]="['/', 'user-management']" nzMatchRouter>
+            <div class="menu-item-content">
+              <div class="menu-icon">
+                <i class="fa-solid fa-users"></i>
+              </div>
+              <span class="menu-text">{{'Menu.userManagement'| translate }}</span>
+            </div>
           </li>
+          
+          <li nz-menu-item [routerLink]="['/', 'slection-ticket']" nzMatchRouter>
+            <div class="menu-item-content">
+              <div class="menu-icon">
+                <i class="fa-solid fa-check-to-slot"></i>
+              </div>
+              <span class="menu-text">Tiến hành bầu cử</span>
+            </div>
+          </li>
+          
+          <li nz-menu-item [routerLink]="['/', 'slection-follow']" nzMatchRouter>
+            <div class="menu-item-content">
+              <div class="menu-icon">
+                <i class="fa-solid fa-magnifying-glass-chart"></i>
+              </div>
+              <span class="menu-text">Theo dõi bầu cử</span>
+            </div>
+          </li>
+          
+          <li nz-menu-item [routerLink]="['/', 'slection-management']" nzMatchRouter>
+            <div class="menu-item-content">
+              <div class="menu-icon">
+                <i class="fa-solid fa-sitemap"></i>
+              </div>
+              <span class="menu-text">Quản lý cuộc bầu cử</span>
+            </div>
+          </li>
+          
+          <li nz-menu-item [routerLink]="['/', 'level-management']" nzMatchRouter>
+            <div class="menu-item-content">
+              <div class="menu-icon">
+                <i class="fa-solid fa-book-open-reader"></i>
+              </div>
+              <span class="menu-text">Quản lý chức vụ</span>
+            </div>
+          </li>
+          
+          <!-- Settings Submenu -->
+          <ul nz-submenu nzTitle="{{'Menu.setting'| translate }}" nzIcon="setting">
+            <li nz-menu-item [routerLink]="['/', 'user-infor',userInfor.sub]" nzMatchRouter>
+              <div class="menu-item-content">
+                <div class="menu-icon">
+                  <i class="fa-regular fa-circle-user"></i>
+                </div>
+                <span class="menu-text">{{'Menu.userInfor'| translate }}</span>
+              </div>
+            </li>
+            <li nz-menu-item [routerLink]="['/', 'setting']" nzMatchRouter>
+              <div class="menu-item-content">
+                <div class="menu-icon">
+                  <i class="fa-solid fa-bullhorn"></i>
+                </div>
+                <span class="menu-text">Cài đặt hệ thống</span>
+              </div>
+            </li>
+          </ul>
         </ul>
-      </ul>
+      </div>
+
+      <!-- User Menu Section -->
+      <div *ngIf="!canActive">
+        <div class="menu-category">
+          <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">NGƯỜI DÙNG</h4>
+        </div>
+        
+        <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" class="custom-menu">
+          <li nz-menu-item [routerLink]="['/', 'statistical']" nzMatchRouter>
+            <div class="menu-item-content">
+              <div class="menu-icon">
+                <i class="fa-solid fa-chart-simple"></i>
+              </div>
+              <span class="menu-text">Thống kê</span>
+            </div>
+          </li>
+          
+          <li nz-menu-item [routerLink]="['/', 'slection-ticket']" nzMatchRouter>
+            <div class="menu-item-content">
+              <div class="menu-icon">
+                <i class="fa-solid fa-check-to-slot"></i>
+              </div>
+              <span class="menu-text">Tiến hành bầu cử</span>
+            </div>
+          </li>
+          
+          <li nz-menu-item [routerLink]="['/', 'slection-follow']" nzMatchRouter>
+            <div class="menu-item-content">
+              <div class="menu-icon">
+                <i class="fa-solid fa-magnifying-glass-chart"></i>
+              </div>
+              <span class="menu-text">Theo dõi bầu cử</span>
+            </div>
+          </li>
+          
+          <!-- Settings Submenu -->
+          <ul nz-submenu nzTitle="{{'Menu.setting'| translate }}" nzIcon="setting">
+            <li nz-menu-item [routerLink]="['/', 'user-infor',userInfor.sub]" nzMatchRouter>
+              <div class="menu-item-content">
+                <div class="menu-icon">
+                  <i class="fa-regular fa-circle-user"></i>
+                </div>
+                <span class="menu-text">{{'Menu.userInfor'| translate }}</span>
+              </div>
+            </li>
+            <li nz-menu-item [routerLink]="['/', 'setting']" nzMatchRouter>
+              <div class="menu-item-content">
+                <div class="menu-icon">
+                  <i class="fa-solid fa-bullhorn"></i>
+                </div>
+                <span class="menu-text">Cài đặt hệ thống</span>
+              </div>
+            </li>
+          </ul>
+        </ul>
+      </div>
     </div>
 
-    <!-- Users -->
-    <div *ngIf="!canActive">
-      <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" class="border-none">
-        <li nz-menu-item [routerLink]="['/', 'statistical']" nzMatchRouter class="menu-item">
-          <i class="fa-solid fa-chart-simple"></i>
-          <span class="ml-3">Thống kê</span>
-        </li>
-        <li nz-menu-item [routerLink]="['/', 'slection-ticket']" nzMatchRouter class="menu-item">
-          <i class="fa-solid fa-check-to-slot"></i>
-          <span class="ml-3">Tiến hành bầu cử</span>
-        </li>
-        <li nz-menu-item [routerLink]="['/', 'slection-follow']" nzMatchRouter class="menu-item">
-          <i class="fa-solid fa-magnifying-glass-chart"></i>
-          <span class="ml-3">Theo dõi bầu cử</span>
-        </li>
-        <!-- <li nz-menu-item [routerLink]="['/', 'notify']" nzMatchRouter class="menu-item">
-          <i class="fa-regular fa-bell"></i>
-          <span class="ml-3">Thông báo</span>
-        </li> -->
-        <ul nz-submenu nzTitle="{{'Menu.setting'| translate }}" nzIcon="setting" class="menu-item">
-          <li nz-menu-item [routerLink]="['/', 'user-infor',userInfor.sub]" nzMatchRouter>
-            <i class="fa-regular fa-circle-user"></i>
-            <span class="ml-3">{{'Menu.userInfor'| translate }}</span>
-          </li>
-          <li nz-menu-item [routerLink]="['/', 'setting']" nzMatchRouter class="menu-item">
-            <i class="fa-solid fa-bullhorn"></i>
-            <span class="ml-3">Cài đặt hệ thống</span>
-          </li>
-        </ul>
-      </ul>
+    <!-- Enhanced Footer with Logout Button -->
+    <div class="sidebar-footer">
+      <button class="logout-button" (click)="handleLogout()">
+        <i class="fa-solid fa-sign-out-alt"></i>
+        <span>Đăng xuất</span>
+      </button>
     </div>
   </nz-sider>
-  <nz-layout class="bg-white" [ngClass]="{ 'ml-[280px]': !isCollapsed, 'lg:ml-[80px]': isCollapsed }">
+  
+  <nz-layout class="bg-gray-50" [ngClass]="{ 'ml-[280px]': !isCollapsed, 'lg:ml-[80px]': isCollapsed }">
     <nz-content>
-      <div class=" border-t border-solid border-primary px-1 h-full" [class.hidden]="!isCollapsed"
-        [class.lg:block]="!isCollapsed">
+      <div class="border-t border-solid border-primary px-4 py-4 h-full min-h-screen" 
+           [class.hidden]="!isCollapsed" [class.lg:block]="!isCollapsed">
         <router-outlet></router-outlet>
       </div>
     </nz-content>
