@@ -14,11 +14,11 @@ import { DetailCtvComponent } from '../../slection-management/slection-managemen
 import { VoteService } from '../../../core/api/vote.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { UserAvatarComponent } from '../../../shared/components/user-avatar/user-avatar.component';
 
 @Component({
   selector: 'app-slection-follow-list',
-  standalone: true,
-  imports: [
+  standalone: true,  imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
@@ -28,6 +28,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
     NzIconModule,
     NzSpinModule,
     TranslateModule,
+    UserAvatarComponent,
     MatInputModule,
     MatFormFieldModule,
     MatDatepickerModule,
