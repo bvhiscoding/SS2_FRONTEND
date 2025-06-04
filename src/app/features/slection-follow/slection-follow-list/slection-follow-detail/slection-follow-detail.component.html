@@ -1,0 +1,85 @@
+<div class=" bg-bgGray w-full p-10">
+    <div class="mb-8 flex justify-between items-center">
+        <h3 class="uppercase text-primary text-[20px] font-semibold">Chi tiết cuộc bầu cử</h3>
+        <div [routerLink]="['/slection-follow/list']" class="text-white px-4 py-2 rounded-lg bg-primary font-medium cursor-pointer hover:scale-105 shadow-shadow-timeword">
+            <i class="fa-solid fa-arrow-left text-white"></i>  Quay lại
+        </div>
+    </div>
+    <div class="w-full flex gap-5">
+        <div class="w-[40%] flex flex-col gap-5">
+            <div class="w-full bg-white p-4 shadow-shadow-timeword rounded-lg">
+                <div class="w-full font-medium text-primary text-[18px]">Thông tin cuộc bầu cử</div>
+                <div class="w-full font-normal text-[16px]">Tên cuộc bầu cử: <div class="font-medium text-myRed">{{infoVote.voteName}}</div></div>
+                <ul class="text-[16px] *:mb-[4px] *:ml-3 mt-2">
+                    <li><i class="fa-solid fa-right-long text-primary"></i> Thời gian bắt đầu cuộc bầu cử: {{infoVote.startDate | date: 'dd/MM/yyyy'}}</li>
+                    <li><i class="fa-solid fa-right-long text-primary"></i> Thời gian kết thúc cuộc bầu cử: {{infoVote.expiredDate | date: 'dd/MM/yyyy'}}</li>
+                    <li><i class="fa-solid fa-right-long text-primary"></i> Chức vụ: {{infoVote.positionName}}</li>
+                    <li><i class="fa-solid fa-right-long text-primary"></i> Trạng thái: 
+                      <div 
+                      [ngClass]="{'bg-green-500': infoVote.status === '1', 'bg-red-500': infoVote.status === '2', 'bg-orange-400': infoVote.status === '0'}"
+                      class="px-2 py-[1px] bg-green-500 text-white rounded-xl shadow-shadow-timeword inline-block">
+                        {{infoVote.status === '0' ? 'Chưa bắt đầu' : infoVote.status === '1' ? 'Đang diễn ra' : infoVote.status === '2' ? 'Đã kết thúc' : ''}}
+                      </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="w-full bg-white p-4 shadow-shadow-timeword rounded-lg">
+                <div class="w-full font-medium text-primary text-[18px]">Người dẫn đầu</div>
+                <div class="w-full flex justify-between items-end my-3">
+                    <div class="flex flex-col flex-1 items-center gap-2">
+                        <img *ngIf="leadingCandidate.imageUrl === null" src="../../../assets/img/Logo-Hoc-Vien-Ky-Thuat-Mat-Ma-ACTVN.webp" class="w-[100px] h-[100px] object-cover" />
+                        <img *ngIf="leadingCandidate.imageUrl !== null" [src]="leadingCandidate.imageUrl" class="w-[100px] h-[100px] object-cover rounded-[50%]" />
+                        <div class="text-[16px] font-medium">{{ leadingCandidate.fullName }}</div>
+                    </div>
+                    <div class="flex flex-col flex-1 justify-end items-center h-full">
+                        <div class="text-[18px] font-medium text-myRed text-bottom">{{ leadingCandidate.totalBallot }}</div>
+                        <div class="text-[16px] font-normal">Tổng số phiếu bầu</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-4 justify-between">
+                <div class="w-full flex justify-between items-center flex-1 bg-white p-4 shadow-shadow-timeword rounded-lg">
+                    <div class="flex flex-col items-center h-full">
+                        <div class="text-center text-[14px] font-normal">Tổng số ứng viên</div>
+                        <div class="text-[18px] font-medium text-myRed text-bottom">{{infoVote.totalCandidate}}</div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-[50px] h-[50px] shadow-shadow-timeword rounded-[50px] bg-primary flex items-center justify-center">
+                            <i class="fa-solid fa-user-tie text-white text-[20px]"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full flex justify-between items-center flex-1 bg-white p-4 shadow-shadow-timeword rounded-lg">
+                    <div class="flex flex-col items-center h-full">
+                        <div class="text-center text-[14px] font-normal">Tổng số cử tri</div>
+                        <div class="text-[18px] font-medium text-myRed text-bottom">{{infoVote.totalVoter}}</div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-[50px] h-[50px] shadow-shadow-timeword rounded-[50px] bg-primary flex items-center justify-center">
+                            <i class="fa-solid fa-users text-white text-[22px]"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex-1 flex flex-col bg-white p-4 rounded-lg shadow-shadow-timeword">
+            <div class="w-full flex justify-between gap-2 pl-4">
+                <div class="font-medium text-primary text-[18px]">Biểu đồ thống kê: </div>
+                <div class="flex gap-2">
+                    <i (click)="handleChangeChart('columns')"  
+                        [ngClass]="chartType === 'columns' ? 'text-myRed' : 'text-primary'"
+                        class="fa-solid fa-chart-simple text-[20px] cursor-pointer hover:scale-105"></i>
+                    <i (click)="handleChangeChart('circle')"  
+                        [ngClass]="chartType === 'circle' ? 'text-myRed' : 'text-primary'"
+                        class="fa-solid fa-chart-pie text-[20px] cursor-pointer hover:scale-105"></i>
+                </div>
+            </div>
+            <div *ngIf="chartType === 'columns'">
+                <app-chart-evoting *ngIf="isCandidateDataReady" [listCandidate]='listCandidate'></app-chart-evoting>
+            </div>
+            <div *ngIf="chartType === 'circle'" class="w-full h-full flex justify-center">
+                <app-chart-circle-evoting *ngIf="isCandidateDataReady" [listCandidate]='listCandidate' class="mt-9"></app-chart-circle-evoting>
+            </div>
+        </div>
+    </div>
+</div>
