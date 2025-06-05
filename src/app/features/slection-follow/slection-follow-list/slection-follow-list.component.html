@@ -1,232 +1,370 @@
-<div class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen w-full p-8">
-    <nz-spin [nzSpinning]="isLoadingOK" nzSize="large">
-      <div class="mb-10 flex justify-between items-center">
-          <div class="flex items-center space-x-4">
-            <div class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-500 rounded-full flex items-center justify-center shadow-lg">
-              <i class="fa-solid fa-magnifying-glass-chart text-white text-xl"></i>
-            </div>
-            <h3 class="uppercase text-primary text-2xl font-bold tracking-wide">THEO DÕI BẦU CỬ</h3>
-          </div>
+<div
+  class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen w-full p-8"
+>
+  <div class="mb-10 flex justify-between items-center">
+    <div class="flex items-center space-x-4">
+      <div
+        class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-500 rounded-full flex items-center justify-center shadow-lg"
+      >
+        <i class="fa-solid fa-magnifying-glass-chart text-white text-xl"></i>
       </div>
+      <h3 class="uppercase text-primary text-2xl font-bold tracking-wide">
+        THEO DÕI BẦU CỬ
+      </h3>
+    </div>
+  </div>
 
-      <div class="bg-white pt-8 pb-8 px-8 mb-12 rounded-2xl shadow-xl border border-gray-100">
-          <div class="mb-8">
-            <div class="flex items-center space-x-3 mb-3">
-              <div class="w-8 h-8 bg-gradient-to-r from-primary to-blue-500 rounded-lg flex items-center justify-center">
-                <i class="fa-solid fa-search text-white text-sm"></i>
-              </div>
-              <h4 class="text-xl font-bold text-gray-800">Tìm kiếm cuộc bầu cử</h4>
+  <div
+    class="bg-white pt-8 pb-8 px-8 mb-12 rounded-2xl shadow-xl border border-gray-100"
+  >
+    <div class="mb-8">
+      <div class="flex items-center space-x-3 mb-3">
+        <div
+          class="w-8 h-8 bg-gradient-to-r from-primary to-blue-500 rounded-lg flex items-center justify-center"
+        >
+          <i class="fa-solid fa-search text-white text-sm"></i>
+        </div>
+        <h4 class="text-xl font-bold text-gray-800">Tìm kiếm cuộc bầu cử</h4>
+      </div>
+      <div
+        class="w-20 h-1 bg-gradient-to-r from-primary to-blue-400 rounded-full"
+      ></div>
+    </div>
+    <ng-container>
+      <form [formGroup]="form" class="search-form">
+        <!-- Form fields row -->
+        <div class="form-fields-row">
+          <mat-form-field class="custom-input form-field" appearance="outline">
+            <mat-label>Tên cuộc bầu cử</mat-label>
+            <input
+              formControlName="name"
+              matInput
+              placeholder="Nhập tên cuộc bầu cử..."
+            />
+          </mat-form-field>
+
+          <mat-form-field class="custom-input form-field" appearance="outline">
+            <mat-label>Trạng thái</mat-label>
+            <mat-select formControlName="status">
+              <mat-option
+                *ngFor="let status of listStatus"
+                [value]="status.value"
+              >
+                {{ status.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Action buttons row -->
+        <div class="form-actions">
+          <button
+            type="button"
+            (click)="handleSearch()"
+            class="search-btn btn-primary"
+          >
+            <i class="fa-solid fa-search"></i>
+            <span>Tìm kiếm</span>
+          </button>
+          <button
+            type="button"
+            (click)="handleCancel()"
+            class="cancel-btn btn-secondary"
+          >
+            <i class="fa-solid fa-times"></i>
+            <span>Hủy bỏ</span>
+          </button>
+        </div>
+      </form>
+    </ng-container>
+  </div>
+  <!-- Elections List Header -->
+  <div class="mb-8 flex justify-start items-center">
+    <div class="flex items-center space-x-4">
+      <div
+        class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-500 rounded-xl flex items-center justify-center shadow-lg"
+      >
+        <i class="fa-solid fa-list-check text-white text-xl"></i>
+      </div>
+      <div>
+        <h3 class="text-gray-800 text-2xl font-bold">Danh sách cuộc bầu cử</h3>
+        <p class="text-gray-500 text-sm mt-1">
+          Các cuộc bầu cử mà bạn là ứng viên
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoadingOK" class="py-24 flex justify-center items-center">
+    <div class="flex flex-col items-center">
+      <div
+        class="h-16 w-16 rounded-full border-4 border-t-primary border-r-primary border-b-gray-200 border-l-gray-200 animate-spin mb-4"
+      ></div>
+      <p class="text-gray-500 animate-pulse">
+        Đang tải danh sách cuộc bầu cử...
+      </p>
+    </div>
+  </div>
+
+  <!-- Elections List Content -->
+  <ng-container *ngIf="!isLoadingOK">
+    <ng-container *ngIf="listVote.length > 0; else noVotes">
+      <ng-container *ngFor="let slection of listVote; let i = index">
+        <div
+          class="flex flex-col w-full mb-8 bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-100 hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1"
+        >
+          <div class="w-full flex gap-2 justify-between">
+            <div
+              class="text-center flex-1 py-4 text-xl bg-gradient-to-r from-primary to-blue-500 text-white font-bold uppercase tracking-wide"
+            >
+              <i class="fa-solid fa-trophy mr-2"></i>
+              {{ slection.voteName }}
             </div>
-            <div class="w-20 h-1 bg-gradient-to-r from-primary to-blue-400 rounded-full"></div>
           </div>
-          <ng-container >
-            <form [formGroup]="form" class="search-form">
-              <!-- Form fields row -->
-              <div class="form-fields-row">
-                <mat-form-field class="custom-input form-field" appearance="outline">
-                  <mat-label>Tên cuộc bầu cử</mat-label>
-                  <input formControlName="name" matInput placeholder="Nhập tên cuộc bầu cử..." />
-                </mat-form-field>
-                
-                <mat-form-field class="custom-input form-field" appearance="outline">
-                  <mat-label>Trạng thái</mat-label>
-                  <mat-select formControlName="status">
-                    <mat-option *ngFor="let status of listStatus" [value]="status.value">
-                      {{ status.label }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
+
+          <div class="flex bg-gradient-to-r from-gray-50 to-blue-50 gap-4 p-6">
+            <div
+              class="w-2/5 flex flex-col justify-center bg-white rounded-xl shadow-lg p-6 border border-gray-100"
+            >
+              <div
+                class="w-full text-center py-3 border-b-2 border-primary font-bold text-lg text-gray-800 mb-4"
+              >
+                <i class="fa-solid fa-info-circle text-primary mr-2"></i>
+                Thông tin chung
               </div>
-              
-              <!-- Action buttons row -->
-              <div class="form-actions">
-                <button type="button" (click)="handleSearch()" class="search-btn btn-primary">
-                  <i class="fa-solid fa-search"></i>
-                  <span>Tìm kiếm</span>
-                </button>
-                <button type="button" (click)="handleCancel()" class="cancel-btn btn-secondary">
-                  <i class="fa-solid fa-times"></i>
-                  <span>Hủy bỏ</span>
+              <ul class="w-full text-sm space-y-3">
+                <li class="flex items-center space-x-2">
+                  <i class="fa-solid fa-calendar-start text-green-500 w-4"></i>
+                  <span class="text-gray-700"
+                    >Bắt đầu:
+                    <span class="font-semibold text-gray-900">{{
+                      slection.startDate | date: "dd/MM/yyyy"
+                    }}</span></span
+                  >
+                </li>
+                <li class="flex items-center space-x-2">
+                  <i class="fa-solid fa-calendar-xmark text-red-500 w-4"></i>
+                  <span class="text-gray-700"
+                    >Kết thúc:
+                    <span class="font-semibold text-gray-900">{{
+                      slection.expiredDate | date: "dd/MM/yyyy"
+                    }}</span></span
+                  >
+                </li>
+                <li class="flex items-center space-x-2">
+                  <i class="fa-solid fa-users-gear text-blue-500 w-4"></i>
+                  <span class="text-gray-700"
+                    >Số ứng viên tối đa:
+                    <span class="font-semibold text-primary">{{
+                      slection.maxCandidateVote
+                    }}</span></span
+                  >
+                </li>
+                <li class="flex items-center space-x-2">
+                  <i class="fa-solid fa-flag text-orange-500 w-4"></i>
+                  <span class="text-gray-700">Trạng thái:</span>
+                  <span
+                    class="px-3 py-1 rounded-full text-xs font-semibold"
+                    [ngClass]="{
+                      'bg-green-100 text-green-800': slection.status === '1',
+                      'bg-red-100 text-red-800': slection.status === '2',
+                      'bg-orange-100 text-orange-800': slection.status === '0'
+                    }"
+                  >
+                    {{
+                      slection.status === "1"
+                        ? "Đang diễn ra"
+                        : slection.status === "2"
+                          ? "Đã kết thúc"
+                          : slection.status === "0"
+                            ? "Chưa bắt đầu"
+                            : ""
+                    }}
+                  </span>
+                </li>
+              </ul>
+
+              <div
+                class="w-full text-center py-3 border-b-2 border-primary font-bold text-lg text-gray-800 mt-6 mb-4"
+              >
+                <i class="fa-solid fa-crown text-yellow-500 mr-2"></i>
+                Thông tin nhiệm kỳ
+              </div>
+              <ul class="w-full text-sm space-y-3">
+                <li class="flex items-center space-x-2">
+                  <i class="fa-solid fa-award text-purple-500 w-4"></i>
+                  <span class="text-gray-700"
+                    >Tên nhiệm kỳ:
+                    <span class="font-bold text-primary">{{
+                      slection.tenure
+                    }}</span></span
+                  >
+                </li>
+                <li class="flex items-center space-x-2">
+                  <i class="fa-solid fa-play text-green-500 w-4"></i>
+                  <span class="text-gray-700"
+                    >Bắt đầu:
+                    <span class="font-semibold text-gray-900">{{
+                      slection.startDateTenure | date: "dd/MM/yyyy"
+                    }}</span></span
+                  >
+                </li>
+                <li class="flex items-center space-x-2">
+                  <i class="fa-solid fa-stop text-red-500 w-4"></i>
+                  <span class="text-gray-700"
+                    >Kết thúc:
+                    <span class="font-semibold text-gray-900">{{
+                      slection.endDateTenure | date: "dd/MM/yyyy"
+                    }}</span></span
+                  >
+                </li>
+              </ul>
+
+              <div
+                class="w-full flex items-center gap-4 border-t-2 border-primary justify-center py-6 mt-6"
+              >
+                <button
+                  (click)="openDetail(slection.id)"
+                  class="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                >
+                  <i class="fa-solid fa-eye mr-2"></i>
+                  Xem chi tiết
                 </button>
               </div>
-            </form>
-          </ng-container>
-        </div>      <!-- Elections List Header -->
-      <div class="mb-8 flex justify-start items-center">
-        <div class="flex items-center space-x-4">
-          <div class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-500 rounded-xl flex items-center justify-center shadow-lg">
-            <i class="fa-solid fa-list-check text-white text-xl"></i>
+            </div>
+
+            <div
+              class="w-3/5 h-auto bg-white rounded-xl shadow-lg p-6 border border-gray-100"
+            >
+              <div
+                class="text-center w-full font-bold text-lg text-gray-800 border-b-2 border-primary py-3 mb-6"
+              >
+                <i class="fa-solid fa-users text-primary mr-2"></i>
+                Danh sách ứng viên
+              </div>
+              <div class="candidates-scroll-container">
+                <div
+                  *ngFor="let array of slection.candidates; let i2 = index"
+                  class="candidate-card bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-3xl p-4 mb-4 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                >
+                  <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0">
+                      <app-user-avatar
+                        [fullName]="array.fullname"
+                        [imageUrl]="array.imageUrl"
+                        size="lg"
+                        class="shadow-md"
+                      ></app-user-avatar>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <div class="text-lg font-bold text-gray-900 truncate">
+                        {{ array.fullname }}
+                      </div>
+                      <div class="text-sm text-gray-600 font-medium">
+                        {{ array.userName }}
+                      </div>
+                      <div class="text-xs text-gray-500 mt-1">
+                        <i class="fa-solid fa-envelope mr-1"></i>
+                        {{
+                          array.newEmail === null
+                            ? array.email.substring(0, 25) + "..."
+                            : array.newEmail.substring(0, 25) + "..."
+                        }}
+                      </div>
+                      <div
+                        class="flex items-center space-x-4 text-xs text-gray-500 mt-2"
+                      >
+                        <span
+                          ><i class="fa-solid fa-phone mr-1"></i
+                          >{{ array.cellPhone }}</span
+                        >
+                        <span
+                          ><i class="fa-solid fa-birthday-cake mr-1"></i
+                          >{{ array.birthday | date: "dd/MM/yyyy" }}</span
+                        >
+                      </div>
+                      <div class="text-xs text-gray-500 mt-1">
+                        <i class="fa-solid fa-map-marker-alt mr-1"></i>
+                        {{ array?.address?.split(", ").pop() }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    (click)="openDetailPopup(array.id)"
+                    class="w-full border-t border-gray-200 text-sm text-center py-3 mt-4 text-primary hover:text-blue-600 hover:bg-blue-50 cursor-pointer transition-all duration-200 font-medium rounded-b-3xl"
+                  >
+                    <i class="fa-solid fa-eye mr-2"></i>
+                    Xem chi tiết
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div>
-            <h3 class="text-gray-800 text-2xl font-bold">Danh sách cuộc bầu cử</h3>
-            <p class="text-gray-500 text-sm mt-1">Các cuộc bầu cử mà bạn là ứng viên</p>
+        </div>
+      </ng-container>
+    </ng-container>
+    <ng-template #noVotes>
+      <div class="text-center py-16">
+        <div
+          class="bg-white rounded-3xl shadow-2xl p-16 max-w-lg mx-auto border border-gray-100 relative overflow-hidden"
+        >
+          <!-- Background decoration -->
+          <div
+            class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary via-blue-500 to-indigo-500"
+          ></div>
+
+          <!-- Icon with animation -->
+          <div
+            class="w-32 h-32 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full flex items-center justify-center mx-auto mb-8 relative"
+          >
+            <div
+              class="w-24 h-24 bg-gradient-to-br from-blue-200 to-indigo-200 rounded-full flex items-center justify-center"
+            >
+              <i
+                class="fa-solid fa-magnifying-glass-chart text-5xl text-blue-500"
+              ></i>
+            </div>
+            <div
+              class="absolute top-2 right-2 w-4 h-4 bg-blue-400 rounded-full animate-ping"
+            ></div>
+          </div>
+
+          <!-- Main message -->
+          <h3 class="text-2xl font-bold text-gray-800 mb-4">
+            Chưa có cuộc bầu cử nào
+          </h3>
+          <p class="text-gray-500 text-lg leading-relaxed mb-8">
+            Bạn chưa là ứng viên của cuộc bầu cử nào. Hãy chờ đợi hoặc liên hệ
+            với quản trị viên để biết thêm thông tin.
+          </p>
+
+          <!-- Decorative elements -->
+          <div class="flex justify-center space-x-2 mb-6">
+            <div
+              class="w-8 h-2 bg-gradient-to-r from-primary to-blue-400 rounded-full"
+            ></div>
+            <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
+          </div>
+
+          <!-- Call to action -->
+          <div
+            class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100"
+          >
+            <p class="text-sm text-blue-800 font-medium">
+              <i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i>
+              Mẹo: Bạn có thể làm mới trang để kiểm tra cuộc bầu cử mới
+            </p>
           </div>
         </div>
       </div>
-      
-      <!-- Loading State -->
-      <div *ngIf="isLoadingOK" class="py-24 flex justify-center items-center">
-          <div class="flex flex-col items-center">
-              <div class="h-16 w-16 rounded-full border-4 border-t-primary border-r-primary border-b-gray-200 border-l-gray-200 animate-spin mb-4"></div>
-              <p class="text-gray-500 animate-pulse">Đang tải danh sách cuộc bầu cử...</p>
-          </div>
-      </div>
-      
-      <!-- Elections List Content -->
-      <ng-container *ngIf="!isLoadingOK">
-        <ng-container *ngIf="listVote.length > 0; else noVotes">
-          <ng-container *ngFor="let slection of listVote, let i = index">
-            <div class="flex flex-col w-full mb-8 bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-100 hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1">
-                <div class="w-full flex gap-2 justify-between">
-                  <div class="text-center flex-1 py-4 text-xl bg-gradient-to-r from-primary to-blue-500 text-white font-bold uppercase tracking-wide">
-                    <i class="fa-solid fa-trophy mr-2"></i>
-                    {{slection.voteName}}
-                  </div>
-                </div>
-                
-                <div class="flex bg-gradient-to-r from-gray-50 to-blue-50 gap-4 p-6">
-                    <div class="w-2/5 flex flex-col justify-center bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-                        <div class="w-full text-center py-3 border-b-2 border-primary font-bold text-lg text-gray-800 mb-4">
-                          <i class="fa-solid fa-info-circle text-primary mr-2"></i>
-                          Thông tin chung
-                        </div>
-                        <ul class="w-full text-sm space-y-3">
-                            <li class="flex items-center space-x-2">
-                              <i class="fa-solid fa-calendar-start text-green-500 w-4"></i>
-                              <span class="text-gray-700">Bắt đầu: <span class="font-semibold text-gray-900">{{slection.startDate | date: 'dd/MM/yyyy'}}</span></span>
-                            </li>
-                            <li class="flex items-center space-x-2">
-                              <i class="fa-solid fa-calendar-xmark text-red-500 w-4"></i>
-                              <span class="text-gray-700">Kết thúc: <span class="font-semibold text-gray-900">{{slection.expiredDate | date: 'dd/MM/yyyy'}}</span></span>
-                            </li>
-                            <li class="flex items-center space-x-2">
-                              <i class="fa-solid fa-users-gear text-blue-500 w-4"></i>
-                              <span class="text-gray-700">Số ứng viên tối đa: <span class="font-semibold text-primary">{{slection.maxCandidateVote}}</span></span>
-                            </li>
-                            <li class="flex items-center space-x-2">
-                              <i class="fa-solid fa-flag text-orange-500 w-4"></i>
-                              <span class="text-gray-700">Trạng thái:</span>
-                              <span class="px-3 py-1 rounded-full text-xs font-semibold" 
-                                    [ngClass]="{'bg-green-100 text-green-800': slection.status === '1', 
-                                               'bg-red-100 text-red-800': slection.status === '2', 
-                                               'bg-orange-100 text-orange-800': slection.status === '0'}">
-                                {{slection.status === '1' ? 'Đang diễn ra' : slection.status === '2' ? 'Đã kết thúc' : slection.status === '0' ? 'Chưa bắt đầu' : ''}}
-                              </span>
-                            </li>
-                        </ul>
-                        
-                        <div class="w-full text-center py-3 border-b-2 border-primary font-bold text-lg text-gray-800 mt-6 mb-4">
-                          <i class="fa-solid fa-crown text-yellow-500 mr-2"></i>
-                          Thông tin nhiệm kỳ
-                        </div>
-                        <ul class="w-full text-sm space-y-3">
-                            <li class="flex items-center space-x-2">
-                              <i class="fa-solid fa-award text-purple-500 w-4"></i>
-                              <span class="text-gray-700">Tên nhiệm kỳ: <span class="font-bold text-primary">{{slection.tenure}}</span></span>
-                            </li>
-                            <li class="flex items-center space-x-2">
-                              <i class="fa-solid fa-play text-green-500 w-4"></i>
-                              <span class="text-gray-700">Bắt đầu: <span class="font-semibold text-gray-900">{{slection.startDateTenure | date: 'dd/MM/yyyy'}}</span></span>
-                            </li>
-                            <li class="flex items-center space-x-2">
-                              <i class="fa-solid fa-stop text-red-500 w-4"></i>
-                              <span class="text-gray-700">Kết thúc: <span class="font-semibold text-gray-900">{{slection.endDateTenure | date: 'dd/MM/yyyy'}}</span></span>
-                            </li>
-                        </ul>
-                        
-                        <div class="w-full flex items-center gap-4 border-t-2 border-primary justify-center py-6 mt-6">
-                          <button (click)="openDetail(slection.id)" class="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                            <i class="fa-solid fa-eye mr-2"></i>
-                            Xem chi tiết
-                          </button>
-                        </div>
-                    </div>
-    
-                    <div class="w-3/5 h-auto bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-                        <div class="text-center w-full font-bold text-lg text-gray-800 border-b-2 border-primary py-3 mb-6">
-                          <i class="fa-solid fa-users text-primary mr-2"></i>
-                          Danh sách ứng viên
-                        </div>
-                        <div class="candidates-scroll-container">
-                            <div *ngFor="let array of slection.candidates, let i2 = index" 
-                                 class="candidate-card bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-3xl p-4 mb-4 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                              <div class="flex items-center space-x-4">
-                                <div class="flex-shrink-0">
-                                  <app-user-avatar
-                                    [fullName]="array.fullname"
-                                    [imageUrl]="array.imageUrl"
-                                    size="lg"
-                                    class="shadow-md"
-                                  ></app-user-avatar>
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                  <div class="text-lg font-bold text-gray-900 truncate">{{array.fullname}}</div>
-                                  <div class="text-sm text-gray-600 font-medium">{{array.userName}}</div>
-                                  <div class="text-xs text-gray-500 mt-1">
-                                    <i class="fa-solid fa-envelope mr-1"></i>
-                                    {{array.newEmail === null ? array.email.substring(0, 25) + '...' : array.newEmail.substring(0, 25) + '...'}}
-                                  </div>
-                                  <div class="flex items-center space-x-4 text-xs text-gray-500 mt-2">
-                                    <span><i class="fa-solid fa-phone mr-1"></i>{{array.cellPhone}}</span>
-                                    <span><i class="fa-solid fa-birthday-cake mr-1"></i>{{array.birthday | date: 'dd/MM/yyyy'}}</span>
-                                  </div>
-                                  <div class="text-xs text-gray-500 mt-1">
-                                    <i class="fa-solid fa-map-marker-alt mr-1"></i>
-                                    {{array?.address?.split(', ').pop()}}
-                                  </div>
-                                </div>
-                              </div>
-                              
-                              <div (click)="openDetailPopup(array.id)" 
-                                   class="w-full border-t border-gray-200 text-sm text-center py-3 mt-4 text-primary hover:text-blue-600 hover:bg-blue-50 cursor-pointer transition-all duration-200 font-medium rounded-b-3xl">
-                                <i class="fa-solid fa-eye mr-2"></i>
-                                Xem chi tiết
-                              </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </ng-container>
-        </ng-container>        
-        <ng-template #noVotes>
-          <div class="text-center py-16">
-            <div class="bg-white rounded-3xl shadow-2xl p-16 max-w-lg mx-auto border border-gray-100 relative overflow-hidden">
-              <!-- Background decoration -->
-              <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary via-blue-500 to-indigo-500"></div>
-              
-              <!-- Icon with animation -->
-              <div class="w-32 h-32 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full flex items-center justify-center mx-auto mb-8 relative">
-                <div class="w-24 h-24 bg-gradient-to-br from-blue-200 to-indigo-200 rounded-full flex items-center justify-center">
-                  <i class="fa-solid fa-magnifying-glass-chart text-5xl text-blue-500"></i>
-                </div>
-                <div class="absolute top-2 right-2 w-4 h-4 bg-blue-400 rounded-full animate-ping"></div>
-              </div>
-              
-              <!-- Main message -->
-              <h3 class="text-2xl font-bold text-gray-800 mb-4">Chưa có cuộc bầu cử nào</h3>
-              <p class="text-gray-500 text-lg leading-relaxed mb-8">
-                Bạn chưa là ứng viên của cuộc bầu cử nào. Hãy chờ đợi hoặc liên hệ với quản trị viên để biết thêm thông tin.
-              </p>
-              
-              <!-- Decorative elements -->
-              <div class="flex justify-center space-x-2 mb-6">
-                <div class="w-8 h-2 bg-gradient-to-r from-primary to-blue-400 rounded-full"></div>
-                <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
-              </div>
-              
-              <!-- Call to action -->
-              <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
-                <p class="text-sm text-blue-800 font-medium">
-                  <i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i>
-                  Mẹo: Bạn có thể làm mới trang để kiểm tra cuộc bầu cử mới
-                </p>
-              </div>
-            </div>
-          </div>
-        </ng-template>
-      </ng-container>
-    </nz-spin>
+    </ng-template>
+  </ng-container>
 </div>
 
-<app-detail-ctv [isVisibleDetail]="isVisibleDetail" [idCtv]="idCtv" (visiblePopUpDetail)="handleChangeDetailVisible($event)"></app-detail-ctv>
+<app-detail-ctv
+  [isVisibleDetail]="isVisibleDetail"
+  [idCtv]="idCtv"
+  (visiblePopUpDetail)="handleChangeDetailVisible($event)"
+></app-detail-ctv>
