@@ -43,17 +43,16 @@
 // Modern Search Form Styles
 .search-form {
   position: relative;
-  
-  // Form fields container with improved layout
+    // Form fields container with compact layout
   .form-fields-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-bottom: 2rem;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
     
     @media (max-width: 768px) {
       grid-template-columns: 1fr;
-      gap: 1.5rem;
+      gap: 1rem;
     }
   }
 
@@ -84,13 +83,12 @@
             transform: translateY(-2px);
           }
             .mat-mdc-form-field-flex {
-            padding: 0 16px;
-              .mat-mdc-form-field-infix {
-              padding: 16px 0;
+            padding: 0 16px;            .mat-mdc-form-field-infix {
+              padding: 12px 0;
               min-height: auto;
               
               input, .mat-mdc-select-trigger {
-                font-size: 16px;
+                font-size: 15px;
                 font-weight: 500;
                 color: #1f2937;
                 background: transparent;
@@ -103,15 +101,14 @@
             }
           }
         }
-        
-        .mat-mdc-floating-label {
-          font-size: 14px;
+          .mat-mdc-floating-label {
+          font-size: 13px;
           font-weight: 600;
           color: #6b7280;
           
           &.mdc-floating-label--float-above {
             color: #3b82f6;
-            font-size: 12px;
+            font-size: 11px;
           }
         }
         
@@ -129,10 +126,9 @@
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         border: 1px solid #e5e7eb;
         overflow: hidden;
-        
-        .mat-mdc-option {
-          padding: 12px 16px;
-          font-size: 15px;
+          .mat-mdc-option {
+          padding: 10px 14px;
+          font-size: 14px;
           font-weight: 500;
           transition: all 0.2s ease;
           
@@ -145,20 +141,19 @@
             color: #1d4ed8;
             font-weight: 600;
           }
-        }      }}
+        }}}
   }
-
-  // Action buttons container with enhanced styling
+  // Action buttons container with compact styling
   .form-actions {
     display: flex;
-    gap: 1rem;
+    gap: 0.75rem;
     justify-content: center;
     align-items: center;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     
     @media (max-width: 640px) {
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.5rem;
     }
     
     .search-btn, .cancel-btn {
@@ -166,10 +161,10 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
-      padding: 14px 32px;
-      border-radius: 12px;
-      font-size: 15px;
+      gap: 0.4rem;
+      padding: 12px 28px;
+      border-radius: 10px;
+      font-size: 14px;
       font-weight: 600;
       letter-spacing: 0.025em;
       border: none;
