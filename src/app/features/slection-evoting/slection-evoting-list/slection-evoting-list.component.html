@@ -1,73 +1,93 @@
-<div class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen w-full p-8">
-      <div class="mb-10 flex justify-between items-center">
-          <div class="flex items-center space-x-4">
-            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center shadow-lg">
-              <i class="fa-solid fa-vote-yea text-white text-xl"></i>
-            </div>
-            <h3 class="uppercase text-primary text-2xl font-bold tracking-wide">TIẾN HÀNH BẦU CỬ</h3>
-          </div>
-      </div><div class="bg-white pt-8 pb-8 px-8 mb-12 rounded-2xl shadow-xl border border-gray-100">
-          <div class="mb-8">
-            <div class="flex items-center space-x-3 mb-3">
-              <div class="w-8 h-8 bg-gradient-to-r from-primary to-blue-500 rounded-lg flex items-center justify-center">
-                <i class="fa-solid fa-search text-white text-sm"></i>
-              </div>
-              <h4 class="text-xl font-bold text-gray-800">Tìm kiếm cuộc bầu cử</h4>
-            </div>
-            <div class="w-20 h-1 bg-gradient-to-r from-primary to-blue-400 rounded-full"></div>
-          </div>
-            <ng-container>
-            <form [formGroup]="form" class="search-form">
-              <!-- Form fields row -->
-              <div class="form-fields-row">
-                <mat-form-field class="custom-input form-field" appearance="outline">
-                  <mat-label>Tên cuộc bầu cử</mat-label>
-                  <input formControlName="name" matInput placeholder="Nhập tên cuộc bầu cử..." />
-                </mat-form-field>
-                
-                <mat-form-field class="custom-input form-field" appearance="outline">
-                  <mat-label>Trạng thái</mat-label>
-                  <mat-select formControlName="status">
-                    <mat-option *ngFor="let status of listStatus" [value]="status.value">
-                      {{ status.label }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              
-              <!-- Action buttons row -->
-              <div class="form-actions">
-                <button type="button" (click)="handleSearch()" class="search-btn btn-primary">
-                  <i class="fa-solid fa-search"></i>
-                  <span>Tìm kiếm</span>
-                </button>
-                <button type="button" (click)="handleCancel()" class="cancel-btn btn-secondary">
-                  <i class="fa-solid fa-times"></i>
-                  <span>Hủy bỏ</span>
-                </button>
-              </div>
-            </form>
-          </ng-container></div>
-          <!-- Elections List Header -->
-      <div class="mb-8 flex justify-start items-center">
-        <div class="flex items-center space-x-4">
-          <div class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-500 rounded-xl flex items-center justify-center shadow-lg">
-            <i class="fa-solid fa-list-check text-white text-xl"></i>
-          </div>
-          <div>
-            <h3 class="text-gray-800 text-2xl font-bold">Danh sách cuộc bầu cử</h3>
-            <p class="text-gray-500 text-sm mt-1">Các cuộc bầu cử mà bạn có quyền tham gia</p>
-          </div>
+<div class="min-h-screen bg-gradient-to-br from-teal-50 to-blue-50 p-6 md:p-10">
+  <!-- Header Section -->
+  <div class="flex flex-wrap items-center justify-between mb-8">
+    <div class="flex items-center mb-4 md:mb-0">
+      <div class="bg-primary p-3 rounded-xl shadow-lg mr-4">
+        <i class="fas fa-vote-yea text-white text-xl"></i>
+      </div>
+      <div>
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-800">
+          Tiến hành Bầu cử
+        </h1>
+        <p class="text-gray-500 mt-1">
+          Tham gia và bỏ phiếu trong các cuộc bầu cử
+        </p>
+      </div>
+    </div>
+  </div><!-- Search & Filter Section -->
+  <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+    <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+      <i class="fas fa-search text-primary mr-2"></i>
+      <span>Tìm kiếm & Lọc</span>
+    </h2>
+
+    <form
+      [formGroup]="form"
+      class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end"
+    >
+      <!-- Search by name -->
+      <div class="form-group">
+        <label class="block text-sm font-medium text-gray-700 mb-1"
+          >Tên cuộc bầu cử</label
+        >
+        <div class="relative">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <i class="fas fa-signature"></i>
+          </span>          <input
+            formControlName="name"
+            class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none transition-colors h-11"
+            placeholder="Nhập tên cuộc bầu cử..."
+          />
         </div>
       </div>
-      
-      <!-- Loading State -->
-      <div *ngIf="isLoadingOK" class="py-24 flex justify-center items-center">
-          <div class="flex flex-col items-center">
-              <div class="h-16 w-16 rounded-full border-4 border-t-primary border-r-primary border-b-gray-200 border-l-gray-200 animate-spin mb-4"></div>
-              <p class="text-gray-500 animate-pulse">Đang tải danh sách cuộc bầu cử...</p>
-          </div>
+
+      <!-- Status filter -->
+      <div class="form-group">
+        <label class="block text-sm font-medium text-gray-700 mb-1"
+          >Trạng thái</label
+        >
+        <div class="relative">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <i class="fas fa-flag"></i>
+          </span>          <select
+            formControlName="status"
+            class="w-full pl-10 pr-10 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none appearance-none transition-colors h-11"
+          >
+            <option value="">Tất cả trạng thái</option>
+            <option *ngFor="let status of listStatus" [value]="status.value">
+              {{ status.label }}
+            </option>
+          </select>
+          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <i class="fas fa-chevron-down"></i>
+          </span>
+        </div>
       </div>
+
+      <!-- Action buttons -->
+      <div class="form-group flex gap-3">        <button
+          (click)="handleSearch()"
+          class="flex-1 bg-primary hover:bg-primary-dark text-white px-4 py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2 font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
+        >
+          <i class="fas fa-search"></i>
+          <span>Tìm kiếm</span>
+        </button>
+        <button
+          (click)="handleCancel()"
+          class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2 font-medium focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50"
+        >
+          <i class="fas fa-times"></i>
+          <span>Huỷ bỏ</span>
+        </button>
+      </div>
+    </form>
+  </div>  <!-- Loading State -->
+  <div *ngIf="isLoadingOK" class="flex justify-center items-center py-20">
+    <div class="text-center">
+      <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-4"></div>
+      <p class="text-gray-500">Đang tải danh sách cuộc bầu cử...</p>
+    </div>
+  </div>
       
       <!-- Elections List Content -->
       <ng-container *ngIf="!isLoadingOK">
