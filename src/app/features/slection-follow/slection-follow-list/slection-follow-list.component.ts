@@ -47,20 +47,21 @@ export class SlectionFollowListComponent {
   public nameEvoting: any = '';
   public numberVote: any;
   public idSlectionManagement: any = '';
-  public listUserManagements: any = [];
-  public listVote: any = []
+  public listUserManagements: any = [];  public listVote: any = [];
+  public filteredListVote: any[] = []; // Danh sách đã được lọc
+  public originalListVote: any[] = []; // Danh sách gốc để backup
   public listStatus: any = [
     {
       label: 'Chưa bắt đầu',
-      value: '1'
+      value: '0'
     },
     {
       label: 'Đang diễn ra',
-      value: '2'
+      value: '1'
     },
     {
       label: 'Đã kết thúc',
-      value: '3'
+      value: '2'
     },
   ];
   public searchQuery: string = '';
@@ -96,14 +97,17 @@ export class SlectionFollowListComponent {
         this.isLoading = false;
         if(res.data.length === 0) {
           this.listVote = [];
-        } else {
-          this.listVote = res.data.map((vote: any) => {
+        } else {          this.listVote = res.data.map((vote: any) => {
             return {
               ...vote,
               candidates: [], // Khởi tạo danh sách ứng viên
               voters: []      // Khởi tạo danh sách cử tri
             };
           });
+          
+          // Backup dữ liệu gốc để tìm kiếm
+          this.originalListVote = [...this.listVote];
+          this.filteredListVote = [...this.listVote];
           
           // Tải danh sách ứng viên và cử tri cho mỗi cuộc bầu cử
           this.listVote.forEach((vote: any) => {
@@ -152,9 +156,27 @@ export class SlectionFollowListComponent {
   handleCancel() {
     this.form.reset({ emitEvent: true });
     this.handleSearch();
-  }
+  }  handleSearch() {
+    const formValue = this.form.value;
+    const nameFilter = formValue.name?.toLowerCase().trim() || '';
+    const statusFilter = formValue.status;
 
-  handleSearch() {
+    // Nếu không có bộ lọc nào, hiển thị tất cả
+    if (!nameFilter && !statusFilter) {
+      this.filteredListVote = [...this.originalListVote];
+      return;
+    }
 
+    // Lọc dữ liệu dựa trên các tiêu chí
+    this.filteredListVote = this.originalListVote.filter(vote => {
+      const matchesName = !nameFilter || 
+        vote.voteName?.toLowerCase().includes(nameFilter) ||
+        vote.tenure?.toLowerCase().includes(nameFilter) ||
+        vote.description?.toLowerCase().includes(nameFilter);
+      
+      const matchesStatus = !statusFilter || vote.status === statusFilter;
+
+      return matchesName && matchesStatus;
+    });
   }
 }

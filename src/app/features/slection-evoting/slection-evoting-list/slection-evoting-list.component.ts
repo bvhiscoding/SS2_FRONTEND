@@ -47,20 +47,25 @@ export class SlectionEvotingListComponent {
   public idCtv: any = '';
   public idEvoting: any = '';
   public nameEvoting: any = '';
-  public numberVote: any;
-  public mode: 'create' | 'edit' = 'create';
+  public numberVote: any;  public mode: 'create' | 'edit' = 'create';
   public totalCount: number = 10;
   public idSlectionManagement: any = '';
   public listUserManagements: any = [];
   public listVote: any[] = [];
+  public filteredListVote: any[] = []; // Danh sách đã được lọc
+  public originalListVote: any[] = []; // Danh sách gốc để backup
   public listStatus: any[] = [
     {
-      label: 'Đang hoạt động',
-      value: 'Active'
+      label: 'Chưa bắt đầu',
+      value: '0'
     },
     {
-      label: 'Hết hạn',
-      value: 'Disable'
+      label: 'Đang diễn ra',
+      value: '1'
+    },
+    {
+      label: 'Đã kết thúc',
+      value: '2'
     },
   ];
   public searchQuery: string = '';
@@ -102,13 +107,15 @@ export class SlectionEvotingListComponent {
           this.isVotersLoading = false;
           this.cdr.detectChanges();
           return;
-        }
-
-        this.listVote = res.data.map((vote: any) => ({
+        }        this.listVote = res.data.map((vote: any) => ({
           ...vote,
           candidates: [], 
           voters: []      
         }));
+        
+        // Backup dữ liệu gốc để tìm kiếm
+        this.originalListVote = [...this.listVote];
+        this.filteredListVote = [...this.listVote];
         
         // Tạo mảng các Promise để xử lý song song các API call
         const candidatePromises = this.listVote.map((vote: any) => 
@@ -193,13 +200,32 @@ export class SlectionEvotingListComponent {
   handleChangeDetailVisible(data: any) {
     this.isVisibleDetail = data.visible;
   }
-
   handleCancel() {
     this.form.reset({ emitEvent: true });
     this.handleSearch();
   }
 
   handleSearch() {
+    const searchName = this.form.get('name')?.value?.toLowerCase().trim() || '';
+    const searchStatus = this.form.get('status')?.value || '';
 
+    // Nếu không có dữ liệu gốc, sử dụng listVote hiện tại
+    const dataToFilter = this.originalListVote.length > 0 ? this.originalListVote : this.listVote;
+
+    this.filteredListVote = dataToFilter.filter((vote: any) => {
+      // Lọc theo tên
+      const matchName = !searchName || 
+        vote.voteName?.toLowerCase().includes(searchName) ||
+        vote.tenure?.toLowerCase().includes(searchName);
+
+      // Lọc theo trạng thái
+      const matchStatus = !searchStatus || vote.status === searchStatus;
+
+      return matchName && matchStatus;
+    });
+
+    // Cập nhật listVote để hiển thị
+    this.listVote = [...this.filteredListVote];
+    this.cdr.detectChanges();
   }
 }

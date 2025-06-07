@@ -91,9 +91,8 @@
   </div>
 
   <!-- Elections List Content -->
-  <ng-container *ngIf="!isLoadingOK">
-    <ng-container *ngIf="listVote.length > 0; else noVotes">
-      <ng-container *ngFor="let slection of listVote; let i = index">
+  <ng-container *ngIf="!isLoadingOK">    <ng-container *ngIf="filteredListVote.length > 0; else noVotes">
+      <ng-container *ngFor="let slection of filteredListVote; let i = index">
         <div
           class="flex flex-col w-full mb-8 bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-100 hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1"
         >

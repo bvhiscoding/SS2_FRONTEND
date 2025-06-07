@@ -107,9 +107,8 @@
 
   <!-- Elections List -->
   <div *ngIf="!isLoadingOK" class="space-y-6">
-    <!-- Empty State -->
-    <div
-      *ngIf="!listVote || listVote.length === 0"
+    <!-- Empty State -->    <div
+      *ngIf="!filteredListVote || filteredListVote.length === 0"
       class="bg-white rounded-xl shadow-lg p-12 text-center"
     >
       <div
@@ -129,9 +128,8 @@
       </button>
     </div>
 
-    <!-- Election Cards -->
-    <div
-      *ngFor="let election of listVote; let i = index"
+    <!-- Election Cards -->    <div
+      *ngFor="let election of filteredListVote; let i = index"
       class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
     >
       <!-- Card Header -->

@@ -52,6 +52,8 @@ export class SlectionManagementListComponent implements OnInit{
   public nameSlection: any = '';
   public selectedView: string = 'candidate'; 
   public listVote: any[] = [];
+  public filteredListVote: any[] = []; // Danh sách đã được lọc
+  public originalListVote: any[] = []; // Danh sách gốc để backup
   public isCandidatesLoading: boolean = true;
   public isVotersLoading: boolean = true;
   get isLoadingOK(): boolean {
@@ -125,13 +127,15 @@ export class SlectionManagementListComponent implements OnInit{
           this.isVotersLoading = false;
           this.cdr.detectChanges();
           return;
-        }
-
-        this.listVote = res.data.map((vote: any) => ({
+        }        this.listVote = res.data.map((vote: any) => ({
           ...vote,
           candidates: [], 
           voters: []      
         }));
+        
+        // Backup dữ liệu gốc để tìm kiếm
+        this.originalListVote = [...this.listVote];
+        this.filteredListVote = [...this.listVote];
         
         // Tạo mảng các Promise để xử lý song song các API call
         const candidatePromises = this.listVote.map((vote: any) => 
@@ -145,9 +149,7 @@ export class SlectionManagementListComponent implements OnInit{
         Promise.all([...candidatePromises, ...voterPromises])
           .then(results => {
             const candidateResults = results.slice(0, this.listVote.length);
-            const voterResults = results.slice(this.listVote.length);
-
-            // Cập nhật dữ liệu ứng viên
+            const voterResults = results.slice(this.listVote.length);            // Cập nhật dữ liệu ứng viên
             candidateResults.forEach((res: any, index: number) => {
               if (res && res.data) {
                 this.listVote[index].candidates = res.data;
@@ -160,6 +162,10 @@ export class SlectionManagementListComponent implements OnInit{
                 this.listVote[index].voters = res.data;
               }
             });
+
+            // Cập nhật lại backup sau khi có đầy đủ dữ liệu
+            this.originalListVote = [...this.listVote];
+            this.filteredListVote = [...this.listVote];
 
             this.totalCount = res.totalItems;
             this.isLoading = false;
@@ -234,10 +240,28 @@ export class SlectionManagementListComponent implements OnInit{
   handleCancel() {
     this.form.reset({ emitEvent: true });
     this.handleSearch();
-  }
+  }  handleSearch() {
+    const formValue = this.form.value;
+    const nameFilter = formValue.name?.toLowerCase().trim() || '';
+    const statusFilter = formValue.status;
 
-  handleSearch() {
+    // Nếu không có bộ lọc nào, hiển thị tất cả
+    if (!nameFilter && !statusFilter) {
+      this.filteredListVote = [...this.originalListVote];
+      return;
+    }
 
+    // Lọc dữ liệu dựa trên các tiêu chí
+    this.filteredListVote = this.originalListVote.filter(vote => {
+      const matchesName = !nameFilter || 
+        vote.voteName?.toLowerCase().includes(nameFilter) ||
+        vote.tenure?.toLowerCase().includes(nameFilter) ||
+        vote.description?.toLowerCase().includes(nameFilter);
+      
+      const matchesStatus = !statusFilter || vote.status === statusFilter;
+
+      return matchesName && matchesStatus;
+    });
   }
 
   // Check if there are more than 3 participants to show scroll indicator
