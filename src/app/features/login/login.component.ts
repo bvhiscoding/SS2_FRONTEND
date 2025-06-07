@@ -199,7 +199,6 @@ export class LoginComponent implements OnInit {
     this.OAuthService.tokenValidationHandler = new JwksValidationHandler();
     this.OAuthService.loadDiscoveryDocumentAndTryLogin();
   }
-
   hide: boolean = true;
   showPass(e: any) {
     const inputPass = document.querySelector('#inputPass') as HTMLInputElement;
@@ -210,6 +209,12 @@ export class LoginComponent implements OnInit {
     } else {
       inputPass.type = 'password';
       this.hide = true;
+    }
+  }
+  onEnterPressed(event: Event) {
+    event.preventDefault();
+    if (!this.isLoading && this.formLogin.valid) {
+      this.login();
     }
   }
   forgotPassword() {}
