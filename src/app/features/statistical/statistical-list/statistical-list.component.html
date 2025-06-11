@@ -5,8 +5,8 @@
           <i class="fas fa-chart-line text-white text-xl"></i>
       </div>
       <div>
-          <h2 class="text-2xl font-bold text-gray-800">Thống kê</h2>
-          <p class="text-gray-500">Tổng quan về hoạt động bầu cử</p>
+          <h2 class="text-2xl font-bold text-gray-800">{{'Statistics.title'| translate }}</h2>
+          <p class="text-gray-500">{{'Statistics.overview'| translate }}</p>
       </div>
   </div>
   
@@ -17,7 +17,7 @@
           <div class="bg-white rounded-xl shadow-lg p-6 h-full">
               <h3 class="text-lg font-semibold flex items-center mb-4 text-primary">
                   <i class="fas fa-list-ul mr-2"></i>
-                  <span>Các cuộc bầu cử mới nhất</span>
+                  <span>{{'Statistics.latestElections'| translate }}</span>
               </h3>
               
               <div class="divide-y divide-gray-100 max-h-[500px] overflow-auto pr-2">
@@ -40,9 +40,9 @@
                               'bg-yellow-100 text-yellow-800': election.status === '0',
                               'bg-red-100 text-red-800': election.status === '2'
                           }" class="px-3 py-1 rounded-full text-xs font-medium">
-                              {{election.status === '1' ? 'Đang diễn ra' : 
-                                 election.status === '2' ? 'Đã kết thúc' : 
-                                 election.status === '0' ? 'Chưa bắt đầu' : ''}}
+                              {{election.status === '1' ? ('Statistics.ongoing'| translate) : 
+                                 election.status === '2' ? ('Statistics.completed'| translate) : 
+                                 election.status === '0' ? ('Statistics.notStarted'| translate) : ''}}
                           </div>
                       </div>
                   </div>
@@ -58,7 +58,7 @@
               <div class="flex justify-between items-center mb-6">
                   <h3 class="text-lg font-semibold text-primary flex items-center">
                       <i class="fas fa-chart-pie mr-2"></i>
-                      <span>Biểu đồ thống kê</span>
+                      <span>{{'Statistics.chartStatistics'| translate }}</span>
                   </h3>
                   
                   <div class="flex gap-3">
@@ -86,7 +86,7 @@
               <!-- Empty State -->
               <div *ngIf="!listDetailVote || listDetailVote.length === 0" class="flex flex-col items-center justify-center py-12 text-gray-400">
                   <i class="fas fa-chart-bar text-5xl mb-4 opacity-30"></i>
-                  <p>Chọn một cuộc bầu cử để xem thống kê chi tiết</p>
+                  <p>{{'Statistics.selectElectionToView'| translate }}</p>
               </div>
           </div>
           
@@ -98,11 +98,11 @@
                       <i class="fas fa-users text-white text-xl"></i>
                   </div>
                   <div class="p-4 flex-1">
-                      <h4 class="text-sm text-gray-500 font-medium">Người dùng</h4>
+                      <h4 class="text-sm text-gray-500 font-medium">{{'Statistics.users'| translate }}</h4>
                       <div class="flex items-center">
                           <span class="text-xl font-bold">{{totalUser}}</span>
                           <a [routerLink]="['/user-management/list']" class="ml-2 text-xs text-blue-600 hover:underline">
-                              (Chi tiết)
+                              ({{'Statistics.details'| translate }})
                           </a>
                       </div>
                   </div>
@@ -114,11 +114,11 @@
                       <i class="fas fa-book-open-reader text-white text-xl"></i>
                   </div>
                   <div class="p-4 flex-1">
-                      <h4 class="text-sm text-gray-500 font-medium">Chức vụ</h4>
+                      <h4 class="text-sm text-gray-500 font-medium">{{'Statistics.positions'| translate }}</h4>
                       <div class="flex items-center">
                           <span class="text-xl font-bold">{{totalPosition}}</span>
                           <a [routerLink]="['/level-management/list']" class="ml-2 text-xs text-green-600 hover:underline">
-                              (Chi tiết)
+                              ({{'Statistics.details'| translate }})
                           </a>
                       </div>
                   </div>
@@ -130,11 +130,11 @@
                       <i class="fas fa-sitemap text-white text-xl"></i>
                   </div>
                   <div class="p-4 flex-1">
-                      <h4 class="text-sm text-gray-500 font-medium">Cuộc bầu cử</h4>
+                      <h4 class="text-sm text-gray-500 font-medium">{{'Statistics.elections'| translate }}</h4>
                       <div class="flex items-center">
                           <span class="text-xl font-bold">{{totalListVote}}</span>
                           <a [routerLink]="['/slection-management/list']" class="ml-2 text-xs text-yellow-600 hover:underline">
-                              (Chi tiết)
+                              ({{'Statistics.details'| translate }})
                           </a>
                       </div>
                   </div>
@@ -145,7 +145,7 @@
           <div class="bg-white rounded-xl shadow-lg p-6">
               <h3 class="text-lg font-semibold text-primary flex items-center mb-4">
                   <i class="far fa-calendar-alt mr-2"></i>
-                  <span>Lịch bầu cử</span>
+                  <span>{{'Statistics.electionCalendar'| translate }}</span>
               </h3>
               <app-sheducer [slectionArray]="slectionArray"></app-sheducer>
           </div>

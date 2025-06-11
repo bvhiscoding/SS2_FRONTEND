@@ -4,6 +4,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sheducer',
@@ -12,7 +13,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
-    FullCalendarModule
+    FullCalendarModule,
+    TranslateModule
   ],
   templateUrl: './sheducer.component.html',
   styleUrls: ['./sheducer.component.scss']

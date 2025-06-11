@@ -12,6 +12,7 @@ import {
   NgApexchartsModule,
   ApexStroke
 } from "ng-apexcharts";
+import { TranslateService } from '@ngx-translate/core';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -39,11 +40,11 @@ export class ChartColumnsComponent implements OnChanges {
   @Input() listDetailVote: any;
   public chartOptions: Partial<ChartOptions>;
 
-  constructor() {
+  constructor(private translate: TranslateService) {
     this.chartOptions = {
       series: [
         {
-          name: "Số lượng phiếu bầu",
+          name: this.translate.instant('Statistics.voteCount'),
           data: []
         }
       ],
@@ -121,9 +122,8 @@ export class ChartColumnsComponent implements OnChanges {
             return val.toString();
           }
         }
-      },
-      title: {
-        text: "Biểu đồ cột thống kê số lượng phiếu bầu cử",
+      },      title: {
+        text: this.translate.instant('Statistics.chartStatistics'),
         floating: true,
         offsetY: 330,
         align: "center",
@@ -132,8 +132,7 @@ export class ChartColumnsComponent implements OnChanges {
         }
       }
     };
-  }
-  ngOnChanges(changes: SimpleChanges): void {
+  }  ngOnChanges(changes: SimpleChanges): void {
     if (changes['listDetailVote'] && this.listDetailVote) {
       const candidateNames = this.listDetailVote.map((candidate: any) => candidate.fullName);
       const totalBallots = this.listDetailVote.map((candidate: any) => candidate.totalBallot);
@@ -145,10 +144,19 @@ export class ChartColumnsComponent implements OnChanges {
         },
         series: [
           {
-            ...this.chartOptions?.series,
+            name: this.translate.instant('Statistics.voteCount'),
             data: totalBallots,
           },
         ],
+        title: {
+          text: this.translate.instant('Statistics.chartStatistics'),
+          floating: true,
+          offsetY: 330,
+          align: "center",
+          style: {
+            color: "#444"
+          }
+        }
       };
     }
   }

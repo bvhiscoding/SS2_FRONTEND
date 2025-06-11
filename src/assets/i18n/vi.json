@@ -1,5 +1,4 @@
-{
-  "Menu": {
+{  "Menu": {
     "unit": "Đơn vị",
     "task": "Công việc",
     "info": "Channel Information",
@@ -14,7 +13,32 @@
     "organization": "Tổ chức",
     "tenant": "Tổ chức",
     "userInfor": "Thông tin cá nhân",
-    "userManagement": "Quản lý người dùng"
+    "userManagement": "Quản lý người dùng",
+    "statistics": "Thống kê",
+    "proceedVoting": "Tiến hành bầu cử",
+    "followElection": "Theo dõi bầu cử",
+    "electionManagement": "Quản lý cuộc bầu cử",
+    "positionManagement": "Quản lý chức vụ",    "systemSettings": "Cài đặt hệ thống",
+    "logout": "Đăng xuất",    "administrator": "Quản trị viên",
+    "user": "Người dùng"
+  },
+  "Statistics": {
+    "title": "Thống kê",
+    "overview": "Tổng quan về hoạt động bầu cử",
+    "latestElections": "Các cuộc bầu cử mới nhất",
+    "chartStatistics": "Biểu đồ thống kê",
+    "selectElectionToView": "Chọn một cuộc bầu cử để xem thống kê chi tiết",
+    "users": "Người dùng",
+    "positions": "Chức vụ",
+    "elections": "Cuộc bầu cử",
+    "details": "Chi tiết",    "electionCalendar": "Lịch bầu cử",
+    "ongoing": "Đang diễn ra",
+    "completed": "Đã kết thúc",
+    "notStarted": "Chưa bắt đầu",    "calendarDetails": "Chi tiết lịch",
+    "electionName": "Tên cuộc bầu cử",
+    "startDate": "Ngày bắt đầu",
+    "voteCount": "Số lượng phiếu bầu",
+    "candidate": "Ứng cử viên"
   },
   "UnitItem": {
     "unfinished": "Chưa hoàn thành",

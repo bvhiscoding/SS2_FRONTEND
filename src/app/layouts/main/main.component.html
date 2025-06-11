@@ -14,10 +14,9 @@
           <!-- Online Status Indicator -->
           <div class="absolute bottom-1 right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white shadow-sm animate-pulse"></div>
         </div>
-          <div class="text-center">
-          <h3 class="text-lg font-semibold text-gray-800 mb-1">{{userName}}</h3>
-          <p class="text-sm text-gray-500" *ngIf="canActive">Administrator</p>
-          <p class="text-sm text-gray-500" *ngIf="!canActive">User</p>
+          <div class="text-center">          <h3 class="text-lg font-semibold text-gray-800 mb-1">{{userName}}</h3>
+          <p class="text-sm text-gray-500" *ngIf="canActive">{{'Menu.administrator'| translate }}</p>
+          <p class="text-sm text-gray-500" *ngIf="!canActive">{{'Menu.user'| translate }}</p>
         </div>
       </div>
       
@@ -37,8 +36,7 @@
         </div>
       </div>
     </div>    <!-- Menu Container -->
-    <div class="sidebar-menu-container">
-      <!-- Admin Menu Section -->
+    <div class="sidebar-menu-container">      <!-- Admin Menu Section -->
       <div *ngIf="canActive">
         <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" class="custom-menu">
           <li nz-menu-item [routerLink]="['/', 'statistical']" nzMatchRouter>
@@ -46,7 +44,7 @@
               <div class="menu-icon">
                 <i class="fa-solid fa-chart-simple"></i>
               </div>
-              <span class="menu-text">Thống kê</span>
+              <span class="menu-text">{{'Menu.statistics'| translate }}</span>
             </div>
           </li>
           
@@ -64,7 +62,7 @@
               <div class="menu-icon">
                 <i class="fa-solid fa-check-to-slot"></i>
               </div>
-              <span class="menu-text">Tiến hành bầu cử</span>
+              <span class="menu-text">{{'Menu.proceedVoting'| translate }}</span>
             </div>
           </li>
           
@@ -73,7 +71,7 @@
               <div class="menu-icon">
                 <i class="fa-solid fa-magnifying-glass-chart"></i>
               </div>
-              <span class="menu-text">Theo dõi bầu cử</span>
+              <span class="menu-text">{{'Menu.followElection'| translate }}</span>
             </div>
           </li>
           
@@ -82,7 +80,7 @@
               <div class="menu-icon">
                 <i class="fa-solid fa-sitemap"></i>
               </div>
-              <span class="menu-text">Quản lý cuộc bầu cử</span>
+              <span class="menu-text">{{'Menu.electionManagement'| translate }}</span>
             </div>
           </li>
             <li nz-menu-item [routerLink]="['/', 'level-management']" nzMatchRouter>
@@ -90,7 +88,7 @@
               <div class="menu-icon">
                 <i class="fa-solid fa-book-open-reader"></i>
               </div>
-              <span class="menu-text">Quản lý chức vụ</span>
+              <span class="menu-text">{{'Menu.positionManagement'| translate }}</span>
             </div>
           </li>
           
@@ -110,7 +108,7 @@
                   <div class="menu-icon">
                     <i class="fa-solid fa-bullhorn"></i>
                   </div>
-                  <span class="menu-text">Cài đặt hệ thống</span>
+                  <span class="menu-text">{{'Menu.systemSettings'| translate }}</span>
                 </div>
               </li>
             </ul>
@@ -124,7 +122,7 @@
               <div class="menu-icon">
                 <i class="fa-solid fa-chart-simple"></i>
               </div>
-              <span class="menu-text">Thống kê</span>
+              <span class="menu-text">{{'Menu.statistics'| translate }}</span>
             </div>
           </li>
           
@@ -133,7 +131,7 @@
               <div class="menu-icon">
                 <i class="fa-solid fa-check-to-slot"></i>
               </div>
-              <span class="menu-text">Tiến hành bầu cử</span>
+              <span class="menu-text">{{'Menu.proceedVoting'| translate }}</span>
             </div>
           </li>
             <li nz-menu-item [routerLink]="['/', 'slection-follow']" nzMatchRouter>
@@ -141,7 +139,7 @@
               <div class="menu-icon">
                 <i class="fa-solid fa-magnifying-glass-chart"></i>
               </div>
-              <span class="menu-text">Theo dõi bầu cử</span>
+              <span class="menu-text">{{'Menu.followElection'| translate }}</span>
             </div>
           </li>
           
@@ -161,20 +159,18 @@
                   <div class="menu-icon">
                     <i class="fa-solid fa-bullhorn"></i>
                   </div>
-                  <span class="menu-text">Cài đặt hệ thống</span>
+                  <span class="menu-text">{{'Menu.systemSettings'| translate }}</span>
                 </div>
               </li>
             </ul>
           </li>
         </ul>
       </div>
-    </div>
-
-    <!-- Enhanced Footer with Logout Button -->
+    </div>    <!-- Enhanced Footer with Logout Button -->
     <div class="sidebar-footer">
       <button class="logout-button" (click)="handleLogout()">
         <i class="fa-solid fa-sign-out-alt"></i>
-        <span>Đăng xuất</span>
+        <span>{{'Menu.logout'| translate }}</span>
       </button>
     </div>
   </nz-sider>

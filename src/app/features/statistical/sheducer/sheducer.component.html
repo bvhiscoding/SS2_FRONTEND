@@ -2,14 +2,14 @@
 
 <!-- Hiển thị form khi có sự kiện được chọn -->
 <div *ngIf="selectedEvent" class="p-[20px] border rounded-lg bg-[#f9f9f9] mt-[20px]">
-    <h3 class="mb-[15px] text-[16px] font-semibold text-primary">Chi tiết lịch</h3>
+    <h3 class="mb-[15px] text-[16px] font-semibold text-primary">{{'Statistics.calendarDetails'| translate }}</h3>
     <form class="flex flex-col gap-[10px]">
       <div>
-        <label class="font-medium text-[#000]" for="title">Tên cuộc bầu cử:</label>
+        <label class="font-medium text-[#000]" for="title">{{'Statistics.electionName'| translate }}:</label>
         <input class="w-full p-[8px] border rounded-lg mt-[5px]" type="text" id="title" [(ngModel)]="selectedEvent.title" name="title" disabled />
       </div>
       <div>
-        <label class="font-medium text-[#000]" for="start">Ngày bắt đầu:</label>
+        <label class="font-medium text-[#000]" for="start">{{'Statistics.startDate'| translate }}:</label>
         <input class="w-full p-[8px] border rounded-lg mt-[5px]" type="text" id="start" [(ngModel)]="selectedEvent.start" name="start" disabled />
       </div>
     </form>

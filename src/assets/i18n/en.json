@@ -1,5 +1,4 @@
-{
-  "Menu": {
+{  "Menu": {
     "unit": "Unit",
     "task": "Task",
     "info": "Channel Information",
@@ -14,7 +13,33 @@
     "organization": "Organization",
     "tenant": "Tenant",
     "userInfor": "User Information",
-    "userManagement": "User Management"
+    "userManagement": "User Management",
+    "statistics": "Statistics",
+    "proceedVoting": "Proceed Voting",
+    "followElection": "Follow Election",
+    "electionManagement": "Election Management",
+    "positionManagement": "Position Management",
+    "systemSettings": "System Settings",
+    "logout": "Logout",    "administrator": "Administrator",
+    "user": "User"
+  },
+  "Statistics": {
+    "title": "Statistics",
+    "overview": "Overview of election activities",
+    "latestElections": "Latest Elections",
+    "chartStatistics": "Chart Statistics",
+    "selectElectionToView": "Select an election to view detailed statistics",
+    "users": "Users",
+    "positions": "Positions",
+    "elections": "Elections",
+    "details": "Details",    "electionCalendar": "Election Calendar",
+    "ongoing": "Ongoing",
+    "completed": "Completed",
+    "notStarted": "Not Started",    "calendarDetails": "Calendar Details",
+    "electionName": "Election Name",
+    "startDate": "Start Date",
+    "voteCount": "Vote Count",
+    "candidate": "Candidate"
   },
   "UnitItem": {
     "unfinished": "Unfinished",

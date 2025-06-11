@@ -10,6 +10,7 @@ import { VoteService } from '../../../core/api/vote.service';
 import { Router, RouterModule } from '@angular/router';
 import { ManagermentService } from '../../../core/api/managerment.service';
 import { PositionService } from '../../../core/api/position.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-statistical-list',
@@ -21,7 +22,8 @@ import { PositionService } from '../../../core/api/position.service';
     ChartCircleComponent,
     SheducerComponent,
     PagiComponent,
-    NzSpinModule
+    NzSpinModule,
+    TranslateModule
   ],
   templateUrl: './statistical-list.component.html',
   styleUrl: './statistical-list.component.scss'
