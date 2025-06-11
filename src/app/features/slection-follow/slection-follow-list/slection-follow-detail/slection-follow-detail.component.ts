@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { PagiComponent } from '../../../../shared/components/pagi/pagi.component';
 import { ChartEvotingComponent } from '../../../slection-evoting/result-evoting/chart-evoting/chart-evoting.component';
@@ -11,13 +12,13 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-slection-follow-detail',
-  standalone: true,
-  imports: [
+  standalone: true,  imports: [
     CommonModule,
     NzSpinModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    TranslateModule,
     ChartEvotingComponent,
     ChartCircleEvotingComponent
   ],

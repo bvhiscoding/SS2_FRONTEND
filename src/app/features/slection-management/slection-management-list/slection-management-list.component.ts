@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ShareTableModule } from '../../../shared/components/share-table/share-table.module';
 import { RouterModule } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ManagermentService } from '../../../core/api/managerment.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -59,21 +59,7 @@ export class SlectionManagementListComponent implements OnInit{
   get isLoadingOK(): boolean {
     return this.isLoading || this.isCandidatesLoading || this.isVotersLoading;
   }
-
-  public listStatus: any[] = [
-    {
-      label: 'Chưa bắt đầu',
-      value: '0'
-    },
-    {
-      label: 'Đang diễn ra',
-      value: '1'
-    },
-    {
-      label: 'Đã kết thúc',
-      value: '2'
-    },
-  ];
+  public listStatus: any[] = [];
   public searchQuery: string = '';
   public role: string;
 
@@ -81,16 +67,34 @@ export class SlectionManagementListComponent implements OnInit{
     name: [''],
     status: [null],
   });
-
   constructor(
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
     private voteService: VoteService,
     private message: NzMessageService,
+    private translate: TranslateService,
   ){}
   
   ngOnInit(): void {
+    this.initStatusList();
     this.viewListVote();
+  }
+
+  initStatusList() {
+    this.listStatus = [
+      {
+        label: this.translate.instant('ElectionManagement.notStarted'),
+        value: '0'
+      },
+      {
+        label: this.translate.instant('ElectionManagement.ongoing'),
+        value: '1'
+      },
+      {
+        label: this.translate.instant('ElectionManagement.completed'),
+        value: '2'
+      },
+    ];
   }
 
   selectView(view: string): void {

@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ShareTableModule } from '../../../shared/components/share-table/share-table.module';
 import { Router, RouterModule } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ManagermentService } from '../../../core/api/managerment.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -47,23 +47,9 @@ export class SlectionFollowListComponent {
   public nameEvoting: any = '';
   public numberVote: any;
   public idSlectionManagement: any = '';
-  public listUserManagements: any = [];  public listVote: any = [];
-  public filteredListVote: any[] = []; // Danh sách đã được lọc
+  public listUserManagements: any = [];  public listVote: any = [];  public filteredListVote: any[] = []; // Danh sách đã được lọc
   public originalListVote: any[] = []; // Danh sách gốc để backup
-  public listStatus: any = [
-    {
-      label: 'Chưa bắt đầu',
-      value: '0'
-    },
-    {
-      label: 'Đang diễn ra',
-      value: '1'
-    },
-    {
-      label: 'Đã kết thúc',
-      value: '2'
-    },
-  ];
+  public listStatus: any = [];
   public searchQuery: string = '';
   public role: string;
   public isCandidatesLoading: boolean = true;
@@ -77,17 +63,35 @@ export class SlectionFollowListComponent {
     status: [null],
   });
 
-
   constructor(
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
     private router: Router,
     private voteService: VoteService,
     private message: NzMessageService,
+    private translate: TranslateService,
   ){}
   
   ngOnInit(): void {
+    this.initStatusList();
     this.viewListVote();
+  }
+
+  initStatusList() {
+    this.listStatus = [
+      {
+        label: this.translate.instant('ElectionFollow.notStarted'),
+        value: '0'
+      },
+      {
+        label: this.translate.instant('ElectionFollow.ongoing'),
+        value: '1'
+      },
+      {
+        label: this.translate.instant('ElectionFollow.completed'),
+        value: '2'
+      },
+    ];
   }
 
   viewListVote() {

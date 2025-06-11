@@ -4,40 +4,36 @@
     <div class="flex items-center mb-4 md:mb-0">
       <div class="bg-primary p-3 rounded-xl shadow-lg mr-4">
         <i class="fas fa-vote-yea text-white text-xl"></i>
-      </div>
-      <div>
+      </div>      <div>
         <h1 class="text-2xl md:text-3xl font-bold text-gray-800">
-          Quản lý Cuộc bầu cử
+          {{ 'ElectionManagement.title' | translate }}
         </h1>
         <p class="text-gray-500 mt-1">
-          Tạo và quản lý các cuộc bầu cử trong hệ thống
+          {{ 'ElectionManagement.description' | translate }}
         </p>
       </div>
-    </div>
-    <button
+    </div>    <button
       (click)="handelOpenPopUpAddSlectionManagement()"
       class="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-2 hover:-translate-y-1 font-medium"
     >
       <i class="fas fa-plus-circle"></i>
-      <span>Tạo cuộc bầu cử mới</span>
+      <span>{{ 'ElectionManagement.createNewElection' | translate }}</span>
     </button>
   </div>
 
   <!-- Search & Filter Section -->
-  <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
-    <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+  <div class="bg-white rounded-xl shadow-lg p-6 mb-8">    <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
       <i class="fas fa-search text-primary mr-2"></i>
-      <span>Tìm kiếm & Lọc</span>
+      <span>{{ 'ElectionManagement.searchAndFilter' | translate }}</span>
     </h2>
 
     <form
       [formGroup]="form"
       class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end"
-    >
-      <!-- Search by name -->
+    >      <!-- Search by name -->
       <div class="form-group">
         <label class="block text-sm font-medium text-gray-700 mb-1"
-          >Tên cuộc bầu cử</label
+          >{{ 'ElectionManagement.electionName' | translate }}</label
         >
         <div class="relative">
           <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -46,7 +42,7 @@
           <input
             formControlName="name"
             class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
-            placeholder="Nhập tên cuộc bầu cử..."
+            [placeholder]="'ElectionManagement.enterElectionName' | translate"
           />
         </div>
       </div>
@@ -54,7 +50,7 @@
       <!-- Status filter -->
       <div class="form-group">
         <label class="block text-sm font-medium text-gray-700 mb-1"
-          >Trạng thái</label
+          >{{ 'ElectionManagement.status' | translate }}</label
         >
         <div class="relative">
           <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -64,7 +60,7 @@
             formControlName="status"
             class="w-full pl-10 pr-10 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary appearance-none transition-colors"
           >
-            <option value="">Tất cả trạng thái</option>
+            <option value="">{{ 'ElectionManagement.allStatuses' | translate }}</option>
             <option *ngFor="let status of listStatus" [value]="status.value">
               {{ status.label }}
             </option>
@@ -73,41 +69,37 @@
             <i class="fas fa-chevron-down"></i>
           </span>
         </div>
-      </div>
-
-      <!-- Action buttons -->
+      </div>      <!-- Action buttons -->
       <div class="form-group flex gap-3">
         <button
           (click)="handleSearch()"
           class="flex-1 bg-primary hover:bg-primary-dark text-white px-4 py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2 font-medium"
         >
           <i class="fas fa-search"></i>
-          <span>Tìm kiếm</span>
+          <span>{{ 'ElectionManagement.search' | translate }}</span>
         </button>
         <button
           (click)="handleCancel()"
           class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2 font-medium"
         >
           <i class="fas fa-times"></i>
-          <span>Huỷ bỏ</span>
+          <span>{{ 'ElectionManagement.cancel' | translate }}</span>
         </button>
       </div>
     </form>
   </div>
-
   <!-- Loading State -->
   <div *ngIf="isLoadingOK" class="flex justify-center items-center py-20">
     <div class="text-center">
       <div
         class="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent mb-4"
       ></div>
-      <p class="text-gray-600 text-lg">Đang tải dữ liệu cuộc bầu cử...</p>
+      <p class="text-gray-600 text-lg">{{ 'ElectionManagement.loadingData' | translate }}</p>
     </div>
   </div>
 
   <!-- Elections List -->
-  <div *ngIf="!isLoadingOK" class="space-y-6">
-    <!-- Empty State -->    <div
+  <div *ngIf="!isLoadingOK" class="space-y-6">    <!-- Empty State -->    <div
       *ngIf="!filteredListVote || filteredListVote.length === 0"
       class="bg-white rounded-xl shadow-lg p-12 text-center"
     >
@@ -117,14 +109,14 @@
         <i class="fas fa-vote-yea text-gray-400 text-3xl"></i>
       </div>
       <h3 class="text-xl font-semibold text-gray-600 mb-2">
-        Chưa có cuộc bầu cử nào
+        {{ 'ElectionManagement.noElections' | translate }}
       </h3>
-      <p class="text-gray-500 mb-6">Hãy tạo cuộc bầu cử đầu tiên để bắt đầu</p>
+      <p class="text-gray-500 mb-6">{{ 'ElectionManagement.noElectionsDescription' | translate }}</p>
       <button
         (click)="handelOpenPopUpAddSlectionManagement()"
         class="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-medium"
       >
-        Tạo cuộc bầu cử mới
+        {{ 'ElectionManagement.createNewElectionBtn' | translate }}
       </button>
     </div>
 
@@ -172,9 +164,8 @@
                   >
                     <i class="fas fa-calendar-alt" aria-hidden="true"></i>
                     <div class="icon-ripple"></div>
-                  </div>
-                  <div class="detail-content">
-                    <span class="detail-label">Thời gian</span>
+                  </div>                  <div class="detail-content">
+                    <span class="detail-label">{{ 'ElectionManagement.electionTime' | translate }}</span>
                     <span class="detail-value"
                       >{{ election.startDate | date: "dd/MM/yyyy" }} -
                       {{ election.expiredDate | date: "dd/MM/yyyy" }}</span
@@ -193,9 +184,9 @@
                     <div class="icon-ripple"></div>
                   </div>
                   <div class="detail-content">
-                    <span class="detail-label">Số ứng viên tối đa</span>
+                    <span class="detail-label">{{ 'ElectionManagement.maxCandidates' | translate }}</span>
                     <span class="detail-value"
-                      >{{ election.maxCandidateVote }} ứng viên</span
+                      >{{ election.maxCandidateVote }} {{ 'ElectionManagement.candidates' | translate }}</span
                     >
                   </div>
                 </div>
@@ -235,16 +226,15 @@
                       aria-hidden="true"
                     ></i>
                     <div class="status-icon-glow"></div>
-                  </div>
-                  <div class="status-content">
-                    <span class="status-label">Trạng thái</span>
+                  </div>                  <div class="status-content">
+                    <span class="status-label">{{ 'ElectionManagement.status' | translate }}</span>
                     <span class="status-text">
                       {{
                         election.status === "1"
-                          ? "Đang diễn ra"
+                          ? ('ElectionManagement.ongoing' | translate)
                           : election.status === "2"
-                            ? "Đã kết thúc"
-                            : "Chưa bắt đầu"
+                            ? ('ElectionManagement.completed' | translate)
+                            : ('ElectionManagement.notStarted' | translate)
                       }}
                     </span>
                   </div>
@@ -306,45 +296,43 @@
 
       <!-- Card Content -->
       <div class="p-6">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <!-- General Information -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">          <!-- General Information -->
           <div class="info-section">
             <h4 class="section-title">
               <i class="fas fa-info-circle text-primary"></i>
-              <span>Thông tin chung</span>
+              <span>{{ 'ElectionManagement.generalInfo' | translate }}</span>
             </h4>
             <div class="info-list">
               <div class="info-item">
-                <span class="info-label">Nhiệm kỳ:</span>
+                <span class="info-label">{{ 'ElectionManagement.term' | translate }}:</span>
                 <span class="info-value font-semibold">{{
                   election.tenure
                 }}</span>
               </div>
               <div class="info-item">
-                <span class="info-label">Thời gian nhiệm kỳ:</span>
+                <span class="info-label">{{ 'ElectionManagement.termDuration' | translate }}:</span>
                 <span class="info-value"
                   >{{ election.startDateTenure | date: "dd/MM/yyyy" }} -
                   {{ election.endDateTenure | date: "dd/MM/yyyy" }}</span
                 >
               </div>
               <div class="info-item">
-                <span class="info-label">Số ứng viên tối đa:</span>
+                <span class="info-label">{{ 'ElectionManagement.maxCandidates' | translate }}:</span>
                 <span class="info-value">{{ election.maxCandidateVote }}</span>
               </div>
             </div>
           </div>
 
           <!-- Participants Section -->
-          <div class="lg:col-span-2">
-            <!-- Tab Navigation -->
+          <div class="lg:col-span-2">            <!-- Tab Navigation -->
             <div class="tab-navigation">              <button
                 (click)="selectView('candidate')"
                 class="tab-btn"
                 [class.active]="selectedView === 'candidate'"
-                [title]="election.candidates?.length > 3 ? 'Cuộn ngang để xem tất cả ứng viên' : ''"
+                [title]="election.candidates?.length > 3 ? ('ElectionManagement.scrollToViewAll' | translate) : ''"
               >
                 <i class="fas fa-user-tie"></i>
-                <span>Ứng viên ({{ election.candidates?.length || 0 }})</span>
+                <span>{{ 'ElectionManagement.candidates' | translate }} ({{ election.candidates?.length || 0 }})</span>
                 <small *ngIf="shouldShowScrollIndicator(election.candidates)" class="scroll-hint">
                   <i class="fas fa-arrows-alt-h"></i>
                 </small>
@@ -354,9 +342,9 @@
                 [class.active]="selectedView === 'voters'"
               >
                 <i class="fas fa-users"></i>
-                <span>Cử tri ({{ election.voters?.length || 0 }})</span>
+                <span>{{ 'ElectionManagement.voters' | translate }} ({{ election.voters?.length || 0 }})</span>
               </button>
-            </div>            <!-- Participants Grid -->
+            </div><!-- Participants Grid -->
             <div class="participants-grid">              <!-- Candidates -->
               <div
                 *ngIf="selectedView === 'candidate'"
@@ -410,13 +398,12 @@
                         <i class="fas fa-map-marker-alt text-gray-400"></i>
                         <span>{{ candidate.address?.split(", ").pop() }}</span>
                       </div>
-                    </div>
-                    <button
+                    </div>                    <button
                       (click)="openDetailPopup(candidate.id)"
                       class="detail-btn"
                     >
                       <i class="fas fa-eye"></i>
-                      <span>Xem chi tiết</span>
+                      <span>{{ 'ElectionManagement.viewDetails' | translate }}</span>
                     </button>
                   </div>
                 </div>

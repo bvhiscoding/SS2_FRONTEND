@@ -12,12 +12,11 @@
       *ngIf="isLoadingDetail && edit"
       class="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50 rounded-lg"
     >
-      <div class="flex flex-col items-center">
-        <div
+      <div class="flex flex-col items-center">        <div
           class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"
         ></div>
         <span class="text-gray-600 font-medium"
-          >Đang tải thông tin cuộc bầu cử...</span
+          >{{ 'ElectionManagementAdd.loadingElectionInfo' | translate }}</span
         >
       </div>
     </div>
@@ -26,7 +25,7 @@
       class="text-start border-b border-primary pb-2 text-primary font-medium text-[22px]"
     >
       <span>{{
-        edit === true ? "Chỉnh sửa cuộc bầu cử" : "Thêm mới cuộc bầu cử"
+        edit === true ? ('ElectionManagementAdd.editElection' | translate) : ('ElectionManagementAdd.addNewElection' | translate)
       }}</span>
     </div>
 
@@ -37,16 +36,15 @@
       <form
         [formGroup]="form"
         class="flex flex-col w-full h-fit pb-2 overflow-auto"
-      >
-        <div class="flex flex-col w-full flex-1">
-          <span class="font-medium">Tên cuộc bầu cử</span>
+      >        <div class="flex flex-col w-full flex-1">
+          <span class="font-medium">{{ 'ElectionManagementAdd.electionName' | translate }}</span>
           <mat-form-field class="custom-input" appearance="outline">
             <input matInput formControlName="name" />
           </mat-form-field>
         </div>
         <div class="flex gap-3 w-full">
           <div class="flex flex-col flex-1">
-            <span class="font-medium">Chức vụ</span>
+            <span class="font-medium">{{ 'ElectionManagementAdd.position' | translate }}</span>
             <mat-form-field class="custom-input" appearance="outline">
               <mat-select formControlName="position">
                 <div
@@ -56,7 +54,7 @@
                   <div
                     class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"
                   ></div>
-                  <span class="ml-2 text-gray-600">Đang tải chức vụ...</span>
+                  <span class="ml-2 text-gray-600">{{ 'ElectionManagementAdd.loadingPositions' | translate }}</span>
                 </div>
                 <mat-option *ngFor="let level of listLevel" [value]="level.id">
                   {{ level.positionName }}
@@ -65,15 +63,14 @@
             </mat-form-field>
           </div>
           <div class="flex flex-col flex-1">
-            <span class="font-medium">Số ứng viên tối đa được bầu</span>
+            <span class="font-medium">{{ 'ElectionManagementAdd.maxCandidatesVote' | translate }}</span>
             <mat-form-field class="custom-input" appearance="outline">
               <input matInput formControlName="number" />
             </mat-form-field>
           </div>
-        </div>
-        <div class="flex gap-3 w-full">
+        </div>        <div class="flex gap-3 w-full">
           <div class="flex flex-col flex-1">
-            <span class="font-medium">Ngày bắt đầu cuộc bầu cử</span>
+            <span class="font-medium">{{ 'ElectionManagementAdd.electionStartDate' | translate }}</span>
             <mat-form-field class="custom-input" appearance="outline">
               <input
                 formControlName="startDateSlection"
@@ -88,7 +85,7 @@
             </mat-form-field>
           </div>
           <div class="flex flex-col flex-1">
-            <span class="font-medium">Ngày kết thúc cuộc bầu cử</span>
+            <span class="font-medium">{{ 'ElectionManagementAdd.electionEndDate' | translate }}</span>
             <mat-form-field class="custom-input" appearance="outline">
               <input
                 formControlName="endDateSlection"
@@ -104,14 +101,14 @@
           </div>
         </div>
         <div class="flex flex-col w-full flex-1">
-          <span class="font-medium">Tên nhiệm kỳ</span>
+          <span class="font-medium">{{ 'ElectionManagementAdd.termName' | translate }}</span>
           <mat-form-field class="custom-input" appearance="outline">
             <input matInput formControlName="term" />
           </mat-form-field>
         </div>
         <div class="flex gap-3 w-full">
           <div class="flex flex-col flex-1">
-            <span class="font-medium">Ngày bắt đầu nhiệm kỳ</span>
+            <span class="font-medium">{{ 'ElectionManagementAdd.termStartDate' | translate }}</span>
             <mat-form-field class="custom-input" appearance="outline">
               <input
                 formControlName="startDateTerm"
@@ -126,7 +123,7 @@
             </mat-form-field>
           </div>
           <div class="flex flex-col flex-1">
-            <span class="font-medium">Ngày kết thúc nhiệm kỳ</span>
+            <span class="font-medium">{{ 'ElectionManagementAdd.termEndDate' | translate }}</span>
             <mat-form-field class="custom-input" appearance="outline">
               <input
                 formControlName="endDateTerm"
@@ -140,9 +137,8 @@
               <mat-datepicker #picker4></mat-datepicker>
             </mat-form-field>
           </div>
-        </div>
-        <div class="flex flex-col w-full">
-          <span class="font-medium">Danh sách các ứng viên thâm gia</span>
+        </div>        <div class="flex flex-col w-full">
+          <span class="font-medium">{{ 'ElectionManagementAdd.candidateList' | translate }}</span>
           <mat-form-field class="custom-input" appearance="outline">
             <mat-select formControlName="candidates" multiple>
               <div
@@ -152,7 +148,7 @@
                 <div
                   class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"
                 ></div>
-                <span class="ml-2 text-gray-600">Đang tải danh sách...</span>
+                <span class="ml-2 text-gray-600">{{ 'ElectionManagementAdd.loadingList' | translate }}</span>
               </div>
               <mat-option
                 *ngFor="let candidate of filteredCandidates"
@@ -164,7 +160,7 @@
           </mat-form-field>
         </div>
         <div class="flex flex-col w-full">
-          <span class="font-medium">Danh sách các cử tri tham gia</span>
+          <span class="font-medium">{{ 'ElectionManagementAdd.voterList' | translate }}</span>
           <mat-form-field class="custom-input" appearance="outline">
             <mat-select formControlName="voters" multiple>
               <div
@@ -174,7 +170,7 @@
                 <div
                   class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"
                 ></div>
-                <span class="ml-2 text-gray-600">Đang tải danh sách...</span>
+                <span class="ml-2 text-gray-600">{{ 'ElectionManagementAdd.loadingList' | translate }}</span>
               </div>
               <mat-option
                 *ngFor="let voter of filteredVoters"
@@ -184,17 +180,16 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
-        <div
+        </div>        <div
           *ngIf="statusBolean"
           class="text-orange-400 flex gap-2 items-center"
         >
           <i class="fa-solid fa-triangle-exclamation text-orange-400"></i>
           <span *ngIf="statusValue === '1'"
-            >Cuộc bầu cử đang diễn ra, không thể chỉnh sửa</span
+            >{{ 'ElectionManagementAdd.ongoingElectionWarning' | translate }}</span
           >
           <span *ngIf="statusValue === '2'"
-            >Cuộc bầu cử đã kết thúc, không thể chỉnh sửa</span
+            >{{ 'ElectionManagementAdd.completedElectionWarning' | translate }}</span
           >
         </div>
       </form>
@@ -207,7 +202,7 @@
         class="!bg-primary w-[120px] border-none rounded-lg hover:opacity-60 hover:bg-primary text-white hover:text-black"
         (click)="handleOk()"
       >
-        Thêm mới
+        {{ 'ElectionManagementAdd.addNew' | translate }}
       </button>
       <button
         *ngIf="edit && !statusBolean"
@@ -216,14 +211,14 @@
         class="!bg-primary w-[120px] border-none rounded-lg hover:opacity-60 hover:bg-primary text-white hover:text-black"
         (click)="handleEdit()"
       >
-        Chỉnh sửa
+        {{ 'ElectionManagementAdd.edit' | translate }}
       </button>
       <button
         nz-button
         class="!bg-[#969696] font-medium w-[120px] border-none rounded-lg hover:opacity-60 text-white"
         (click)="handleCancel()"
       >
-        Huỷ bỏ
+        {{ 'ElectionManagementAdd.cancel' | translate }}
       </button>
     </div>
   </ng-template>
