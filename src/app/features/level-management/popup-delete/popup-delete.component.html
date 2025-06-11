@@ -14,7 +14,7 @@
     <ng-template #modalTitle>
         <div class="flex items-center text-red-600">
             <i class="fas fa-exclamation-triangle text-lg mr-2"></i>
-            <span class="font-bold">Xác nhận xóa</span>
+            <span class="font-bold">{{ 'DeletePositionPopup.confirmDelete' | translate }}</span>
         </div>
     </ng-template>
 
@@ -29,11 +29,10 @@
                     <span class="absolute -bottom-1 -right-1 h-8 w-8 bg-red-500 rounded-full flex items-center justify-center text-white">
                         <i class="fas fa-exclamation-triangle text-sm"></i>
                     </span>
-                </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-2">Xác nhận xóa</h3>
+                </div>                <h3 class="text-xl font-bold text-gray-800 mb-2">{{ 'DeletePositionPopup.confirmDelete' | translate }}</h3>
                 <p class="text-gray-600">
-                    Bạn có chắc chắn muốn xóa chức vụ 
-                    <span class="font-bold text-red-600">{{nameLevel}}</span> không?
+                    {{ 'DeletePositionPopup.confirmDeleteMessage' | translate }} 
+                    <span class="font-bold text-red-600">{{nameLevel}}</span>{{ 'DeletePositionPopup.questionMark' | translate }}
                 </p>
             </div>
             
@@ -43,9 +42,8 @@
                     <div class="flex-shrink-0">
                         <i class="fas fa-info-circle text-yellow-500"></i>
                     </div>
-                    <div class="ml-3">
-                        <p class="text-sm text-yellow-700">
-                            Hành động này không thể hoàn tác. Tất cả dữ liệu liên quan đến chức vụ này sẽ bị xóa vĩnh viễn.
+                    <div class="ml-3">                        <p class="text-sm text-yellow-700">
+                            {{ 'DeletePositionPopup.warningMessage' | translate }}
                         </p>
                     </div>
                 </div>
@@ -58,7 +56,7 @@
                     (click)="handleCancel()"
                 >
                     <i class="fas fa-times mr-2"></i>
-                    <span>Hủy bỏ</span>
+                    <span>{{ 'DeletePositionPopup.cancel' | translate }}</span>
                 </button>
                 
                 <button 
@@ -66,7 +64,7 @@
                     (click)="handleOk()"
                 >
                     <i class="fas fa-trash-alt mr-2"></i>
-                    <span>Xác nhận xóa</span>
+                    <span>{{ 'DeletePositionPopup.delete' | translate }}</span>
                 </button>
             </div>
         </div>

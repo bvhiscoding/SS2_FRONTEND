@@ -5,10 +5,9 @@
           <div class="flex items-center">
               <div class="bg-primary rounded-lg p-3 shadow-md mr-4">
                   <i class="fas fa-sitemap text-white text-xl"></i>
-              </div>
-              <div>
-                  <h1 class="text-2xl font-bold text-gray-800">Quản lý Chức vụ</h1>
-                  <p class="text-gray-500 mt-1">Quản lý các chức vụ trong hệ thống</p>
+              </div>              <div>
+                  <h1 class="text-2xl font-bold text-gray-800">{{ 'PositionManagement.title' | translate }}</h1>
+                  <p class="text-gray-500 mt-1">{{ 'PositionManagement.description' | translate }}</p>
               </div>
           </div>
           <button 
@@ -16,7 +15,7 @@
               class="px-5 py-3 bg-primary text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-2 transform hover:translate-y-[-2px]"
           >
               <i class="fas fa-plus-circle"></i>
-              <span class="font-medium">Thêm chức vụ mới</span>
+              <span class="font-medium">{{ 'PositionManagement.addNew' | translate }}</span>
           </button>
       </div>
   </div>
@@ -24,17 +23,15 @@
   <!-- Search and Filter Box -->
   <div class="bg-white rounded-xl shadow-md p-6 mb-8 transition-all duration-300 hover:shadow-lg">
       <!-- Search and Filter Toggle -->
-      <div class="flex flex-col md:flex-row md:items-center gap-4">
-          <div class="text-lg font-medium text-gray-700 flex items-center">
+      <div class="flex flex-col md:flex-row md:items-center gap-4">          <div class="text-lg font-medium text-gray-700 flex items-center">
               <i class="fas fa-search text-primary mr-2"></i>
-              <span>Tìm kiếm:</span>
+              <span>{{ 'PositionManagement.search' | translate }}</span>
           </div>
           <div class="relative flex-1 max-w-lg">
               <input 
                   [(ngModel)]="searchQuery"
-                  (input)="onSearchChange()"
-                  class="w-full px-5 py-3 pr-10 bg-gray-50 border-0 rounded-lg shadow-inner focus:ring-2 focus:ring-primary outline-none transition-all duration-300" 
-                  placeholder="Nhập tên chức vụ để tìm kiếm..."
+                  (input)="onSearchChange()"                  class="w-full px-5 py-3 pr-10 bg-gray-50 border-0 rounded-lg shadow-inner focus:ring-2 focus:ring-primary outline-none transition-all duration-300" 
+                  [placeholder]="'PositionManagement.searchPlaceholder' | translate"
               >
               <button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-primary hover:text-primary-dark p-2 rounded-full hover:bg-gray-100 transition-all duration-200">
                   <i class="fas fa-search"></i>
@@ -43,9 +40,8 @@
           <button 
               class="px-5 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-all duration-200 flex items-center gap-2"
               (click)="toggleFilterPanel()"
-          >
-              <i class="fas fa-filter" [class.text-primary]="isFilterActive"></i>
-              <span>Lọc</span>
+          >              <i class="fas fa-filter" [class.text-primary]="isFilterActive"></i>
+              <span>{{ 'PositionManagement.filter' | translate }}</span>
               <span *ngIf="activeFilterCount > 0" class="ml-1 flex items-center justify-center h-5 w-5 bg-primary text-white text-xs rounded-full">
                   {{activeFilterCount}}
               </span>
@@ -54,24 +50,22 @@
       
       <!-- Filter Panel (Expandable) -->
       <div *ngIf="showFilterPanel" class="mt-4 pt-4 border-t border-gray-200 animate-fade-in">
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <!-- Status Filter -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">              <!-- Status Filter -->
               <div class="filter-group">
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Trạng thái:</label>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">{{ 'PositionManagement.status' | translate }}:</label>
                   <select 
                       [(ngModel)]="filters.status" 
                       (change)="applyFilters()"
                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
                   >
-                      <option [ngValue]="null">Tất cả trạng thái</option>
-                      <option [ngValue]="true">Hoạt động</option>
-                      <option [ngValue]="false">Bị khóa</option>
+                      <option [ngValue]="null">{{ 'PositionManagement.allStatuses' | translate }}</option>
+                      <option [ngValue]="true">{{ 'PositionManagement.active' | translate }}</option>
+                      <option [ngValue]="false">{{ 'PositionManagement.inactive' | translate }}</option>
                   </select>
               </div>
-              
-              <!-- Created Date Range Filter -->
+                <!-- Created Date Range Filter -->
               <div class="filter-group">
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Ngày tạo (từ):</label>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">{{ 'PositionManagement.createdDateFrom' | translate }}</label>
                   <input 
                       type="date" 
                       [(ngModel)]="filters.createdDateFrom"
@@ -81,7 +75,7 @@
               </div>
               
               <div class="filter-group">
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Ngày tạo (đến):</label>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">{{ 'PositionManagement.createdDateTo' | translate }}</label>
                   <input 
                       type="date" 
                       [(ngModel)]="filters.createdDateTo"
@@ -98,7 +92,7 @@
                   class="px-3 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors duration-200 flex items-center gap-1"
               >
                   <i class="fas fa-undo"></i>
-                  <span>Đặt lại</span>
+                  <span>{{ 'PositionManagement.reset' | translate }}</span>
               </button>
               
               <button 
@@ -106,31 +100,30 @@
                   class="px-3 py-2 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors duration-200 flex items-center gap-1"
               >
                   <i class="fas fa-check"></i>
-                  <span>Áp dụng</span>
+                  <span>{{ 'PositionManagement.apply' | translate }}</span>
               </button>
           </div>
       </div>
       
       <!-- Active Filters Display -->
-      <div *ngIf="activeFilterCount > 0" class="mt-4 pt-3 border-t border-gray-200 flex flex-wrap items-center gap-2">
-          <span class="text-sm text-gray-600">Bộ lọc đang áp dụng:</span>
+      <div *ngIf="activeFilterCount > 0" class="mt-4 pt-3 border-t border-gray-200 flex flex-wrap items-center gap-2">          <span class="text-sm text-gray-600">{{ 'PositionManagement.activeFilters' | translate }}</span>
           
           <div *ngIf="filters.status !== null" class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm flex items-center gap-1">
-              <span>Trạng thái: {{filters.status ? 'Hoạt động' : 'Bị khóa'}}</span>
+              <span>{{ 'PositionManagement.statusFilter' | translate }} {{filters.status ? ('PositionManagement.active' | translate) : ('PositionManagement.inactive' | translate)}}</span>
               <button (click)="removeFilter('status')" class="ml-1 text-blue-600 hover:text-blue-800">
                   <i class="fas fa-times-circle"></i>
               </button>
           </div>
           
           <div *ngIf="filters.createdDateFrom" class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm flex items-center gap-1">
-              <span>Từ ngày: {{filters.createdDateFrom | date:'dd/MM/yyyy'}}</span>
+              <span>{{ 'PositionManagement.fromDate' | translate }} {{filters.createdDateFrom | date:'dd/MM/yyyy'}}</span>
               <button (click)="removeFilter('createdDateFrom')" class="ml-1 text-blue-600 hover:text-blue-800">
                   <i class="fas fa-times-circle"></i>
               </button>
           </div>
           
           <div *ngIf="filters.createdDateTo" class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm flex items-center gap-1">
-              <span>Đến ngày: {{filters.createdDateTo | date:'dd/MM/yyyy'}}</span>
+              <span>{{ 'PositionManagement.toDate' | translate }} {{filters.createdDateTo | date:'dd/MM/yyyy'}}</span>
               <button (click)="removeFilter('createdDateTo')" class="ml-1 text-blue-600 hover:text-blue-800">
                   <i class="fas fa-times-circle"></i>
               </button>
@@ -141,7 +134,7 @@
               class="ml-2 text-sm text-gray-600 hover:text-primary underline flex items-center gap-1"
           >
               <i class="fas fa-trash-alt text-xs"></i>
-              <span>Xóa tất cả bộ lọc</span>
+              <span>{{ 'PositionManagement.clearAllFilters' | translate }}</span>
           </button>
       </div>
   </div>
@@ -150,17 +143,16 @@
   <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
       <!-- Table Header -->
       <div class="p-6 border-b border-gray-100">
-          <div class="flex justify-between items-center">
-              <h2 class="text-xl font-semibold text-gray-800 flex items-center">
+          <div class="flex justify-between items-center">              <h2 class="text-xl font-semibold text-gray-800 flex items-center">
                   <i class="fas fa-list-ul text-primary mr-2"></i>
-                  <span>Danh sách chức vụ</span>
+                  <span>{{ 'PositionManagement.positionList' | translate }}</span>
               </h2>
               <div class="flex items-center gap-3 text-sm text-gray-600">
-                  <span>Tổng số: <strong class="text-primary">{{filteredCount || 0}}</strong></span>
+                  <span>{{ 'PositionManagement.totalCount' | translate }} <strong class="text-primary">{{filteredCount || 0}}</strong></span>
                   <div class="h-4 w-px bg-gray-300"></div>
                   <div class="flex items-center gap-1">
                       <i class="fas fa-eye text-primary"></i>
-                      <span>Hiển thị:</span>
+                      <span>{{ 'PositionManagement.showing' | translate }}</span>
                       <select 
                           [(ngModel)]="params.pageSize" 
                           (ngModelChange)="changePageSize($event)"
@@ -182,7 +174,7 @@
                   <div class="spinner-circle"></div>
                   <div class="spinner-circle-inner"></div>
               </div>
-              <p class="text-gray-500 animate-pulse">Đang tải dữ liệu...</p>
+              <p class="text-gray-500 animate-pulse">{{ 'PositionManagement.loadingData' | translate }}</p>
           </div>
       </div>
       
@@ -191,11 +183,10 @@
           <div class="rounded-lg overflow-hidden border border-gray-200">
               <table class="min-w-full divide-y divide-gray-200">
                   <thead>
-                      <tr class="bg-gray-50">
-                          <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-16">STT</th>
+                      <tr class="bg-gray-50">                          <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-16">{{ 'PositionManagement.serialNumber' | translate }}</th>
                           <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                               <div class="flex items-center">
-                                  <span>Tên chức vụ</span>
+                                  <span>{{ 'PositionManagement.positionName' | translate }}</span>
                                   <button (click)="sortBy('positionName')" class="ml-1 focus:outline-none">
                                       <i class="fas" 
                                          [ngClass]="{'fa-sort': sortField !== 'positionName', 
@@ -205,10 +196,10 @@
                                   </button>
                               </div>
                           </th>
-                          <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mô tả</th>
+                          <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ 'PositionManagement.description' | translate }}</th>
                           <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                               <div class="flex items-center justify-center">
-                                  <span>Trạng thái</span>
+                                  <span>{{ 'PositionManagement.status' | translate }}</span>
                                   <button (click)="sortBy('status')" class="ml-1 focus:outline-none">
                                       <i class="fas" 
                                          [ngClass]="{'fa-sort': sortField !== 'status', 
@@ -218,7 +209,7 @@
                                   </button>
                               </div>
                           </th>
-                          <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Thao tác</th>
+                          <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ 'PositionManagement.actions' | translate }}</th>
                       </tr>
                   </thead>
                   <tbody class="bg-white divide-y divide-gray-200">
@@ -236,19 +227,18 @@
                           <td class="px-6 py-4">
                               <div class="text-gray-600 max-w-md">
                                   <span *ngIf="row.positionDescription">{{ row.positionDescription }}</span>
-                                  <span *ngIf="!row.positionDescription" class="text-gray-400 italic">Chưa có mô tả</span>
+                                  <span *ngIf="!row.positionDescription" class="text-gray-400 italic">{{ 'PositionManagement.noDescription' | translate }}</span>
                               </div>
                           </td>
-                          <td class="px-6 py-4 text-center whitespace-nowrap">
-                              <span *ngIf="row.status === true" 
+                          <td class="px-6 py-4 text-center whitespace-nowrap">                              <span *ngIf="row.status === true" 
                                   class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
                                   <span class="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
-                                  Hoạt động
+                                  {{ 'PositionManagement.active' | translate }}
                               </span>
                               <span *ngIf="row.status === false" 
                                   class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
                                   <span class="w-2 h-2 rounded-full bg-red-500 mr-2"></span>
-                                  Bị khóa
+                                  {{ 'PositionManagement.locked' | translate }}
                               </span>
                           </td>
                           <td class="px-6 py-4 text-center whitespace-nowrap">
@@ -256,14 +246,14 @@
                                   <button 
                                       (click)="handelOpenPopUpEditManagement(row?.id)" 
                                       class="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors duration-200"
-                                      title="Chỉnh sửa"
+                                      [title]="'PositionManagement.edit' | translate"
                                   >
                                       <i class="fas fa-edit"></i>
                                   </button>
                                   <button 
                                       (click)="openDeletePopup(row?.id, row?.positionName)" 
                                       class="p-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-colors duration-200"
-                                      title="Xóa"
+                                      [title]="'PositionManagement.delete' | translate"
                                   >
                                       <i class="fas fa-trash-alt"></i>
                                   </button>
@@ -279,11 +269,10 @@
               <div class="text-center">
                   <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                       <i class="fas fa-folder-open text-gray-400 text-3xl"></i>
-                  </div>
-                  <h3 class="text-lg font-medium text-gray-600 mb-2">Không có dữ liệu</h3>
+                  </div>                  <h3 class="text-lg font-medium text-gray-600 mb-2">{{ 'PositionManagement.noData' | translate }}</h3>
                   <p class="text-gray-500 mb-6">
-                      <span *ngIf="activeFilterCount > 0">Không tìm thấy chức vụ nào phù hợp với bộ lọc. Hãy thử điều chỉnh lại bộ lọc.</span>
-                      <span *ngIf="activeFilterCount === 0">Chưa có chức vụ nào được tạo trong hệ thống.</span>
+                      <span *ngIf="activeFilterCount > 0">{{ 'PositionManagement.noMatchingFilters' | translate }}</span>
+                      <span *ngIf="activeFilterCount === 0">{{ 'PositionManagement.noPositionsCreated' | translate }}</span>
                   </p>
                   <div class="flex justify-center space-x-3">
                       <button 
@@ -292,14 +281,14 @@
                           class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors duration-200"
                       >
                           <i class="fas fa-filter-circle-xmark mr-2"></i>
-                          Xóa bộ lọc
+                          {{ 'PositionManagement.clearFilters' | translate }}
                       </button>
                       <button 
                           (click)="handelOpenPopUpAddLevelManagement()" 
                           class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors duration-200"
                       >
                           <i class="fas fa-plus-circle mr-2"></i>
-                          Thêm chức vụ mới
+                          {{ 'PositionManagement.addNew' | translate }}
                       </button>
                   </div>
               </div>
@@ -308,11 +297,10 @@
       
       <!-- Pagination -->
       <div *ngIf="!isLoading && filteredPositions && filteredPositions.length > 0" class="border-t border-gray-200 px-6 py-4">
-          <div class="flex justify-between items-center">
-              <div class="text-sm text-gray-600">
-                  Hiển thị {{ (params.page - 1) * params.pageSize + 1 }} đến 
+          <div class="flex justify-between items-center">              <div class="text-sm text-gray-600">
+                  {{ 'PositionManagement.displaying' | translate }} {{ (params.page - 1) * params.pageSize + 1 }} {{ 'PositionManagement.to' | translate }} 
                   {{ (params.page * params.pageSize > filteredCount) ? filteredCount : params.page * params.pageSize }}
-                  trong tổng số {{ filteredCount }} kết quả
+                  {{ 'PositionManagement.of' | translate }} {{ filteredCount }} {{ 'PositionManagement.results' | translate }}
               </div>
               <div>
                   <!-- Simplified pagination control -->
@@ -341,10 +329,9 @@
                           [(ngModel)]="params.pageSize" 
                           (ngModelChange)="changePageSize($event)"
                           class="ml-4 px-2 py-1 border rounded"
-                      >
-                          <option [ngValue]="10">10 / trang</option>
-                          <option [ngValue]="20">20 / trang</option>
-                          <option [ngValue]="50">50 / trang</option>
+                      >                          <option [ngValue]="10">10{{ 'PositionManagement.displayPerPage' | translate }}</option>
+                          <option [ngValue]="20">20{{ 'PositionManagement.displayPerPage' | translate }}</option>
+                          <option [ngValue]="50">50{{ 'PositionManagement.displayPerPage' | translate }}</option>
                       </select>
                   </div>
               </div>

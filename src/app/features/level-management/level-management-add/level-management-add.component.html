@@ -14,7 +14,7 @@
     <ng-template #modalTitle>
         <div class="flex items-center text-primary">
             <i class="fas {{ edit ? 'fa-edit' : 'fa-plus-circle' }} text-xl mr-2"></i>
-            <span class="font-bold">{{edit ? 'Chỉnh sửa chức vụ' : 'Thêm chức vụ mới'}}</span>
+            <span class="font-bold">{{edit ? ('PositionManagementAdd.editTitle' | translate) : ('PositionManagementAdd.addTitle' | translate)}}</span>
         </div>
     </ng-template>
 
@@ -26,10 +26,9 @@
                     <div class="bg-white bg-opacity-20 rounded-full p-3 mr-4">
                         <i class="fas {{ edit ? 'fa-edit' : 'fa-plus-circle' }} text-xl"></i>
                     </div>
-                    <div>
-                        <h3 class="text-xl font-bold">{{edit ? 'Chỉnh sửa chức vụ' : 'Thêm chức vụ mới'}}</h3>
+                    <div>                        <h3 class="text-xl font-bold">{{edit ? ('PositionManagementAdd.editTitle' | translate) : ('PositionManagementAdd.addTitle' | translate)}}</h3>
                         <p class="text-white text-opacity-80 mt-1 text-sm">
-                            {{edit ? 'Cập nhật thông tin chức vụ' : 'Tạo một chức vụ mới trong hệ thống'}}
+                            {{edit ? ('PositionManagementAdd.editSubtitle' | translate) : ('PositionManagementAdd.addSubtitle' | translate)}}
                         </p>
                     </div>
                 </div>
@@ -43,7 +42,7 @@
                         <label class="form-label">
                             <span class="flex items-center">
                                 <i class="fas fa-briefcase text-primary mr-2"></i>
-                                Tên chức vụ<span class="text-red-500 ml-1">*</span>
+                                {{ 'PositionManagementAdd.positionName' | translate }}<span class="text-red-500 ml-1">*</span>
                             </span>
                         </label>
                         <div class="mt-1 relative rounded-md shadow-sm">
@@ -51,7 +50,7 @@
                                 type="text" 
                                 formControlName="levelName" 
                                 class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary bg-white"
-                                placeholder="Nhập tên chức vụ" 
+                                [placeholder]="'PositionManagementAdd.positionNamePlaceholder' | translate" 
                             />
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <i class="fas fa-user-tie text-gray-400"></i>
@@ -69,7 +68,7 @@
                         <label class="form-label">
                             <span class="flex items-center">
                                 <i class="fas fa-align-left text-primary mr-2"></i>
-                                Mô tả
+                                {{ 'PositionManagementAdd.description' | translate }}
                             </span>
                         </label>
                         <div class="mt-1 relative rounded-md shadow-sm">
@@ -77,7 +76,7 @@
                                 formControlName="description" 
                                 rows="4" 
                                 class="block w-full px-4 py-3 pl-10 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary bg-white"
-                                placeholder="Nhập mô tả chi tiết về chức vụ này"
+                                [placeholder]="'PositionManagementAdd.descriptionPlaceholder' | translate"
                             ></textarea>
                             <div class="absolute top-3 left-3 pointer-events-none">
                                 <i class="fas fa-file-alt text-gray-400"></i>
@@ -90,7 +89,7 @@
                         <label class="form-label">
                             <span class="flex items-center">
                                 <i class="fas fa-toggle-on text-primary mr-2"></i>
-                                Trạng thái<span class="text-red-500 ml-1">*</span>
+                                {{ 'PositionManagementAdd.status' | translate }}<span class="text-red-500 ml-1">*</span>
                             </span>
                         </label>
                         <div class="mt-1 relative rounded-md shadow-sm">
@@ -98,7 +97,7 @@
                                 formControlName="status"
                                 class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary bg-white appearance-none"
                             >
-                                <option [ngValue]="null" disabled selected>-- Chọn trạng thái --</option>
+                                <option [ngValue]="null" disabled selected>{{ 'PositionManagementAdd.selectStatus' | translate }}</option>
                                 <option *ngFor="let status of listStatus" [ngValue]="status.value">
                                     {{ status.label }}
                                 </option>
@@ -126,7 +125,7 @@
                     (click)="handleCancel()"
                 >
                     <i class="fas fa-times mr-2"></i>
-                    <span>Hủy bỏ</span>
+                    <span>{{ 'PositionManagementAdd.cancel' | translate }}</span>
                 </button>
                 
                 <button 
@@ -137,7 +136,7 @@
                     (click)="handleOk()"
                 >
                     <i class="fas fa-plus-circle mr-2"></i>
-                    <span>Thêm mới</span>
+                    <span>{{ 'PositionManagementAdd.add' | translate }}</span>
                 </button>
                 
                 <button 
@@ -148,7 +147,7 @@
                     (click)="handleEdit()"
                 >
                     <i class="fas fa-save mr-2"></i>
-                    <span>Cập nhật</span>
+                    <span>{{ 'PositionManagementAdd.update' | translate }}</span>
                 </button>
             </div>
         </div>

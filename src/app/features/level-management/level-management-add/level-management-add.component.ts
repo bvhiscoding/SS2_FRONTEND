@@ -5,7 +5,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -42,19 +42,9 @@ export class LevelManagementAddComponent implements OnInit, OnChanges{
   @Input() isVisiblePopUpAddLevelManagement: boolean = true;
   @Input() idLevelManagement: any;
   @Input() mode: 'create' | 'edit';
-  @Output() visiblePopUpAddLevelManagement = new EventEmitter<boolean>();
-  public edit: boolean = false;
+  @Output() visiblePopUpAddLevelManagement = new EventEmitter<boolean>();  public edit: boolean = false;
 
-  listStatus = [
-    {
-      label: 'Hoạt động',
-      value: true,
-    },
-    {
-      label: 'Bị khoá',
-      value: false,
-    }
-  ];
+  listStatus: any[] = [];
 
   public form: FormGroup = this.fb.group({
     levelName: [null, Validators.required],
@@ -68,6 +58,7 @@ export class LevelManagementAddComponent implements OnInit, OnChanges{
     private positionService: PositionService,
     private modal: NzModalService,
     private message: NzMessageService,
+    private translate: TranslateService,
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['idLevelManagement']) {
@@ -79,9 +70,8 @@ export class LevelManagementAddComponent implements OnInit, OnChanges{
         this.form.reset(); 
       }
     }
-  }
-  ngOnInit(): void {
-    this.form.controls['isAdmin'].disable();
+  }  ngOnInit(): void {
+    this.initStatusList();
     if(this.idLevelManagement && this.mode === 'edit') {
       this.edit = true;
       this.viewPosition();
@@ -89,6 +79,19 @@ export class LevelManagementAddComponent implements OnInit, OnChanges{
       this.edit = false;
       this.form.reset(); 
     }
+  }
+
+  initStatusList(): void {
+    this.listStatus = [
+      {
+        label: this.translate.instant('PositionManagement.active'),
+        value: true,
+      },
+      {
+        label: this.translate.instant('PositionManagement.inactive'),
+        value: false,
+      }
+    ];
   }
 
   handleOk(): void {
@@ -102,15 +105,13 @@ export class LevelManagementAddComponent implements OnInit, OnChanges{
       this.form.get('description')?.markAsTouched();
       this.form.get('status')?.markAsTouched()
       return;
-    }
-    this.positionService.createPosition(body).subscribe(res => {
+    }    this.positionService.createPosition(body).subscribe(res => {
       if(res) {
-        this.message.success("Tạo tài khoản thành công")
+        this.message.success(this.translate.instant('PositionManagementAdd.addSuccess'));
         this.visiblePopUpAddLevelManagement.emit(false);
       }
     }, (err) => {
-      const errorMessage = err.error ? err.error.split('|')[1] : 'Có lỗi xảy ra';
-      this.message.error(errorMessage);
+      this.message.error(this.translate.instant('PositionManagementAdd.addError'));
     })
   }
 
@@ -141,14 +142,13 @@ export class LevelManagementAddComponent implements OnInit, OnChanges{
       this.form.get('description')?.markAsTouched();
       this.form.get('status')?.markAsTouched()
       return;
-    }
-    this.positionService.updatePosition(body).subscribe({
+    }    this.positionService.updatePosition(body).subscribe({
       next: (res) => {
-        this.message.success('Cập nhật chức vụ thành công');
+        this.message.success(this.translate.instant('PositionManagementAdd.updateSuccess'));
         this.visiblePopUpAddLevelManagement.emit(false);
       },
       error: (err) => {
-        this.message.error('Có lỗi xảy ra');
+        this.message.error(this.translate.instant('PositionManagementAdd.updateError'));
       }
     })
   }

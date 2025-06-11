@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ShareTableModule } from '../../../shared/components/share-table/share-table.module';
 import { RouterModule } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ManagermentService } from '../../../core/api/managerment.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -60,12 +60,12 @@ export class LevelManagementListComponent implements OnInit{
     roles: [null],
   });
 
-
   constructor(
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
     private message: NzMessageService,
     private positionService: PositionService,
+    private translate: TranslateService,
   ){}
   
   ngOnInit(): void {
