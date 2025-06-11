@@ -16,8 +16,7 @@ import { UserAvatarComponent } from '../../../shared/components/user-avatar/user
 
 @Component({
   selector: 'app-result-evoting',
-  standalone: true,
-  imports: [
+  standalone: true,  imports: [
     CommonModule,
     NzSpinModule,
     FormsModule,
@@ -26,7 +25,8 @@ import { UserAvatarComponent } from '../../../shared/components/user-avatar/user
     NzIconModule,    RouterModule,
     ChartEvotingComponent,
     ChartCircleEvotingComponent,
-    UserAvatarComponent
+    UserAvatarComponent,
+    TranslateModule
   ],
   templateUrl: './result-evoting.component.html',
   styleUrl: './result-evoting.component.scss'

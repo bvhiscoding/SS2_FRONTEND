@@ -1,5 +1,4 @@
-{
-  "Menu": {
+{  "Menu": {
     "unit": "Đơn vị",
     "task": "Công việc",
     "info": "Channel Information",
@@ -19,10 +18,8 @@
     "proceedVoting": "Tiến hành bầu cử",
     "followElection": "Theo dõi bầu cử",
     "electionManagement": "Quản lý cuộc bầu cử",
-    "positionManagement": "Quản lý chức vụ",
-    "systemSettings": "Cài đặt hệ thống",
-    "logout": "Đăng xuất",
-    "administrator": "Quản trị viên",
+    "positionManagement": "Quản lý chức vụ",    "systemSettings": "Cài đặt hệ thống",
+    "logout": "Đăng xuất",    "administrator": "Quản trị viên",
     "user": "Người dùng"
   },
   "Statistics": {
@@ -34,17 +31,15 @@
     "users": "Người dùng",
     "positions": "Chức vụ",
     "elections": "Cuộc bầu cử",
-    "details": "Chi tiết",
-    "electionCalendar": "Lịch bầu cử",
+    "details": "Chi tiết",    "electionCalendar": "Lịch bầu cử",
     "ongoing": "Đang diễn ra",
     "completed": "Đã kết thúc",
-    "notStarted": "Chưa bắt đầu",
-    "calendarDetails": "Chi tiết lịch",
+    "notStarted": "Chưa bắt đầu",    "calendarDetails": "Chi tiết lịch",
     "electionName": "Tên cuộc bầu cử",
     "startDate": "Ngày bắt đầu",
-    "voteCount": "Số lượng phiếu bầu",
-    "candidate": "Ứng cử viên"
-  },  "UserManagement": {
+    "voteCount": "Số lượng phiếu bầu",    "candidate": "Ứng cử viên"
+  },
+  "UserManagement": {
     "title": "Quản lý người dùng",
     "description": "Quản lý và theo dõi người dùng trong hệ thống",
     "addNewUser": "Thêm mới người dùng",
@@ -69,12 +64,9 @@
     "enable": "Kích hoạt",
     "createdDate": "Ngày tạo",
     "lastLogin": "Đăng nhập cuối",
-    "details": "Chi tiết",
-    "serialNumber": "STT",
-    "username": "Tên đăng nhập",
-    "dateOfBirth": "Ngày sinh",
-    "address": "Địa chỉ"
-  },  "ProceedVoting": {
+    "details": "Chi tiết"
+  },
+  "ProceedVoting": {
     "title": "Tiến hành bầu cử",
     "description": "Tham gia và bầu cử trong các cuộc bầu cử",
     "searchAndFilter": "Bộ lọc tìm kiếm",
@@ -91,65 +83,14 @@
     "viewResults": "Xem kết quả",
     "startDate": "Ngày bắt đầu",
     "endDate": "Ngày kết thúc",
+    "description": "Mô tả",
     "candidates": "Ứng viên",
     "totalVotes": "Tổng số phiếu",
     "myVote": "Phiếu của tôi",
     "notVoted": "Chưa bầu",
     "voted": "Đã bầu",
     "voteNow": "Bầu ngay",
-    "seeResults": "Xem kết quả",
-    "generalInfo": "Thông tin chung",
-    "termInfo": "Thông tin nhiệm kỳ",
-    "termName": "Tên nhiệm kỳ",
-    "maxCandidates": "Số ứng viên tối đa",
-    "candidateList": "Danh sách ứng viên",
-    "votedCandidates": "Ứng viên đã bỏ phiếu",    "viewDetails": "Xem chi tiết",
-    "notVotedForAnyCandidate": "Chưa bỏ phiếu cho ứng viên nào"
-  },
-  "UserDetails": {
-    "title": "Thông tin chi tiết",
-    "avatar": "Ảnh đại diện",
-    "fullName": "Họ và tên",
-    "username": "Username",
-    "idCard": "Căn cước công dân",
-    "dateOfBirth": "Ngày tháng năm sinh",
-    "gender": "Giới tính",
-    "male": "Nam",
-    "female": "Nữ",
-    "phoneNumber": "Số điện thoại",
-    "email": "Email",
-    "address": "Sinh sống",    "close": "Đóng"
-  },
-  "ResultVoting": {
-    "title": "Kết quả bầu cử",
-    "backToList": "Quay lại",
-    "electionInfo": "Thông tin cuộc bầu cử",
-    "leader": "Người dẫn đầu",
-    "totalCandidates": "Tổng số ứng viên",
-    "totalVoters": "Tổng số cử tri",
-    "chartStatistics": "Biểu đồ thống kê",
-    "columnChart": "Cột",
-    "pieChart": "Tròn",
-    "candidateList": "Danh sách ứng viên",
-    "voterList": "Danh sách cử tri",
-    "serialNumber": "STT",
-    "fullName": "Họ và tên",
-    "email": "Email",
-    "phoneNumber": "Số điện thoại",
-    "dateOfBirth": "Ngày sinh",
-    "voteCount": "Số phiếu bầu",
-    "voting": "Bầu cử",
-    "voted": "Đã bầu",
-    "notVoted": "Chưa bầu",
-    "emptyList": "Danh sách trống",
-    "totalVoteCount": "Tổng số phiếu bầu",
-    "startDate": "Bắt đầu",
-    "endDate": "Kết thúc",
-    "position": "Chức vụ",
-    "status": "Trạng thái",
-    "notStarted": "Chưa bắt đầu",
-    "ongoing": "Đang diễn ra",
-    "completed": "Đã kết thúc"
+    "seeResults": "Xem kết quả"
   },
   "UnitItem": {
     "unfinished": "Chưa hoàn thành",

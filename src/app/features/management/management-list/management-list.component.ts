@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ShareTableModule } from '../../../shared/components/share-table/share-table.module';
 import { RouterModule } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ManagermentService } from '../../../core/api/managerment.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -46,38 +46,14 @@ export class ManagementListComponent implements OnInit{
   public totalCount: number = 10;
   public listUserManagements : any = [];
   public mode: 'create' | 'edit' = 'create';
-  public role: string;
-  public params = {
+  public role: string;  public params = {
     page: 1,
     pageSize:10
-  }
-  public math = Math; 
+  };
+  public math = Math;
 
-  listStatus = [
-    {
-      label: 'Chưa đổi mật khẩu',
-      value: 0,
-    },
-    {
-      label: 'Hoạt động',
-      value: 1,
-    },
-    {
-      label: 'Khoá',
-      value: 2,
-    },
-  ];
-
-  listRoles = [
-    {
-      label: 'Quản trị viên',
-      value: 0,
-    },
-    {
-      label: 'Người dùng thường',
-      value: 1,
-    }
-  ];
+  listStatus: any[] = [];
+  listRoles: any[] = [];
 
   form: FormGroup = this.fb.group({
     fullName: [''],
@@ -95,10 +71,39 @@ export class ManagementListComponent implements OnInit{
     private managermentService: ManagermentService,
     private accountService: AccountService,
     private message: NzMessageService,
+    private translate: TranslateService,
   ){}
   
   ngOnInit(): void {
+    this.initializeTranslatedLists();
     this.viewListUser();
+  }
+  private initializeTranslatedLists(): void {
+    this.listStatus = [
+      {
+        label: 'Chưa đổi mật khẩu',
+        value: 0,
+      },
+      {
+        label: this.translate.instant('UserManagement.active'),
+        value: 1,
+      },
+      {
+        label: this.translate.instant('UserManagement.inactive'),
+        value: 2,
+      },
+    ];
+
+    this.listRoles = [
+      {
+        label: this.translate.instant('Menu.administrator'),
+        value: 0,
+      },
+      {
+        label: this.translate.instant('Menu.user'),
+        value: 1,
+      }
+    ];
   }
 
   viewListUser() {

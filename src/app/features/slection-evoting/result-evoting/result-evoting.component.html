@@ -3,15 +3,14 @@
         <div class="flex items-center space-x-4">
             <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg">
                 <i class="fa-solid fa-chart-line text-white text-xl"></i>
-            </div>
-            <h3 class="uppercase text-primary text-2xl font-bold tracking-wide">Kết quả bầu cử</h3>
+            </div>            <h3 class="uppercase text-primary text-2xl font-bold tracking-wide">{{'ResultVoting.title'| translate }}</h3>
         </div>
         <button [routerLink]="['/slection-ticket/list']" 
                 class="text-white px-6 py-3 rounded-xl bg-gradient-to-r from-primary to-blue-500 hover:from-blue-500 hover:to-primary 
                        font-bold cursor-pointer transform hover:scale-105 shadow-lg hover:shadow-xl transition-all duration-300 
                        flex items-center space-x-3">
             <i class="fa-solid fa-arrow-left text-white"></i>  
-            <span>Quay lại</span>
+            <span>{{'ResultVoting.backToList'| translate }}</span>
         </button>
     </div>    <div class="w-full flex gap-8">
         <div class="w-2/5 flex flex-col gap-6">
@@ -19,8 +18,7 @@
                 <div class="flex items-center mb-6">
                     <div class="w-10 h-10 bg-gradient-to-r from-primary to-blue-500 rounded-xl flex items-center justify-center mr-4">
                         <i class="fa-solid fa-info-circle text-white"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-gray-800">Thông tin cuộc bầu cử</h4>
+                    </div>                    <h4 class="text-xl font-bold text-gray-800">{{'ResultVoting.electionInfo'| translate }}</h4>
                 </div>
                 <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 mb-4">
                     <div class="text-lg font-bold text-primary mb-2">{{infoVote.voteName}}</div>
@@ -28,24 +26,23 @@
                 <ul class="text-base space-y-4">
                     <li class="flex items-center space-x-3">
                         <i class="fa-solid fa-calendar-start text-green-500 w-5"></i>
-                        <span class="text-gray-700">Bắt đầu: <span class="font-semibold">{{infoVote.startDate | date: 'dd/MM/yyyy'}}</span></span>
+                        <span class="text-gray-700">{{'ResultVoting.startDate'| translate }}: <span class="font-semibold">{{infoVote.startDate | date: 'dd/MM/yyyy'}}</span></span>
                     </li>
                     <li class="flex items-center space-x-3">
                         <i class="fa-solid fa-calendar-xmark text-red-500 w-5"></i>
-                        <span class="text-gray-700">Kết thúc: <span class="font-semibold">{{infoVote.expiredDate | date: 'dd/MM/yyyy'}}</span></span>
+                        <span class="text-gray-700">{{'ResultVoting.endDate'| translate }}: <span class="font-semibold">{{infoVote.expiredDate | date: 'dd/MM/yyyy'}}</span></span>
                     </li>
                     <li class="flex items-center space-x-3">
                         <i class="fa-solid fa-user-tie text-blue-500 w-5"></i>
-                        <span class="text-gray-700">Chức vụ: <span class="font-semibold">{{infoVote.positionName}}</span></span>
-                    </li>
-                    <li class="flex items-center space-x-3">
+                        <span class="text-gray-700">{{'ResultVoting.position'| translate }}: <span class="font-semibold">{{infoVote.positionName}}</span></span>
+                    </li>                    <li class="flex items-center space-x-3">
                         <i class="fa-solid fa-flag text-orange-500 w-5"></i>
-                        <span class="text-gray-700">Trạng thái:</span>
+                        <span class="text-gray-700">{{'ResultVoting.status'| translate }}:</span>
                         <span class="px-3 py-1 rounded-full text-sm font-bold shadow-md" 
                               [ngClass]="{'bg-green-100 text-green-800': infoVote.status === '1', 
                                          'bg-red-100 text-red-800': infoVote.status === '2', 
                                          'bg-orange-100 text-orange-800': infoVote.status === '0'}">
-                            {{infoVote.status === '0' ? 'Chưa bắt đầu' : infoVote.status === '1' ? 'Đang diễn ra' : infoVote.status === '2' ? 'Đã kết thúc' : ''}}
+                            {{infoVote.status === '0' ? ('ResultVoting.notStarted'| translate) : infoVote.status === '1' ? ('ResultVoting.ongoing'| translate) : infoVote.status === '2' ? ('ResultVoting.completed'| translate) : ''}}
                         </span>
                     </li>
                 </ul>
@@ -53,8 +50,7 @@
                 <div class="flex items-center mb-6">
                     <div class="w-10 h-10 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center mr-4">
                         <i class="fa-solid fa-crown text-white"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-gray-800">Người dẫn đầu</h4>
+                    </div>                    <h4 class="text-xl font-bold text-gray-800">{{'ResultVoting.leader'| translate }}</h4>
                 </div>
                 <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-6">
                     <div class="flex items-center justify-between">                        <div class="flex flex-col items-center">
@@ -72,7 +68,7 @@
                         </div>
                         <div class="flex flex-col items-center justify-center">
                             <div class="text-3xl font-bold text-red-600 mb-1">{{ leadingCandidate.totalBallot }}</div>
-                            <div class="text-sm font-medium text-gray-600">Tổng số phiếu bầu</div>
+                            <div class="text-sm font-medium text-gray-600">{{'ResultVoting.totalVoteCount'| translate }}</div>
                             <div class="mt-2 px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-bold">
                                 LEADING
                             </div>
@@ -80,10 +76,9 @@
                     </div>
                 </div>
             </div>            <div class="flex gap-4 justify-between">
-                <div class="w-full bg-white p-6 shadow-xl rounded-2xl border border-gray-100 hover:shadow-2xl transition-all duration-300">
-                    <div class="flex items-center justify-between">
+                <div class="w-full bg-white p-6 shadow-xl rounded-2xl border border-gray-100 hover:shadow-2xl transition-all duration-300">                    <div class="flex items-center justify-between">
                         <div class="flex flex-col">
-                            <div class="text-sm font-medium text-gray-600 mb-2">Tổng số ứng viên</div>
+                            <div class="text-sm font-medium text-gray-600 mb-2">{{'ResultVoting.totalCandidates'| translate }}</div>
                             <div class="text-3xl font-bold text-red-600">{{infoVote.totalCandidate}}</div>
                         </div>
                         <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
@@ -94,7 +89,7 @@
                 <div class="w-full bg-white p-6 shadow-xl rounded-2xl border border-gray-100 hover:shadow-2xl transition-all duration-300">
                     <div class="flex items-center justify-between">
                         <div class="flex flex-col">
-                            <div class="text-sm font-medium text-gray-600 mb-2">Tổng số cử tri</div>
+                            <div class="text-sm font-medium text-gray-600 mb-2">{{'ResultVoting.totalVoters'| translate }}</div>
                             <div class="text-3xl font-bold text-red-600">{{infoVote.totalVoter}}</div>
                         </div>
                         <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg">
@@ -108,21 +103,20 @@
                 <div class="flex items-center">
                     <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mr-4">
                         <i class="fa-solid fa-chart-pie text-white"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-gray-800">Biểu đồ thống kê</h4>
+                    </div>                    <h4 class="text-xl font-bold text-gray-800">{{'ResultVoting.chartStatistics'| translate }}</h4>
                 </div>
                 <div class="flex gap-3 bg-gray-100 rounded-xl p-2">
                     <button (click)="handleChangeChart('columns')"  
                             [ngClass]="chartType === 'columns' ? 'bg-white text-primary shadow-md' : 'text-gray-600 hover:text-primary'"
                             class="p-3 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2">
                         <i class="fa-solid fa-chart-simple text-xl"></i>
-                        <span class="hidden sm:inline">Cột</span>
+                        <span class="hidden sm:inline">{{'ResultVoting.columnChart'| translate }}</span>
                     </button>
                     <button (click)="handleChangeChart('circle')"  
                             [ngClass]="chartType === 'circle' ? 'bg-white text-primary shadow-md' : 'text-gray-600 hover:text-primary'"
                             class="p-3 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2">
                         <i class="fa-solid fa-chart-pie text-xl"></i>
-                        <span class="hidden sm:inline">Tròn</span>
+                        <span class="hidden sm:inline">{{'ResultVoting.pieChart'| translate }}</span>
                     </button>
                 </div>
             </div>
@@ -136,38 +130,35 @@
             </div>
         </div>
     </div>
-    <div class="w-full px-4 my-5 pb-5 flex flex-col gap-3 bg-white rounded-lg shadow-shadow-timeword">
-        <div class="flex py-2 w-full">
+    <div class="w-full px-4 my-5 pb-5 flex flex-col gap-3 bg-white rounded-lg shadow-shadow-timeword">        <div class="flex py-2 w-full">
             <div (click)="handleChangeTable('candidate')" 
                 [ngClass]="type === 'candidate' ? 'border-b-2 border-green-500 text-green-500 font-medium' : 'text-primary'"
-                class="flex-1 py-2 text-center font-medium cursor-pointer hover:scale-105">Danh sách ứng viên</div>
+                class="flex-1 py-2 text-center font-medium cursor-pointer hover:scale-105">{{'ResultVoting.candidateList'| translate }}</div>
             <div (click)="handleChangeTable('voters')" 
                 [ngClass]="type === 'voters' ? 'border-b-2 border-green-500 text-green-500 font-medium' : 'text-primary'"
-                class="flex-1 py-2 text-center font-medium cursor-pointer hover:scale-105">Danh sách cử tri</div>
+                class="flex-1 py-2 text-center font-medium cursor-pointer hover:scale-105">{{'ResultVoting.voterList'| translate }}</div>
         </div>
         <div  *ngIf="type === 'candidate'">
             <div [style.height]=" maxheight ? maxheight:'450px'"
-            class="mt-[27px] w-full min-w-full overflow-x-auto overflow-y-auto">
-                <table class="text-[13px] font-normal w-full relative">
+            class="mt-[27px] w-full min-w-full overflow-x-auto overflow-y-auto">                <table class="text-[13px] font-normal w-full relative">
                     <thead class="bg-primary *:py-4 *:text-center *:text-white font-medium sticky top-0 ">
-                        <th class="px-2">STT</th>
-                        <th class="">Họ và tên</th>
-                        <th class="">Email</th>
-                        <th class="">Số điện thoại</th>
-                        <th class="">Ngày sinh</th>
-                        <th class="">Số phiếu bầu</th>
+                        <th class="px-2">{{'ResultVoting.serialNumber'| translate }}</th>
+                        <th class="">{{'ResultVoting.fullName'| translate }}</th>
+                        <th class="">{{'ResultVoting.email'| translate }}</th>
+                        <th class="">{{'ResultVoting.phoneNumber'| translate }}</th>
+                        <th class="">{{'ResultVoting.dateOfBirth'| translate }}</th>
+                        <th class="">{{'ResultVoting.voteCount'| translate }}</th>
                     </thead>
                     <div class="w-full" *ngIf="isLoading; else data">
                       <div class="flex items-center justify-center absolute mt-[100px] !w-[100%]">
                         <nz-spin class="inline-block w-full text-center" nzSize="large" ></nz-spin>
                       </div>
-                    </div>  
-                    <div class="!w-full flex justify-center absolute" *ngIf="listCandidate.length == 0">
+                    </div>                    <div class="!w-full flex justify-center absolute" *ngIf="listCandidate.length == 0">
                       <div class="flex flex-col items-center justify-center mt-[50px] !w-[100%]">
                         <span nz-icon nzType="exclamation-circle" nzTheme="outline" class="text-[20px]"></span>
-                        <div class="text-textColor font-[500] text-[14px] mt-[10px]">Danh sách trống</div>
+                        <div class="text-textColor font-[500] text-[14px] mt-[10px]">{{'ResultVoting.emptyList'| translate }}</div>
                       </div>
-                    </div>  
+                    </div>
                     <ng-template #data>
                       <tbody> 
                         <tr class="*:py-4 *:text-center border-b border-myBorder px-2" *ngFor="let item of listCandidate; let index = index">
@@ -202,27 +193,25 @@
         </div>
         <div  *ngIf="type === 'voters'">
             <div [style.height]=" maxheight ? maxheight:'450px'"
-            class="mt-[27px] w-full min-w-full overflow-x-auto overflow-y-auto">
-                <table class="text-[13px] font-normal w-full relative">
+            class="mt-[27px] w-full min-w-full overflow-x-auto overflow-y-auto">                <table class="text-[13px] font-normal w-full relative">
                     <thead class="bg-primary *:py-4 *:text-center *:text-white font-medium sticky top-0 ">
-                        <th class="px-2">STT</th>
-                        <th class="">Họ và tên</th>
-                        <th class="">Email</th>
-                        <th class="">Số điện thoại</th>
-                        <th class="">Ngày sinh</th>
-                        <th class="">Bầu cử</th>
+                        <th class="px-2">{{'ResultVoting.serialNumber'| translate }}</th>
+                        <th class="">{{'ResultVoting.fullName'| translate }}</th>
+                        <th class="">{{'ResultVoting.email'| translate }}</th>
+                        <th class="">{{'ResultVoting.phoneNumber'| translate }}</th>
+                        <th class="">{{'ResultVoting.dateOfBirth'| translate }}</th>
+                        <th class="">{{'ResultVoting.voting'| translate }}</th>
                     </thead>
                     <div class="w-full" *ngIf="isLoading; else data">
                       <div class="flex items-center justify-center absolute mt-[100px] !w-[100%]">
                         <nz-spin class="inline-block w-full text-center" nzSize="large" ></nz-spin>
                       </div>
-                    </div>  
-                    <div class="!w-full flex justify-center absolute" *ngIf="listVoters.length == 0">
+                    </div>                    <div class="!w-full flex justify-center absolute" *ngIf="listVoters.length == 0">
                       <div class="flex flex-col items-center justify-center mt-[50px] !w-[100%]">
                         <span nz-icon nzType="exclamation-circle" nzTheme="outline" class="text-[20px]"></span>
-                        <div class="text-textColor font-[500] text-[14px] mt-[10px]">Danh sách trống</div>
+                        <div class="text-textColor font-[500] text-[14px] mt-[10px]">{{'ResultVoting.emptyList'| translate }}</div>
                       </div>
-                    </div>  
+                    </div>
                     <ng-template #data>
                       <tbody> 
                         <tr class="*:py-4 *:text-center border-b border-myBorder px-2" *ngFor="let item of listVoters; let index = index">
@@ -240,9 +229,8 @@
                           </td>
                           <td >
                             {{item?.birthday | date: 'dd/MM/yyyy'}}
-                          </td>
-                          <td [ngClass]="item?.status === true ? 'font-medium text-green-500' : 'font-medium text-myRed'">
-                            {{item?.status === true ? 'Đã bầu' : 'Chưa bầu'}}
+                          </td>                          <td [ngClass]="item?.status === true ? 'font-medium text-green-500' : 'font-medium text-myRed'">
+                            {{item?.status === true ? ('ResultVoting.voted'| translate) : ('ResultVoting.notVoted'| translate)}}
                           </td>
                         </tr>
                       </tbody> 

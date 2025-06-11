@@ -271,14 +271,12 @@
                         {{ array?.address?.split(", ").pop() }}
                       </div>
                     </div>
-                  </div>
-
-                  <div
+                  </div>                  <div
                     (click)="openDetailPopup(array.id)"
                     class="w-full border-t border-gray-200 text-sm text-center py-3 mt-4 text-primary hover:text-blue-600 hover:bg-blue-50 cursor-pointer transition-all duration-200 font-medium rounded-b-3xl"
                   >
                     <i class="fa-solid fa-eye mr-2"></i>
-                    Xem chi tiết
+                    {{'ProceedVoting.viewDetails'| translate }}
                   </div>
                 </div>
               </div>

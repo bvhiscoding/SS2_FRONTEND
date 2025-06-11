@@ -464,13 +464,12 @@
                         <i class="fas fa-map-marker-alt text-gray-400"></i>
                         <span>{{ voter.address?.split(", ").pop() }}</span>
                       </div>
-                    </div>
-                    <button
+                    </div>                    <button
                       (click)="openDetailPopup(voter.id)"
                       class="detail-btn"
                     >
                       <i class="fas fa-eye"></i>
-                      <span>Xem chi tiết</span>
+                      <span>{{'ProceedVoting.viewDetails'| translate }}</span>
                     </button>
                   </div>
                 </div>

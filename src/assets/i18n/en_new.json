@@ -70,11 +70,7 @@
     "enable": "Enable",
     "createdDate": "Created Date",
     "lastLogin": "Last Login",
-    "details": "Details",
-    "serialNumber": "No.",
-    "username": "Username",
-    "dateOfBirth": "Date of Birth",
-    "address": "Address"
+    "details": "Details"
   },
   "ProceedVoting": {
     "title": "Proceed Voting",
@@ -93,65 +89,14 @@
     "viewResults": "View Results",
     "startDate": "Start Date",
     "endDate": "End Date",
+    "description": "Description",
     "candidates": "Candidates",
     "totalVotes": "Total Votes",
     "myVote": "My Vote",
     "notVoted": "Not Voted",
     "voted": "Voted",
     "voteNow": "Vote Now",
-    "seeResults": "See Results",
-    "generalInfo": "General Information",
-    "termInfo": "Term Information",
-    "termName": "Term Name",
-    "maxCandidates": "Maximum candidates",
-    "candidateList": "Candidate List",
-    "votedCandidates": "Voted Candidates",    "viewDetails": "View Details",
-    "notVotedForAnyCandidate": "Not voted for any candidate yet"
-  },
-  "UserDetails": {
-    "title": "Detailed Information",
-    "avatar": "Avatar",
-    "fullName": "Full Name",
-    "username": "Username",
-    "idCard": "ID Card Number",
-    "dateOfBirth": "Date of Birth",
-    "gender": "Gender",
-    "male": "Male",
-    "female": "Female",
-    "phoneNumber": "Phone Number",
-    "email": "Email",
-    "address": "Address",    "close": "Close"
-  },
-  "ResultVoting": {
-    "title": "Election Results",
-    "backToList": "Back to List",
-    "electionInfo": "Election Information",
-    "leader": "Leading Candidate",
-    "totalCandidates": "Total Candidates",
-    "totalVoters": "Total Voters",
-    "chartStatistics": "Chart Statistics",
-    "columnChart": "Column",
-    "pieChart": "Pie",
-    "candidateList": "Candidate List",
-    "voterList": "Voter List",
-    "serialNumber": "No.",
-    "fullName": "Full Name",
-    "email": "Email",
-    "phoneNumber": "Phone Number",
-    "dateOfBirth": "Date of Birth",
-    "voteCount": "Vote Count",
-    "voting": "Voting",
-    "voted": "Voted",
-    "notVoted": "Not Voted",
-    "emptyList": "Empty List",
-    "totalVoteCount": "Total Vote Count",
-    "startDate": "Start Date",
-    "endDate": "End Date",
-    "position": "Position",
-    "status": "Status",
-    "notStarted": "Not Started",
-    "ongoing": "Ongoing",
-    "completed": "Completed"
+    "seeResults": "See Results"
   },
   "UnitItem": {
     "unfinished": "Unfinished",
@@ -165,7 +110,7 @@
     "manager": "Manager",
     "member": "Members",
     "description": "Description",
-    "noEmty": "No Emty",
+    "noEmty": "No Empty",
     "enterDescription": "Enter description",
     "listUnitTask": "List Sub Unit"
   },
@@ -177,7 +122,7 @@
     "edit": "Edit",
     "delete": "Delete",
     "add": "Add",
-    "createQuickTask": "Quickly Create Task ",
+    "createQuickTask": "Quickly Create Task",
     "no": "No",
     "yes": "Yes",
     "addMember": "Add Member",
@@ -185,92 +130,11 @@
     "register": "Register",
     "confirm": "Confirm"
   },
-  "PopUpAddEditTask": {
-    "taskName": "Task Name",
-    "startDate": "Start Date",
-    "endDate": "End Date",
-    "status": "Status",
-    "manager": "Manager",
-    "member": "Members",
-    "description": "Description",
-    "noEmty": "No Emty",
-    "enterDescription": "Enter description",
-    "priorityLevel": "Priority level",
-    "priorityHigh": "High",
-    "priorityMedium": "Medium",
-    "priorityLow": "Low",
-    "deadline": "Deadline",
-    "TaskInfor": "Task Infor",
-    "enterTaskInfor": "Enter task infor",
-    "listSubTask": "List Sub Task"
-  },
-  "PopUpEditTaskHistory": {
-    "editTaskHistory": "Edit Task History"
-  },
-  "PopUpAddEditObject": {
-    "object": "Object",
-    "target": "Target",
-    "startDate": "Start Date",
-    "endDate": "End Date",
-    "status": "Status",
-    "manager": "Manager",
-    "member": "Members",
-    "description": "Description",
-    "noEmty": "No Emty",
-    "enterDescription": "Enter description",
-    "priorityLevel": "Priority level",
-    "priorityHigh": "High",
-    "priorityMedium": "Medium",
-    "priorityLow": "Low",
-    "deadline": "Deadline"
-  },
-  "PopUpAddEditKeyResult": {
-    "keyResult": "Key Result",
-    "scale": "Scale",
-    "startDate": "Start Date",
-    "endDate": "End Date",
-    "status": "Status",
-    "manager": "Manager",
-    "member": "Members",
-    "description": "Description",
-    "noEmty": "No Emty",
-    "enterDescription": "Enter description",
-    "priorityLevel": "Priority level",
-    "priorityHigh": "High",
-    "priorityMedium": "Medium",
-    "priorityLow": "Low",
-    "deadline": "Deadline"
-  },
-  "PopUpRegister": {
-    "register": "Register",
-    "username": "Username",
-    "fullName": "Full Name",
-    "phoneNumber": "Phone Number",
+  "Management": {
+    "userList": "List of users",
+    "addNew": "Add new account",
     "password": "Password",
-    "rePass": "Re-enter password",
-    "noEmty": "No Emty",
-    "notMatch": "Password Is Not Match",
-    "wrongPhoneNumber": "Wrong Phone Number",
-    "wrongEmail": "Wrong Email",
-    "requiredPassword": "Password must have at least one uppercase letter, one lowercase letter, number, special character and be at least 8 characters long"
-  },
-  "PopUpForgotPassword": {
-    "forgotPassword": "Forgot Password",
-    "reciveOTP": "Receive OTP code via",
-    "phoneNumber": "Phone Number"
-  },
-  "PopUpInsertOTP": {
-    "insertOTP": "Insert OTP Code",
-    "Haventreceivedthecode": "Haven't received the code?",
-    "resend": " Resend"
-  },
-  "PopUpChangePassword": {
-    "oldPassword": "Old Password",
-    "newPassword": "New Password",
-    "rePass": "Re-enter password"
-  },
-  "PopUpChangeGroup": {
-    "editGroup": "Edit Group"
+    "passwordConfirm": "Password Confirm"
   },
   "Login": {
     "username": "Username",
@@ -280,14 +144,9 @@
     "login": "Login",
     "loginWith": "Login With",
     "registerAccount": "Register Account",
-    "noEmty": "No Emty",
-    "userNamePlaceholder": "User Name/Email/Phone Number"
-  },
-  "Management": {
-    "userList": "List of users",
-    "addNew": "Add new account",
-    "password": "Password",
-    "passwordConfirm": "Password Confirm"
+    "noEmty": "No Empty",
+    "userNamePlaceholder": "User Name/Email/Phone Number",
+    "loggingIn": "Logging in..."
   },
   "Toast": {
     "createSuccess": "Create Success",
@@ -295,8 +154,6 @@
     "Error": "Error",
     "deleteSuccess": "Delete Success",
     "DueDate": "DueDate must >= current date",
-    "AlerEmail": "You cannot verify your account via email if left blank",
-    "AlerPhoneNumber": "You cannot verify your account via phone number if left blank",
     "notify": "Notification",
     "registerSuccess": "Register Success",
     "confirmDelete": "Confirm Delete",
@@ -309,9 +166,6 @@
   },
   "modal": {
     "doYouWantCreateSubUnit": "Do you want to create subunit?"
-  },
-  "settingOrgnizationPopUp": {
-    "settingOrgnization": "Setting orgnization"
   },
   "userInforPage": {
     "accountInfor": "Account Information",
