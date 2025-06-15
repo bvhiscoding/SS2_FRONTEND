@@ -271,13 +271,13 @@
   },
   "PopUpChangeGroup": {
     "editGroup": "Edit Group"
-  },
-  "Login": {
+  },  "Login": {
     "username": "Username",
     "text": "Please login to access the system!",
     "password": "Password",
     "forgotPass": "Forgot password?",
     "login": "Login",
+    "loggingIn": "Logging In",
     "loginWith": "Login With",
     "registerAccount": "Register Account",
     "noEmty": "No Emty",

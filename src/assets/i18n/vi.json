@@ -273,13 +273,13 @@
   },
   "PopUpChangeGroup": {
     "editGroup": "Chỉnh sửa nhóm"
-  },
-  "Login": {
+  },  "Login": {
     "username": "Tên đăng nhập",
     "text": "Vui lòng đăng nhập để truy cập hệ thống!",
     "password": "Mật khẩu",
     "forgotPass": "Quên mật khẩu?",
     "login": "Đăng nhập",
+    "loggingIn": "Đang đăng nhập",
     "loginWith": "Đăng nhập với",
     "registerAccount": "Đăng ký tài khoản",
     "noEmty": "Không bỏ trống trường này",
