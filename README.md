@@ -9,7 +9,9 @@ The platform features comprehensive user authentication with multi-factor verifi
 1. [Overview](https://github.com/bvhiscoding/SS2_FRONTEND/#overview)
 2. [Technology Explanation](https://github.com/bvhiscoding/SS2_FRONTEND/#technology-explanation)
 3. [Functions](https://github.com/bvhiscoding/SS2_FRONTEND/#functions)
-4. [UI UX Design](https://github.com/bvhiscoding/SS2_FRONTEND/#ui-ux-design)
+4. [Project Structure](https://github.com/bvhiscoding/SS2_FRONTEND/#project-structure)
+5. [UI UX Design](https://github.com/bvhiscoding/SS2_FRONTEND/#ui-ux-design)
+6. [Conclusion](https://github.com/bvhiscoding/SS2_FRONTEND/#conclusion)
 
 ## Technology Explanation
 
@@ -79,11 +81,76 @@ Benefits of This Blockchain Implementation
 - Account Management
 - Database Management
 
+## Project Structure
+![Project_BFD_Diagram](https://github.com/user-attachments/assets/a7ff7c16-3441-481c-ad0f-aa14bfe1469e)
+
+Figure 1. BFD Diagram of Blockchain voting application
+
+The Block Flow Diagram illustrates the high-level architecture of the blockchain-based voting system, showcasing interaction between different components. The frontend layer provides users with an intuitive interface for voting operations, handling authentication, vote casting, and result visualization. The middleware manages business logic, user management, and communication with both database and blockchain networks.
+The backend integration connects to PostgreSQL for user credentials and metadata, and Polygon blockchain for immutable vote recording. Smart contracts automatically enforce voting rules and maintain an immutable ledger. The system incorporates security measures including two-factor authentication, encrypted transmission, and role-based access control with proper segregation between administrative and voter functions.
+
+![Project_ER_Diagram](https://github.com/user-attachments/assets/aec0b2ea-e649-4396-a9ae-f539b107531a)
+
+Figure 2. ER Diagram of Blockchain voting application
+
+The Entity-Relationship diagram depicts the comprehensive data model underlying the blockchain voting system. Central entities include Users, Elections, Positions, Candidates, and Votes with specific attributes and relationships. The User entity stores authentication credentials and role assignments supporting multiple user types. The Election entity contains metadata including timeframes and eligible voter lists.
+The Position entity represents contested roles, with candidates linked through many-to-many relationships. The Vote entity links voters to chosen candidates, including blockchain transaction hashes for traceability. Supporting entities handle notifications, audit logs, and configuration settings enabling comprehensive election management and monitoring.
+
+![Project_Use-case_Diagram](https://github.com/user-attachments/assets/cf5542ca-36e8-482b-a2d3-d8b6f8ada46b)
+
+Figure 3. Use Case Diagram of Blockchain voting application
+
+The Use Case diagram illustrates functional requirements and interactions within the system, identifying three primary actors: Voters, Election Administrators, and System Administrators. Voter use cases include authentication, viewing elections, casting votes, tracking status, and accessing results. The system ensures eligible participation and prevents multiple voting through blockchain verification.
+Election Administrator use cases encompass creating elections, managing candidates, defining eligibility, monitoring progress, and generating reports. System Administrator use cases focus on user management, configuration, security monitoring, and maintenance. Cross-cutting concerns include notification management, audit logging, and security enforcement across all interactions.
+
 ## UI UX Design
-Login Function UI
-![Login](https://github.com/user-attachments/assets/d9640528-7d90-4a95-b4c9-31a76f9c777e)
+Login Page
 
-Personal Info UI
-![Personal_info](https://github.com/user-attachments/assets/e18e73a4-af8d-4b2f-b01e-f70f11f86745)
+![Login](https://github.com/user-attachments/assets/600613fd-799d-495e-9d31-87acb7e63d8e)
 
-**---Work In Progress---**
+Statistics Page
+
+![Statistics](https://github.com/user-attachments/assets/8881c832-4f49-4d22-9339-df2df5589fe8)
+
+User Management Page
+
+![User Management](https://github.com/user-attachments/assets/de5d94b9-fd6f-4aa0-a10a-c1a1c2c43611)
+
+Proceed Voting Page
+
+![Proceed Voting](https://github.com/user-attachments/assets/0eb28383-a251-4b8a-94f1-dcaff9767c6b)
+
+Follow Election/Voting Monitor Page
+
+![Follow Election/Voting Monitor](https://github.com/user-attachments/assets/2305cf7a-7eb4-40e3-aab1-309993da98d0)
+
+Voting/Election Management Page
+
+![Voting/Election Management](https://github.com/user-attachments/assets/f213c46a-3772-43fd-b7fc-a71602e08e30)
+
+Personal Information Page
+
+![Personal Information](https://github.com/user-attachments/assets/a7e89646-a772-47d5-b665-8790a486cd51)
+
+System Settings Page
+
+Language/Region
+
+![Language/Region](https://github.com/user-attachments/assets/91df89b5-06b0-4bc5-92b6-fa9b0b56d837)
+
+Theme
+
+![Theme](https://github.com/user-attachments/assets/bc3b08f5-3952-4bd1-b091-fffe995d99d4)
+
+Notification
+
+![Notification](https://github.com/user-attachments/assets/09435ce1-f683-4cc3-aa7f-70ea9c4c2f7f)
+
+Security
+
+![Security](https://github.com/user-attachments/assets/ad71b901-8833-49b1-810f-92c5aac4ab85)
+
+## Conclusion
+In this project, we have demonstrated how blockchain technology can significantly enhance the security, transparency, and integrity of electronic voting systems. Through our comprehensive analysis and system development, we believe that our blockchain-based voting solution effectively combines the advantages of digital voting with the decentralized, immutable features of blockchain technology. We have shown that our system can meet critical electoral requirements such as voter anonymity, ballot security, transparency, and auditability. By leveraging smart contracts, we automate the voting process, ensuring that rules are enforced consistently and results are trustworthy without relying on a central authority. The cryptographic techniques integrated into our system further protect against tampering, fraud, and unauthorized data manipulation.
+
+Our key contribution lies in designing a three-phase voting model—covering preparation, voting, and result aggregation—that maintains security and transparency throughout the entire electoral cycle. We believe that this approach not only improves accessibility and reduces operational costs but also fosters greater public trust in democratic processes. Of course, we recognize that challenges remain, particularly regarding scalability, energy consumption, and system complexity. Moving forward, we think that further research should focus on optimizing blockchain consensus mechanisms, enhancing user experience, and developing regulatory frameworks to facilitate real-world deployment. Overall, we are hopeful that our work represents a meaningful step toward modernizing electoral systems while upholding the fundamental principles of democracy in the digital age.
