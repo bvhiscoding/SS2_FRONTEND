@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ShareTableModule } from '../../../shared/components/share-table/share-table.module';
 import { RouterModule } from '@angular/router';
@@ -17,7 +22,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-management-list',
-  
   standalone: true,
   imports: [
     CommonModule,
@@ -33,22 +37,23 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     MatDatepickerModule,
     MatSelectModule,
     ManagementAddComponent,
-    AccountDisableComponent
+    AccountDisableComponent,
   ],
   templateUrl: './management-list.component.html',
-  styleUrl: './management-list.component.scss'
+  styleUrl: './management-list.component.scss',
 })
-export class ManagementListComponent implements OnInit{
+export class ManagementListComponent implements OnInit {
   public chartType: any = 'columns';
   public isLoading: boolean = false;
   public idManagement: any = '';
   public nameManagement: any = '';
   public totalCount: number = 10;
-  public listUserManagements : any = [];
+  public listUserManagements: any = [];
   public mode: 'create' | 'edit' = 'create';
-  public role: string;  public params = {
+  public role: string;
+  public params = {
     page: 1,
-    pageSize:10
+    pageSize: 10,
   };
   public math = Math;
 
@@ -64,7 +69,6 @@ export class ManagementListComponent implements OnInit{
     roles: [null],
   });
 
-
   constructor(
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
@@ -72,8 +76,8 @@ export class ManagementListComponent implements OnInit{
     private accountService: AccountService,
     private message: NzMessageService,
     private translate: TranslateService,
-  ){}
-  
+  ) {}
+
   ngOnInit(): void {
     this.initializeTranslatedLists();
     this.viewListUser();
@@ -102,17 +106,19 @@ export class ManagementListComponent implements OnInit{
       {
         label: this.translate.instant('Menu.user'),
         value: 1,
-      }
+      },
     ];
   }
 
   viewListUser() {
     this.isLoading = true;
-    this.managermentService.getAllManagement(this.params.page, this.params.pageSize).subscribe(res => {
-      this.isLoading = false;
-      this.listUserManagements = res.data;
-      this.totalCount = res.totalItems;
-    })
+    this.managermentService
+      .getAllManagement(this.params.page, this.params.pageSize)
+      .subscribe((res) => {
+        this.isLoading = false;
+        this.listUserManagements = res.data;
+        this.totalCount = res.totalItems;
+      });
   }
 
   isVisiblePopUpAddManagement: boolean = false;
@@ -125,7 +131,7 @@ export class ManagementListComponent implements OnInit{
     this.isVisiblePopUpAddManagement = true;
   }
 
-  handleDetail(id?: any):void {
+  handleDetail(id?: any): void {
     this.idManagement = id;
     this.mode = 'edit';
     this.isVisiblePopUpAddManagement = true;
@@ -136,13 +142,13 @@ export class ManagementListComponent implements OnInit{
     this.isVisiblePopUpEditManagement = e;
   }
   handelOpenPopUpEditManagement(id: string) {
-    console.log("Id: ", id)
+    console.log('Id: ', id);
     this.isVisiblePopUpEditManagement = true;
   }
 
   openDisablePopup(id?: string, name?: any, status?: any) {
     this.idManagement = id;
-    if(status === 'Active') {
+    if (status === 'Active') {
       this.isVisible = true;
       this.nameManagement = name;
     } else if (status === 'Disable') {
@@ -152,7 +158,7 @@ export class ManagementListComponent implements OnInit{
           this.cdr.detectChanges();
           this.message.success('Active account successfully!');
         },
-      })
+      });
     }
   }
   isVisible: boolean = false;
@@ -168,9 +174,7 @@ export class ManagementListComponent implements OnInit{
     this.handleSearch();
   }
 
-  handleSearch() {
-
-  }
+  handleSearch() {}
 
   changePage(e: number) {
     this.params.page = e;
