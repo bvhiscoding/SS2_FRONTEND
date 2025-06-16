@@ -180,18 +180,24 @@ export class ManagementAddComponent implements OnInit, OnChanges {
       imageUrl: this.avatarUrl,
       urlIdentityCardImage: this.identityCardUrl,
       isAdmin: this.form.get('isAdmin')?.value,
-    };    if (this.form.invalid) {
+    };
+    if (this.form.invalid) {
       console.log('Form is invalid. Form status:', this.form.status);
       console.log('Form errors:', this.getFormValidationErrors());
-      
+
       // Debug each field
-      Object.keys(this.form.controls).forEach(key => {
+      Object.keys(this.form.controls).forEach((key) => {
         const control = this.form.get(key);
         if (control?.invalid) {
-          console.log(`Field ${key} is invalid:`, control.errors, 'Value:', control.value);
+          console.log(
+            `Field ${key} is invalid:`,
+            control.errors,
+            'Value:',
+            control.value,
+          );
         }
       });
-      
+
       this.form.get('username')?.markAsTouched();
       this.form.get('fullName')?.markAsTouched();
       this.form.get('identityCardNumber')?.markAsTouched();
@@ -397,14 +403,14 @@ export class ManagementAddComponent implements OnInit, OnChanges {
 
   getFormValidationErrors(): any {
     const formErrors: any = {};
-    
-    Object.keys(this.form.controls).forEach(key => {
+
+    Object.keys(this.form.controls).forEach((key) => {
       const controlErrors = this.form.get(key)?.errors;
       if (controlErrors) {
         formErrors[key] = controlErrors;
       }
     });
-    
+
     return formErrors;
   }
 

@@ -44,7 +44,8 @@
     "startDate": "Ngày bắt đầu",
     "voteCount": "Số lượng phiếu bầu",
     "candidate": "Ứng cử viên"
-  },  "UserManagement": {
+  },
+  "UserManagement": {
     "title": "Quản lý người dùng",
     "description": "Quản lý và theo dõi người dùng trong hệ thống",
     "addNewUser": "Thêm mới người dùng",
@@ -73,8 +74,16 @@
     "serialNumber": "STT",
     "username": "Tên đăng nhập",
     "dateOfBirth": "Ngày sinh",
-    "address": "Địa chỉ"
-  },  "ProceedVoting": {
+    "address": "Địa chỉ",
+    "showing": "Hiển thị",
+    "to": "đến",
+    "of": "trên tổng",
+    "results": "kết quả",
+    "itemsPerPage": "mục trên trang",
+    "noUsers": "Không tìm thấy người dùng",
+    "noUsersDescription": "Chưa có người dùng nào được tạo trong hệ thống."
+  },
+  "ProceedVoting": {
     "title": "Tiến hành bầu cử",
     "description": "Tham gia và bầu cử trong các cuộc bầu cử",
     "searchAndFilter": "Bộ lọc tìm kiếm",
@@ -103,7 +112,8 @@
     "termName": "Tên nhiệm kỳ",
     "maxCandidates": "Số ứng viên tối đa",
     "candidateList": "Danh sách ứng viên",
-    "votedCandidates": "Ứng viên đã bỏ phiếu",    "viewDetails": "Xem chi tiết",
+    "votedCandidates": "Ứng viên đã bỏ phiếu",
+    "viewDetails": "Xem chi tiết",
     "notVotedForAnyCandidate": "Chưa bỏ phiếu cho ứng viên nào"
   },
   "UserDetails": {
@@ -118,7 +128,8 @@
     "female": "Nữ",
     "phoneNumber": "Số điện thoại",
     "email": "Email",
-    "address": "Sinh sống",    "close": "Đóng"
+    "address": "Sinh sống",
+    "close": "Đóng"
   },
   "ResultVoting": {
     "title": "Kết quả bầu cử",
@@ -273,7 +284,8 @@
   },
   "PopUpChangeGroup": {
     "editGroup": "Chỉnh sửa nhóm"
-  },  "Login": {
+  },
+  "Login": {
     "username": "Tên đăng nhập",
     "text": "Vui lòng đăng nhập để truy cập hệ thống!",
     "password": "Mật khẩu",
@@ -333,7 +345,8 @@
     "required": "Không bỏ trống",
     "wrongPhoneNumber": "Sai số điện thoại",
     "wrongEmail": "Sai email"
-  },  "profile": {
+  },
+  "profile": {
     "doNotLeaveEmpty": "Không bỏ trống trường này!"
   },
   "ElectionFollow": {
@@ -434,7 +447,8 @@
     "addNew": "Thêm mới",
     "edit": "Chỉnh sửa",
     "cancel": "Huỷ bỏ"
-  },  "DeleteElectionPopup": {
+  },
+  "DeleteElectionPopup": {
     "confirmDelete": "Xác nhận xóa",
     "confirmDeleteMessage": "Bạn có chắc chắn muốn huỷ bỏ cuộc bầu cử",
     "questionMark": " không?",
@@ -472,7 +486,8 @@
     "locked": "Bị khóa",
     "noData": "Không có dữ liệu",
     "noMatchingFilters": "Không tìm thấy chức vụ nào phù hợp với bộ lọc. Hãy thử điều chỉnh lại bộ lọc.",
-    "noPositionsCreated": "Chưa có chức vụ nào được tạo trong hệ thống.",    "clearFilters": "Xóa bộ lọc",
+    "noPositionsCreated": "Chưa có chức vụ nào được tạo trong hệ thống.",
+    "clearFilters": "Xóa bộ lọc",
     "displayPerPage": "/ trang",
     "displaying": "Hiển thị",
     "to": "đến",
@@ -503,7 +518,8 @@
     "updateSuccess": "Cập nhật chức vụ thành công!",
     "addError": "Thêm chức vụ thất bại!",
     "updateError": "Cập nhật chức vụ thất bại!"
-  },  "DeletePositionPopup": {
+  },
+  "DeletePositionPopup": {
     "confirmDelete": "Xác nhận xóa",
     "confirmDeleteMessage": "Bạn có chắc chắn muốn xóa chức vụ",
     "questionMark": " không?",

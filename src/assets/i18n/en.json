@@ -52,7 +52,7 @@
     "searchAndFilter": "Search & Filter",
     "fullName": "Full Name",
     "email": "Email",
-    "phoneNumber": "Phone Number", 
+    "phoneNumber": "Phone Number",
     "role": "Role",
     "status": "Status",
     "searchPlaceholder": "Enter user name...",
@@ -74,7 +74,14 @@
     "serialNumber": "No.",
     "username": "Username",
     "dateOfBirth": "Date of Birth",
-    "address": "Address"
+    "address": "Address",
+    "showing": "Showing",
+    "to": "to",
+    "of": "of",
+    "results": "results",
+    "itemsPerPage": "items per page",
+    "noUsers": "No Users Found",
+    "noUsersDescription": "No users have been created in the system yet."
   },
   "ProceedVoting": {
     "title": "Proceed Voting",
@@ -85,7 +92,7 @@
     "searchPlaceholder": "Enter election name...",
     "allStatuses": "All Statuses",
     "ongoing": "Ongoing",
-    "upcoming": "Upcoming", 
+    "upcoming": "Upcoming",
     "completed": "Completed",
     "search": "Search",
     "reset": "Reset",
@@ -105,7 +112,8 @@
     "termName": "Term Name",
     "maxCandidates": "Maximum candidates",
     "candidateList": "Candidate List",
-    "votedCandidates": "Voted Candidates",    "viewDetails": "View Details",
+    "votedCandidates": "Voted Candidates",
+    "viewDetails": "View Details",
     "notVotedForAnyCandidate": "Not voted for any candidate yet"
   },
   "UserDetails": {
@@ -120,7 +128,8 @@
     "female": "Female",
     "phoneNumber": "Phone Number",
     "email": "Email",
-    "address": "Address",    "close": "Close"
+    "address": "Address",
+    "close": "Close"
   },
   "ResultVoting": {
     "title": "Election Results",
@@ -271,7 +280,8 @@
   },
   "PopUpChangeGroup": {
     "editGroup": "Edit Group"
-  },  "Login": {
+  },
+  "Login": {
     "username": "Username",
     "text": "Please login to access the system!",
     "password": "Password",
@@ -331,7 +341,8 @@
     "required": "Required",
     "wrongPhoneNumber": "Wrong Phone Number",
     "wrongEmail": "Wrong Email"
-  },  "profile": {
+  },
+  "profile": {
     "doNotLeaveEmpty": "Do not leave empty!"
   },
   "ElectionFollow": {
@@ -432,7 +443,8 @@
     "addNew": "Add New",
     "edit": "Edit",
     "cancel": "Cancel"
-  },  "DeleteElectionPopup": {
+  },
+  "DeleteElectionPopup": {
     "confirmDelete": "Confirm Delete",
     "confirmDeleteMessage": "Are you sure you want to cancel the election",
     "questionMark": "?",
@@ -462,7 +474,8 @@
     "loadingData": "Loading data...",
     "serialNumber": "STT",
     "positionName": "Position Name",
-    "description": "Description",    "actions": "Actions",
+    "description": "Description",
+    "actions": "Actions",
     "edit": "Edit",
     "delete": "Delete",
     "noDescription": "No description",
@@ -501,7 +514,8 @@
     "updateSuccess": "Position updated successfully!",
     "addError": "Failed to add position!",
     "updateError": "Failed to update position!"
-  },  "DeletePositionPopup": {
+  },
+  "DeletePositionPopup": {
     "confirmDelete": "Confirm Delete",
     "confirmDeleteMessage": "Are you sure you want to delete position",
     "questionMark": "?",

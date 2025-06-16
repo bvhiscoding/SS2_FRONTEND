@@ -77,10 +77,24 @@ export class ManagementListComponent implements OnInit {
     private message: NzMessageService,
     private translate: TranslateService,
   ) {}
-
   ngOnInit(): void {
     this.initializeTranslatedLists();
     this.viewListUser();
+
+    // Debug translation service
+    setTimeout(() => {
+      console.log('Translation debug:');
+      console.log('Current language:', this.translate.currentLang);
+      console.log('Default language:', this.translate.defaultLang);
+      console.log('showing:', this.translate.instant('UserManagement.showing'));
+      console.log('to:', this.translate.instant('UserManagement.to'));
+      console.log('of:', this.translate.instant('UserManagement.of'));
+      console.log('results:', this.translate.instant('UserManagement.results'));
+      console.log(
+        'itemsPerPage:',
+        this.translate.instant('UserManagement.itemsPerPage'),
+      );
+    }, 1000);
   }
   private initializeTranslatedLists(): void {
     this.listStatus = [
@@ -183,5 +197,35 @@ export class ManagementListComponent implements OnInit {
   changePageSize(e: number) {
     this.params.pageSize = e;
     this.viewListUser();
+  }
+  // Translation helper methods for pagination
+  getShowingText(): string {
+    const text = this.translate.instant('UserManagement.showing');
+    console.log('getShowingText called, result:', text);
+    return text;
+  }
+
+  getToText(): string {
+    const text = this.translate.instant('UserManagement.to');
+    console.log('getToText called, result:', text);
+    return text;
+  }
+
+  getOfText(): string {
+    const text = this.translate.instant('UserManagement.of');
+    console.log('getOfText called, result:', text);
+    return text;
+  }
+
+  getResultsText(): string {
+    const text = this.translate.instant('UserManagement.results');
+    console.log('getResultsText called, result:', text);
+    return text;
+  }
+
+  getItemsPerPageText(): string {
+    const text = this.translate.instant('UserManagement.itemsPerPage');
+    console.log('getItemsPerPageText called, result:', text);
+    return text;
   }
 }

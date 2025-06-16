@@ -70,7 +70,18 @@
     "enable": "Kích hoạt",
     "createdDate": "Ngày tạo",
     "lastLogin": "Đăng nhập cuối",
-    "details": "Chi tiết"
+    "details": "Chi tiết",
+    "serialNumber": "STT",
+    "username": "Tên đăng nhập",
+    "dateOfBirth": "Ngày sinh",
+    "address": "Địa chỉ",
+    "showing": "Hiển thị",
+    "to": "đến",
+    "of": "trên tổng",
+    "results": "kết quả",
+    "itemsPerPage": "mục trên trang",
+    "noUsers": "Không tìm thấy người dùng",
+    "noUsersDescription": "Chưa có người dùng nào được tạo trong hệ thống."
   },
   "ProceedVoting": {
     "title": "Tiến hành bầu cử",

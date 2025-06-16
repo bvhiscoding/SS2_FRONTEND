@@ -374,15 +374,15 @@
       <div class="flex items-center justify-between">
         <div class="text-sm text-gray-700">
           <span
-            >{{ "UserManagement.showing" | translate }}
+            >{{ getShowingText() }}
             <strong>{{ (params.page - 1) * params.pageSize + 1 }}</strong>
-            {{ "UserManagement.to" | translate }}
+            {{ getToText() }}
             <strong>{{
               math.min(params.page * params.pageSize, totalCount)
             }}</strong>
-            {{ "UserManagement.of" | translate }}
+            {{ getOfText() }}
             <strong>{{ totalCount }}</strong>
-            {{ "UserManagement.results" | translate }}</span
+            {{ getResultsText() }}</span
           >
         </div>
         <div class="flex items-center space-x-2">
@@ -410,18 +410,10 @@
             (ngModelChange)="changePageSize($event)"
             class="ml-4 px-2 py-1 border rounded"
           >
-            <option [ngValue]="5">
-              5 {{ "UserManagement.itemsPerPage" | translate }}
-            </option>
-            <option [ngValue]="10">
-              10 {{ "UserManagement.itemsPerPage" | translate }}
-            </option>
-            <option [ngValue]="20">
-              20 {{ "UserManagement.itemsPerPage" | translate }}
-            </option>
-            <option [ngValue]="50">
-              50 {{ "UserManagement.itemsPerPage" | translate }}
-            </option>
+            <option [ngValue]="5">5 {{ getItemsPerPageText() }}</option>
+            <option [ngValue]="10">10 {{ getItemsPerPageText() }}</option>
+            <option [ngValue]="20">20 {{ getItemsPerPageText() }}</option>
+            <option [ngValue]="50">50 {{ getItemsPerPageText() }}</option>
           </select>
         </div>
       </div>

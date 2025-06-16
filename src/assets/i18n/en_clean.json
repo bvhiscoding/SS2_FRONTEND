@@ -52,7 +52,7 @@
     "searchAndFilter": "Search & Filter",
     "fullName": "Full Name",
     "email": "Email",
-    "phoneNumber": "Phone Number", 
+    "phoneNumber": "Phone Number",
     "role": "Role",
     "status": "Status",
     "searchPlaceholder": "Enter user name...",
@@ -74,7 +74,14 @@
     "serialNumber": "No.",
     "username": "Username",
     "dateOfBirth": "Date of Birth",
-    "address": "Address"
+    "address": "Address",
+    "showing": "Showing",
+    "to": "to",
+    "of": "of",
+    "results": "results",
+    "itemsPerPage": "items per page",
+    "noUsers": "No Users Found",
+    "noUsersDescription": "No users have been created in the system yet."
   },
   "ProceedVoting": {
     "title": "Proceed Voting",
@@ -85,7 +92,7 @@
     "searchPlaceholder": "Enter election name...",
     "allStatuses": "All Statuses",
     "ongoing": "Ongoing",
-    "upcoming": "Upcoming", 
+    "upcoming": "Upcoming",
     "completed": "Completed",
     "search": "Search",
     "reset": "Reset",
