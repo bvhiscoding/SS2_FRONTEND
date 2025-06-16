@@ -93,14 +93,21 @@ export class SlectionFollowListComponent {
       },
     ];
   }
-
   viewListVote() {
     this.isLoading = true;
+    this.isCandidatesLoading = true;
+    this.isVotersLoading = true;
+    
     this.voteService.viewListVoteForCandidates().subscribe({
       next: (res) => {
         this.isLoading = false;
         if(res.data.length === 0) {
           this.listVote = [];
+          this.originalListVote = [];
+          this.filteredListVote = [];
+          // Set loading states to false when there are no elections
+          this.isCandidatesLoading = false;
+          this.isVotersLoading = false;
         } else {          this.listVote = res.data.map((vote: any) => {
             return {
               ...vote,
@@ -114,19 +121,44 @@ export class SlectionFollowListComponent {
           this.filteredListVote = [...this.listVote];
           
           // Tải danh sách ứng viên và cử tri cho mỗi cuộc bầu cử
+          let candidatesLoaded = 0;
+          let votersLoaded = 0;
+          const totalElections = this.listVote.length;
+          
           this.listVote.forEach((vote: any) => {
             this.voteService.listViewCandidate(vote.id).subscribe({
               next: (candidateRes) => {
                 vote.candidates = candidateRes.data;
+                candidatesLoaded++;
+                if (candidatesLoaded === totalElections) {
+                  this.isCandidatesLoading = false;
+                }
                 this.cdr.detectChanges();
-                this.isCandidatesLoading = false;
+              },
+              error: () => {
+                candidatesLoaded++;
+                if (candidatesLoaded === totalElections) {
+                  this.isCandidatesLoading = false;
+                }
+                this.cdr.detectChanges();
               }
             });
+            
             this.voteService.listViewVoter(vote.id).subscribe({
               next: (voterRes) => {
                 vote.voters = voterRes.data;
+                votersLoaded++;
+                if (votersLoaded === totalElections) {
+                  this.isVotersLoading = false;
+                }
                 this.cdr.detectChanges();
-                this.isVotersLoading = false;
+              },
+              error: () => {
+                votersLoaded++;
+                if (votersLoaded === totalElections) {
+                  this.isVotersLoading = false;
+                }
+                this.cdr.detectChanges();
               }
             });
           });
@@ -136,6 +168,8 @@ export class SlectionFollowListComponent {
       },
       error: (err) => {
         this.isLoading = false;
+        this.isCandidatesLoading = false;
+        this.isVotersLoading = false;
         this.message.error('Lỗi hệ thống');
       }
     });
