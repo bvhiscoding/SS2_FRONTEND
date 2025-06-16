@@ -518,7 +518,7 @@
     "updateSuccess": "Cập nhật chức vụ thành công!",
     "addError": "Thêm chức vụ thất bại!",
     "updateError": "Cập nhật chức vụ thất bại!"
-  },
+    },
   "DeletePositionPopup": {
     "confirmDelete": "Xác nhận xóa",
     "confirmDeleteMessage": "Bạn có chắc chắn muốn xóa chức vụ",
@@ -528,5 +528,148 @@
     "delete": "Xác nhận xóa",
     "deleteSuccess": "Xóa chức vụ thành công!",
     "deleteError": "Xóa chức vụ thất bại!"
+  },
+  "UserInfo": {
+    "title": "Thông tin cá nhân",
+    "description": "Quản lý và cập nhật thông tin tài khoản của bạn",
+    "statusActive": "Đang hoạt động",
+    "editButton": "Chỉnh sửa",
+    "sections": {
+      "personalInfo": "Thông tin cá nhân",
+      "contactInfo": "Thông tin liên hệ",  
+      "identityInfo": "Thông tin CCCD/CMND"
+    },
+    "fields": {
+      "fullName": "Họ và tên",
+      "fullNamePlaceholder": "Nhập họ và tên",
+      "dateOfBirth": "Ngày sinh",
+      "dateOfBirthPlaceholder": "Chọn ngày sinh",
+      "username": "Tên đăng nhập",
+      "usernamePlaceholder": "Tên đăng nhập",
+      "gender": "Giới tính",
+      "male": "Nam",
+      "female": "Nữ",
+      "phoneNumber": "Số điện thoại",
+      "phoneNumberPlaceholder": "Nhập số điện thoại",
+      "email": "Email",
+      "emailPlaceholder": "Địa chỉ email",
+      "address": "Địa chỉ thường trú",
+      "addressPlaceholder": "Nhập địa chỉ thường trú",
+      "idNumber": "Số CCCD/CMND",
+      "idNumberPlaceholder": "Nhập số CCCD/CMND",
+      "dateOfIssue": "Ngày cấp",
+      "dateOfIssuePlaceholder": "Chọn ngày cấp",
+      "placeOfIssue": "Nơi cấp",
+      "placeOfIssuePlaceholder": "Nhập nơi cấp",
+      "identityCardImage": "Ảnh CCCD/CMND",
+      "noIdentityCard": "Chưa có ảnh CCCD/CMND",
+      "selectIdentityCard": "Chọn ảnh CCCD/CMND"
+    },
+    "validation": {
+      "required": "Trường này không được để trống",
+      "phoneInvalid": "Số điện thoại không hợp lệ",
+      "emailInvalid": "Email không hợp lệ"
+    },
+    "messages": {
+      "updateSuccess": "Cập nhật thông tin thành công",
+      "updateError": "Cập nhật thông tin thất bại",
+      "uploadSuccess": "Upload thành công!",
+      "uploadError": "Upload thất bại. Vui lòng thử lại!",
+      "loadError": "Lỗi không hiển thị thông tin"
+    },
+    "buttons": {
+      "save": "Lưu",
+      "cancel": "Hủy bỏ",
+      "edit": "Chỉnh sửa"
+    }
+  },  "Settings": {
+    "title": "Cài đặt hệ thống",
+    "subtitle": "Tùy chỉnh giao diện và thiết lập tài khoản",
+    "navigation": {
+      "title": "Danh mục cài đặt",
+      "language": "Ngôn ngữ & Khu vực",
+      "appearance": "Giao diện",
+      "notifications": "Thông báo",
+      "security": "Bảo mật"
+    },
+    "language": {
+      "title": "Ngôn ngữ & Khu vực",
+      "displayLanguage": "Ngôn ngữ hiển thị",
+      "description": "Thay đổi ngôn ngữ hiển thị trong toàn bộ ứng dụng",
+      "vietnamese": "Tiếng Việt",
+      "english": "Tiếng Anh",
+      "timezone": "Múi giờ",
+      "timezoneDescription": "Đặt múi giờ để hiển thị thời gian chính xác"
+    },
+    "appearance": {
+      "title": "Giao diện",
+      "theme": {
+        "title": "Chủ đề màu sắc",
+        "default": "Mặc định",
+        "blue": "Xanh dương",
+        "green": "Xanh lá"
+      },
+      "fontSize": {
+        "title": "Kích thước font chữ",
+        "label": "Kích thước font",
+        "small": "Nhỏ",
+        "medium": "Trung bình",
+        "large": "Lớn",
+        "preview": "Đây là văn bản mẫu để xem trước kích thước font chữ đã chọn."
+      },
+      "animation": {
+        "title": "Hiệu ứng hoạt hình",
+        "pageTransition": "Bật hiệu ứng chuyển trang",
+        "pageTransitionDescription": "Hiệu ứng mượt mà khi chuyển giữa các trang",
+        "hover": "Hiệu ứng hover",
+        "hoverDescription": "Hiệu ứng khi di chuột qua các nút và liên kết"
+      },
+      "density": {
+        "title": "Mật độ giao diện",
+        "compact": "Nhỏ gọn",
+        "comfortable": "Thoải mái",
+        "spacious": "Rộng rãi"
+      }
+    },
+    "notifications": {
+      "title": "Thông báo",
+      "email": {
+        "title": "Thông báo qua Email",
+        "security": "Thông báo bảo mật",
+        "securityDescription": "Nhận thông báo khi có hoạt động đăng nhập bất thường",
+        "election": "Thông báo cuộc bầu cử",
+        "electionDescription": "Thông báo về cuộc bầu cử mới và cập nhật tiến trình",
+        "results": "Thông báo kết quả",
+        "resultsDescription": "Nhận kết quả bầu cử khi hoàn tất"
+      },
+      "inApp": {
+        "title": "Thông báo trong ứng dụng",
+        "sound": "Âm thanh thông báo",
+        "soundDescription": "Phát âm thanh khi có thông báo mới",
+        "popup": "Thông báo popup",
+        "popupDescription": "Hiển thị popup thông báo khi có hoạt động quan trọng"
+      },
+      "frequency": {
+        "title": "Tần suất thông báo",
+        "immediate": "Ngay lập tức",
+        "daily": "Tóm tắt hàng ngày",
+        "weekly": "Tóm tắt hàng tuần"
+      }
+    },
+    "security": {
+      "title": "Bảo mật",
+      "password": {
+        "title": "Mật khẩu",
+        "change": "Thay đổi mật khẩu",
+        "changeDescription": "Để đảm bảo an toàn bạn nên đổi mật khẩu ít nhất 6 tháng 1 lần",
+        "changeButton": "Thay đổi mật khẩu"
+      },
+      "email": {
+        "title": "Email liên kết",
+        "current": "Email hiện tại",
+        "verified": "Đã xác thực",
+        "changeButton": "Thay đổi email"
+      }
+    }
   }
 }

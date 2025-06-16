@@ -50,7 +50,7 @@ export class MyInfoViewComponent implements OnInit {
   districtData: any = [];
   wardsData: any = [];
   identityCardUrl: string | null = null;
-  avatarPreview:string = "../../../assets/img/Logo-Hoc-Vien-Ky-Thuat-Mat-Ma-ACTVN.webp"
+  avatarPreview: string = "../../../assets/img/Logo-Hoc-Vien-Ky-Thuat-Mat-Ma-ACTVN.webp";
   public listGender: any = [
     {
       value: true,
@@ -61,6 +61,7 @@ export class MyInfoViewComponent implements OnInit {
       label: 'Nữ',
     },
   ];
+  
   constructor(
       private fb: FormBuilder,
       private translate: TranslateService,
@@ -72,14 +73,28 @@ export class MyInfoViewComponent implements OnInit {
       private managermentService: ManagermentService,
   ) {
       this.translate
-          .get('settings.securityTab.noEmty')
+          .get('UserInfo.validation.required')
           .subscribe((value) => (this.requiredMsg = value));
       this.translate.onLangChange.subscribe((e) => {
           this.translate
-              .get('settings.securityTab.noEmty')
+              .get('UserInfo.validation.required')
               .subscribe((value) => (this.requiredMsg = value));
+          this.updateGenderLabels();
       });
-     
+      this.updateGenderLabels();
+  }
+  
+  updateGenderLabels(): void {
+    this.listGender = [
+      {
+        value: true,
+        label: this.translate.instant('UserInfo.fields.male'),
+      },
+      {
+        value: false,
+        label: this.translate.instant('UserInfo.fields.female'),
+      },
+    ];
   }
   ngOnInit(): void {
       this.form.disable();
@@ -160,9 +175,8 @@ export class MyInfoViewComponent implements OnInit {
         this.avatarPreview = res.imageUrl;
         this.identityCardUrl = res.identityCardImage;
         this.cdr.detectChanges();
-      },
-      error: (err) => {
-        this.message.error('Lỗi không hiển thị thông tin');
+      },      error: (err) => {
+        this.message.error(this.translate.instant('UserInfo.messages.loadError'));
       },
     })
   }
@@ -194,11 +208,10 @@ export class MyInfoViewComponent implements OnInit {
         } else {
           this.identityCardUrl = response.filename;
           this.form.get('identityCardUrl')?.setValue(this.identityCardUrl);
-        }
-        this.message.success('Upload thành công!');
+        }        this.message.success(this.translate.instant('UserInfo.messages.uploadSuccess'));
       },
       (error) => {
-        this.message.error('Upload thất bại. Vui lòng thử lại!');
+        this.message.error(this.translate.instant('UserInfo.messages.uploadError'));
       }
     );
   }
@@ -215,20 +228,19 @@ export class MyInfoViewComponent implements OnInit {
         cellPhone: this.form.get('phoneNumber')?.value,
         imageUrl: this.avatarPreview,
         identityCardImage: this.identityCardUrl,
-        identityCardNumber: this.form.get('idNumber')?.value,
-        identityCardDate: this.form.get('dateOfIssue')?.value,
+        identityCardNumber: this.form.get('idNumber')?.value,        identityCardDate: this.form.get('dateOfIssue')?.value,
         identityCardPlace: this.form.get('placeOfIssue')?.value,
-    }
+    };
     this.accountService.updateInfo(body).subscribe({
       next: (res) => {
-        this.message.success('Cập nhật thông tin thành công');
+        this.message.success(this.translate.instant('UserInfo.messages.updateSuccess'));
         this.getViewInfo();
         this.isEdit = false;
         this.form.disable();
         this.cdr.detectChanges();
       },
       error: (err) => {
-        this.message.error('Cập nhật thông tin thất bại');
+        this.message.error(this.translate.instant('UserInfo.messages.updateError'));
       },
     });
   }

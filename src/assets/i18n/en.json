@@ -517,12 +517,154 @@
   },
   "DeletePositionPopup": {
     "confirmDelete": "Confirm Delete",
-    "confirmDeleteMessage": "Are you sure you want to delete position",
-    "questionMark": "?",
+    "confirmDeleteMessage": "Are you sure you want to delete position",    "questionMark": "?",
     "warningMessage": "This action cannot be undone. All data related to this position will be permanently deleted.",
     "cancel": "Cancel",
     "delete": "Delete",
     "deleteSuccess": "Position deleted successfully!",
     "deleteError": "Failed to delete position!"
+  },
+  "UserInfo": {
+    "title": "Personal Information",
+    "description": "Manage and update your account information",
+    "statusActive": "Active",
+    "editButton": "Edit",
+    "sections": {
+      "personalInfo": "Personal Information",
+      "contactInfo": "Contact Information",  
+      "identityInfo": "ID Card Information"
+    },
+    "fields": {
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "Enter full name",
+      "dateOfBirth": "Date of Birth",
+      "dateOfBirthPlaceholder": "Select date of birth",
+      "username": "Username",
+      "usernamePlaceholder": "Username",
+      "gender": "Gender",
+      "male": "Male",
+      "female": "Female",
+      "phoneNumber": "Phone Number",
+      "phoneNumberPlaceholder": "Enter phone number",
+      "email": "Email",
+      "emailPlaceholder": "Email address",
+      "address": "Permanent Address",
+      "addressPlaceholder": "Enter permanent address",
+      "idNumber": "ID Card Number",
+      "idNumberPlaceholder": "Enter ID card number",
+      "dateOfIssue": "Date of Issue",
+      "dateOfIssuePlaceholder": "Select date of issue",
+      "placeOfIssue": "Place of Issue",
+      "placeOfIssuePlaceholder": "Enter place of issue",
+      "identityCardImage": "ID Card Image",
+      "noIdentityCard": "No ID card image",
+      "selectIdentityCard": "Select ID card image"
+    },
+    "validation": {
+      "required": "This field is required",
+      "phoneInvalid": "Invalid phone number",
+      "emailInvalid": "Invalid email"
+    },
+    "messages": {
+      "updateSuccess": "Information updated successfully",
+      "updateError": "Failed to update information",
+      "uploadSuccess": "Upload successful!",
+      "uploadError": "Upload failed. Please try again!",
+      "loadError": "Failed to load information"
+    },
+    "buttons": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "edit": "Edit"
+    }
+  },  "Settings": {
+    "title": "System Settings",
+    "subtitle": "Customize interface and account settings",
+    "navigation": {
+      "title": "Settings Categories",
+      "language": "Language & Region",
+      "appearance": "Appearance",
+      "notifications": "Notifications",
+      "security": "Security"
+    },
+    "language": {
+      "title": "Language & Region",
+      "displayLanguage": "Display Language",
+      "description": "Change the display language throughout the application",
+      "vietnamese": "Vietnamese",
+      "english": "English",
+      "timezone": "Timezone",
+      "timezoneDescription": "Set timezone to display accurate time"
+    },
+    "appearance": {
+      "title": "Appearance",
+      "theme": {
+        "title": "Color Theme",
+        "default": "Default",
+        "blue": "Blue",
+        "green": "Green"
+      },
+      "fontSize": {
+        "title": "Font Size",
+        "label": "Font Size",
+        "small": "Small",
+        "medium": "Medium",
+        "large": "Large",
+        "preview": "This is sample text to preview the selected font size."
+      },
+      "animation": {
+        "title": "Animations",
+        "pageTransition": "Enable page transitions",
+        "pageTransitionDescription": "Smooth effects when switching between pages",
+        "hover": "Hover effects",
+        "hoverDescription": "Effects when hovering over buttons and links"
+      },
+      "density": {
+        "title": "Interface Density",
+        "compact": "Compact",
+        "comfortable": "Comfortable",
+        "spacious": "Spacious"
+      }
+    },
+    "notifications": {
+      "title": "Notifications",
+      "email": {
+        "title": "Email Notifications",
+        "security": "Security notifications",
+        "securityDescription": "Receive notifications for unusual login activity",
+        "election": "Election notifications",
+        "electionDescription": "Notifications about new elections and progress updates",
+        "results": "Result notifications",
+        "resultsDescription": "Receive election results when completed"
+      },
+      "inApp": {
+        "title": "In-App Notifications",
+        "sound": "Sound notifications",
+        "soundDescription": "Play sound when new notifications arrive",
+        "popup": "Popup notifications",
+        "popupDescription": "Show popup notifications for important activities"
+      },
+      "frequency": {
+        "title": "Notification Frequency",
+        "immediate": "Immediate",
+        "daily": "Daily Summary",
+        "weekly": "Weekly Summary"
+      }
+    },
+    "security": {
+      "title": "Security",
+      "password": {
+        "title": "Password",
+        "change": "Change Password",
+        "changeDescription": "For security, you should change your password at least every 6 months",
+        "changeButton": "Change Password"
+      },
+      "email": {
+        "title": "Linked Email",
+        "current": "Current Email",
+        "verified": "Verified",
+        "changeButton": "Change Email"
+      }
+    }
   }
 }

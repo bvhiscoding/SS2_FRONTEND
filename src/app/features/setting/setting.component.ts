@@ -71,15 +71,13 @@ export class SettingComponent implements OnInit {
 
   public currentTheme: string = 'default';
   public activeTab: string = 'language'; // Add active tab tracking
-
   // Navigation tabs
   public settingTabs = [
-    { id: 'language', name: 'Ngôn ngữ & Khu vực', icon: 'fa-globe' },
-    { id: 'appearance', name: 'Giao diện', icon: 'fa-palette' },
-    { id: 'notifications', name: 'Thông báo', icon: 'fa-bell' },
-    { id: 'security', name: 'Bảo mật', icon: 'fa-shield-alt' }
+    { id: 'language', name: 'Ngôn ngữ & Khu vực', icon: 'fa-globe', translationKey: 'Settings.navigation.language' },
+    { id: 'appearance', name: 'Giao diện', icon: 'fa-palette', translationKey: 'Settings.navigation.appearance' },
+    { id: 'notifications', name: 'Thông báo', icon: 'fa-bell', translationKey: 'Settings.navigation.notifications' },
+    { id: 'security', name: 'Bảo mật', icon: 'fa-shield-alt', translationKey: 'Settings.navigation.security' }
   ];
-
   constructor(
     private iconService: NzIconService,
     private translate: TranslateService, 
@@ -88,7 +86,10 @@ export class SettingComponent implements OnInit {
     private accountService: AccountService
   ) {
     this.iconService.addIconLiteral('settingsIcon:antd', settingsIcon);
+    
+    // Initialize language properly
     this.lang = localStorage.getItem('lang') || this.translate.getDefaultLang();
+    this.translate.use(this.lang);
 
     const time = new Date().toString().match(/([A-Z]+[\+-][0-9]+.*)/);
     if (time) {
@@ -105,7 +106,6 @@ export class SettingComponent implements OnInit {
   ngOnInit(): void {
     this.viewInfo();
   }
-
   timeZoneList = timeZoneList;
   lang: string = '';
   timeZone: string = '';
@@ -256,10 +256,9 @@ export class SettingComponent implements OnInit {
   isTabActive(tabId: string): boolean {
     return this.activeTab === tabId;
   }
-
   changeLanguage(e: any) {
-    this.language = e;
-    this.translate.use(this.language);
+    this.lang = e;
+    this.translate.use(this.lang);
     this.translate.setDefaultLang(e);
     localStorage.setItem('lang', e);
     this.cdr.detectChanges();
