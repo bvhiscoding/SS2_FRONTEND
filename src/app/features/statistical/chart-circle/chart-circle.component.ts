@@ -75,25 +75,40 @@ export class ChartCircleComponent implements OnChanges {
       ]
     };
   }
-
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['listDetailVote'] && this.listDetailVote) {
-      // Truy xuất danh sách fullName và thiết lập labels
-      const labels = this.listDetailVote.map((candidate: any) => candidate.fullName);
+    if (changes['listDetailVote']) {
+      console.log('Circle chart data received:', this.listDetailVote);
+      
+      if (this.listDetailVote && this.listDetailVote.length > 0) {
+        // Truy xuất danh sách fullName và thiết lập labels
+        const labels = this.listDetailVote.map((candidate: any) => candidate.fullName || 'Unknown');
 
-      // Tạo series giả định (ví dụ: số phiếu bầu)
-      const series = this.listDetailVote.map((candidate: any) => candidate.totalBallot);
+        // Tạo series giả định (ví dụ: số phiếu bầu)
+        const series = this.listDetailVote.map((candidate: any) => candidate.totalBallot || 0);
 
-      // Tạo mảng màu sắc ngẫu nhiên tương ứng
-      const colors = labels.map(() => this.getRandomColor());
+        // Tạo mảng màu sắc ngẫu nhiên tương ứng
+        const colors = labels.map(() => this.getRandomColor());
 
-      // Cập nhật biểu đồ
-      this.chartOptions = {
-        ...this.chartOptions,
-        labels,
-        series,
-        colors
-      };
+        console.log('Circle chart - Labels:', labels);
+        console.log('Circle chart - Series:', series);
+        console.log('Circle chart - Colors:', colors);
+
+        // Cập nhật biểu đồ
+        this.chartOptions = {
+          ...this.chartOptions,
+          labels,
+          series,
+          colors
+        };
+      } else {
+        // Display empty chart when no data
+        this.chartOptions = {
+          ...this.chartOptions,
+          labels: [],
+          series: [],
+          colors: []
+        };
+      }
     }
   }
 

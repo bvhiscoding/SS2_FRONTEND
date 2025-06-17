@@ -56,7 +56,6 @@ export class StatisticalListComponent implements OnInit {
     private managermentService: ManagermentService,
     private positionService: PositionService,
   ){}
-
   ngOnInit(): void {
     this.idOwner = JSON.parse(
       localStorage.getItem('id_token_claims_obj') || '{}',
@@ -67,6 +66,9 @@ export class StatisticalListComponent implements OnInit {
     this.role = JSON.parse(
       localStorage.getItem('id_token_claims_obj') || '{}',
     )?.role;
+    
+    console.log('User role:', this.role);
+    
     if(this.role[0] === 'Administrator'){
       this.canActive = true;
       this.viewVoteforAdmin();
@@ -78,38 +80,58 @@ export class StatisticalListComponent implements OnInit {
       this.viewVoteHistory();
     }
   }
-
   viewVoteforAdmin() {
     this.voteService.viewListVote().subscribe({
       next: (res) => {
+        console.log('Vote list response:', res);
         this.slectionArray = res.data;
+        console.log('Elections loaded:', this.slectionArray);
       },
       error: (err) => {
+        console.error('Error loading elections:', err);
         this.message.error('Lỗi hệ thống');
       }
     })
   }
-
   viewVoteHistory() {
     this.voteService.viewListVoteHistory(this.param.pageNumber, this.param.pageSize).subscribe({
       next: (res) => {
+        console.log('Vote history response:', res);
         this.slectionArray = res.data.data;
-        this.totalCount = res.data.totalItems
+        this.totalCount = res.data.totalItems;
+        console.log('Vote history loaded:', this.slectionArray);
       },
       error: (err) => {
+        console.error('Error loading vote history:', err);
         this.message.error('Lỗi hệ thống');
       }
     })
-  }
-
-  selectVote(voteId: string): void {
+  }  selectVote(voteId: string): void {
     this.selectedVoteId = voteId;
     this.chartAnimationComplete = false;
+    this.listDetailVote = []; // Clear previous data
     
-    this.voteService.listViewCandidate(voteId).subscribe((candidateRes) => {
-      this.listDetailVote = candidateRes.data;
-      setTimeout(() => this.chartAnimationComplete = true, 300);
-      this.cdr.detectChanges();
+    console.log('Selecting vote with ID:', voteId);
+    
+    this.voteService.listViewCandidate(voteId).subscribe({
+      next: (candidateRes) => {
+        console.log('API Response:', candidateRes);
+        if (candidateRes && candidateRes.data) {
+          this.listDetailVote = candidateRes.data;
+          console.log('List Detail Vote:', this.listDetailVote);
+        } else {
+          console.warn('No data received from API');
+          this.listDetailVote = [];
+        }
+        setTimeout(() => this.chartAnimationComplete = true, 300);
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error loading candidate data:', err);
+        this.listDetailVote = [];
+        this.message.error('Không thể tải dữ liệu ứng viên');
+        this.cdr.detectChanges();
+      }
     });
   }
 

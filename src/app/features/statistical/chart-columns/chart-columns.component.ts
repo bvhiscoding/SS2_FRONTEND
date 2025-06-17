@@ -39,12 +39,11 @@ export class ChartColumnsComponent implements OnChanges {
   @ViewChild("chart") chart: ChartComponent;
   @Input() listDetailVote: any;
   public chartOptions: Partial<ChartOptions>;
-
   constructor(private translate: TranslateService) {
     this.chartOptions = {
       series: [
         {
-          name: this.translate.instant('Statistics.voteCount'),
+          name: "Số phiếu bầu",
           data: []
         }
       ],
@@ -66,7 +65,7 @@ export class ChartColumnsComponent implements OnChanges {
       dataLabels: {
         enabled: true,
         formatter: function(val) {
-          return val.toString();
+          return val ? val.toString() : "0";
         },
         offsetY: -20,
         style: {
@@ -74,7 +73,6 @@ export class ChartColumnsComponent implements OnChanges {
           colors: ["#304758"]
         }
       },
-
       xaxis: {
         categories: [],
         position: "top",
@@ -109,7 +107,6 @@ export class ChartColumnsComponent implements OnChanges {
         type: "solid"
       },
       yaxis: {
-        max: 12,
         axisBorder: {
           show: false
         },
@@ -119,11 +116,11 @@ export class ChartColumnsComponent implements OnChanges {
         labels: {
           show: true,
           formatter: function(val) {
-            return val.toString();
+            return val ? val.toString() : "0";
           }
         }
       },      title: {
-        text: this.translate.instant('Statistics.chartStatistics'),
+        text: "Thống kê số phiếu bầu",
         floating: true,
         offsetY: 330,
         align: "center",
@@ -133,31 +130,56 @@ export class ChartColumnsComponent implements OnChanges {
       }
     };
   }  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['listDetailVote'] && this.listDetailVote) {
-      const candidateNames = this.listDetailVote.map((candidate: any) => candidate.fullName);
-      const totalBallots = this.listDetailVote.map((candidate: any) => candidate.totalBallot);
-      this.chartOptions = {
-        ...this.chartOptions,
-        xaxis: {
-          ...this.chartOptions?.xaxis,
-          categories: candidateNames,
-        },
-        series: [
-          {
-            name: this.translate.instant('Statistics.voteCount'),
-            data: totalBallots,
+    if (changes['listDetailVote']) {
+      console.log('Chart data received:', this.listDetailVote);
+      
+      if (this.listDetailVote && this.listDetailVote.length > 0) {
+        const candidateNames = this.listDetailVote.map((candidate: any) => candidate.fullName || 'Unknown');
+        const totalBallots = this.listDetailVote.map((candidate: any) => candidate.totalBallot || 0);
+        
+        console.log('Candidate names:', candidateNames);
+        console.log('Total ballots:', totalBallots);
+        
+        this.chartOptions = {
+          ...this.chartOptions,
+          xaxis: {
+            ...this.chartOptions?.xaxis,
+            categories: candidateNames,
           },
-        ],
-        title: {
-          text: this.translate.instant('Statistics.chartStatistics'),
-          floating: true,
-          offsetY: 330,
-          align: "center",
-          style: {
-            color: "#444"
+          series: [
+            {
+              name: "Số phiếu bầu",
+              data: totalBallots,
+            },
+          ],
+          title: {
+            text: "Thống kê số phiếu bầu",
+            floating: true,
+            offsetY: 330,
+            align: "center",
+            style: {
+              color: "#444"
+            }
           }
-        }
-      };
+        };
+        
+        console.log('Updated chart options:', this.chartOptions);
+      } else {
+        // Display empty chart when no data
+        this.chartOptions = {
+          ...this.chartOptions,
+          xaxis: {
+            ...this.chartOptions?.xaxis,
+            categories: [],
+          },
+          series: [
+            {
+              name: "Số phiếu bầu",
+              data: [],
+            },
+          ]
+        };
+      }
     }
   }
 }
