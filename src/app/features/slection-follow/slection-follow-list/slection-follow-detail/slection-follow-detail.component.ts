@@ -4,9 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { PagiComponent } from '../../../../shared/components/pagi/pagi.component';
 import { ChartEvotingComponent } from '../../../slection-evoting/result-evoting/chart-evoting/chart-evoting.component';
 import { ChartCircleEvotingComponent } from '../../../slection-evoting/result-evoting/chart-circle-evoting/chart-circle-evoting.component';
+import { UserAvatarComponent } from '../../../../shared/components/user-avatar/user-avatar.component';
 import { VoteService } from '../../../../core/api/vote.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -17,10 +19,13 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     NzSpinModule,
     FormsModule,
     ReactiveFormsModule,
+    PagiComponent,
+    NzIconModule,
     RouterModule,
-    TranslateModule,
     ChartEvotingComponent,
-    ChartCircleEvotingComponent
+    ChartCircleEvotingComponent,
+    UserAvatarComponent,
+    TranslateModule
   ],
   templateUrl: './slection-follow-detail.component.html',
   styleUrl: './slection-follow-detail.component.scss'
@@ -35,6 +40,8 @@ export class SlectionFollowDetailComponent {
   public leadingCandidate: any = null;
   public totalCount: number = 10;
   maxheight: string = '';
+  public currentPage: number = 1;
+  public itemsPerPage: number = 10;
   public param = {
     pageNumber: 1,
     pageSize: 10,
@@ -49,6 +56,7 @@ export class SlectionFollowDetailComponent {
     private voteService: VoteService,
     private message: NzMessageService,
   ){}
+  
   ngOnInit(): void {
     this.idVote = this.route.snapshot.paramMap.get('id');
     this.viewDetailVote(this.idVote);
@@ -64,7 +72,12 @@ export class SlectionFollowDetailComponent {
             this.leadingCandidate = this.listCandidate.reduce((max: any, candidate: any) => 
             candidate.totalBallot > max.totalBallot ? candidate : max
           , this.listCandidate[0]);
+
             this.isCandidateDataReady = true; 
+            this.cdr.detectChanges();
+          });
+          this.voteService.listViewVoter(id).subscribe((voterRes) => {
+            this.listVoters = voterRes.data;
             this.cdr.detectChanges();
           });
         } else {
@@ -84,5 +97,17 @@ export class SlectionFollowDetailComponent {
 
   handleChangeTable(name: string) {
     this.type = name;
+  }
+
+  changePage(page: number) {
+    this.currentPage = page;
+    this.param.pageNumber = page;
+  }
+
+  changePageSize(pageSize: number) {
+    this.itemsPerPage = pageSize;
+    this.param.pageSize = pageSize;
+    this.currentPage = 1;
+    this.param.pageNumber = 1;
   }
 }

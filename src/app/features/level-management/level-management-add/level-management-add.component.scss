@@ -1,0 +1,619 @@
+// Modern Position Modal Styles with Perfect Border Radius Solution
+.modern-position-modal {
+  // Force complete border-radius control on ALL modal elements
+  .ant-modal {
+    border-radius: 24px !important;
+    overflow: hidden !important;
+    background: white !important; // White background with border-radius
+    border: none !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  .ant-modal-content {
+    border-radius: 24px !important;
+    overflow: hidden !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: white !important; // White background ensures clean corners
+    position: relative;
+    
+    // Force all child elements to respect border-radius
+    * {
+      &:first-child {
+        border-top-left-radius: 24px !important;
+        border-top-right-radius: 24px !important;
+      }
+      
+      &:last-child {
+        border-bottom-left-radius: 24px !important;
+        border-bottom-right-radius: 24px !important;
+      }
+    }
+  }
+
+  .ant-modal-header {
+    display: none !important;
+  }
+
+  .ant-modal-close {
+    display: none !important;
+  }
+
+  .ant-modal-body {
+    padding: 0 !important;
+    border-radius: 24px !important;
+    overflow: hidden !important;
+    background: white !important; // White background maintains clean edges
+    position: relative;
+    
+    // Ensure no content extends beyond border-radius
+    > * {
+      border-radius: inherit !important;
+    }
+  }
+  
+  // Additional safety override for any child components
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.position-modal {
+  // Transparent background để ant-modal white background hiển thị
+  background: transparent;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 24px; // Kế thừa border-radius từ parent
+  overflow: hidden; // Đảm bảo content không tràn ra ngoài
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--primary-color, #1890ff);
+    font-weight: 700;
+    font-size: 16px;
+
+    i {
+      font-size: 18px;
+    }
+  }
+
+  &__header {
+    position: relative;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem;
+    overflow: hidden;
+    // Perfect fit với border-radius của modal
+    border-radius: 24px 24px 0 0;
+    // Không cần negative margin nữa vì background đã white với border-radius
+    
+    &-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    &-text {
+      color: white;
+    }
+  }
+
+  &__icon-wrapper {
+    flex-shrink: 0;
+  }
+
+  &__icon-bg {
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    i {
+      font-size: 24px;
+      color: white;
+    }
+  }
+
+  &__title-main {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    color: white;
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+  }
+
+  &__decoration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+
+    &-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+
+      &--1 {
+        width: 120px;
+        height: 120px;
+        top: -60px;
+        right: -60px;
+      }
+
+      &--2 {
+        width: 80px;
+        height: 80px;
+        bottom: -40px;
+        left: -40px;
+      }
+
+      &--3 {
+        width: 60px;
+        height: 60px;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+      }
+    }
+  }
+
+  &__body {
+    padding: 2rem;
+    background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+  }  &__footer {
+    padding: 1.5rem 2rem;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    border-radius: 0 0 24px 24px !important; // Restore border radius for footer
+    position: relative;
+    overflow: hidden;
+    
+    // Ensure footer completely fills the bottom rounded area
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #f8fafc;
+      border-radius: 0 0 24px 24px;
+      z-index: 0;
+    }
+    
+    // Ensure buttons are above the background
+    > * {
+      position: relative;
+      z-index: 2;
+    }
+  }
+}
+
+.position-form {
+  &__group {
+    margin-bottom: 1.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__label {
+    display: block;
+    margin-bottom: 8px;
+
+    &-content {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      color: #374151;
+      font-size: 14px;
+    }
+
+    &-icon {
+      margin-right: 8px;
+      color: var(--primary-color, #1890ff);
+      font-size: 16px;
+    }
+  }
+
+  &__required {
+    color: #ef4444;
+    margin-left: 4px;
+  }
+
+  &__input-wrapper {
+    position: relative;
+  }
+
+  &__input-container {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+    }
+
+    &:focus-within {
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    &--textarea {
+      .position-form__textarea-icon {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        color: #9ca3af;
+        pointer-events: none;
+      }
+    }
+  }
+
+  &__input {
+    width: 100%;
+    padding: 16px 16px 16px 48px;
+    border: 2px solid #e5e7eb;
+    background: white;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    outline: none;
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+
+    &:focus {
+      border-color: var(--primary-color, #1890ff);
+    }
+
+    &:hover {
+      border-color: #d1d5db;
+    }
+  }
+
+  &__textarea {
+    width: 100%;
+    padding: 16px 16px 16px 48px;
+    border: 2px solid #e5e7eb;
+    background: white;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    outline: none;
+    resize: vertical;
+    min-height: 100px;
+    font-family: inherit;
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+
+    &:focus {
+      border-color: var(--primary-color, #1890ff);
+    }
+
+    &:hover {
+      border-color: #d1d5db;
+    }
+  }
+
+  &__input-icon {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    pointer-events: none;
+  }
+
+  &__select-container {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+    }
+
+    &:focus-within {
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+  }
+
+  &__select {
+    width: 100%;
+    padding: 16px 48px 16px 48px;
+    border: 2px solid #e5e7eb;
+    background: white;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+
+    &:focus {
+      border-color: var(--primary-color, #1890ff);
+    }
+
+    &:hover {
+      border-color: #d1d5db;
+    }
+
+    option {
+      padding: 8px;
+    }
+  }
+
+  &__select-icon {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    pointer-events: none;
+  }
+
+  &__select-arrow {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    pointer-events: none;
+  }
+
+  &__error {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    color: #ef4444;
+    font-size: 12px;
+    font-weight: 500;
+
+    i {
+      font-size: 14px;
+    }
+  }
+}
+
+.position-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  &:hover:before {
+    left: 100%;
+  }
+
+  &--cancel {
+    background: #f3f4f6;
+    color: #6b7280;
+    border: 2px solid #e5e7eb;
+
+    &:hover {
+      background: #e5e7eb;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  &--primary {
+    background: linear-gradient(135deg, var(--primary-color, #1890ff) 0%, #3b82f6 100%);
+    color: white;
+    border: 2px solid transparent;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    &:active {
+      transform: translateY(-1px);
+    }
+  }
+
+  &--disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  i {
+    font-size: 16px;
+  }
+}
+
+// Loading states
+.position-form__input,
+.position-form__textarea,
+.position-form__select {
+  &:disabled {
+    background: #f9fafb;
+    color: #9ca3af;
+    cursor: not-allowed;
+  }
+}
+
+// Animation for modal entrance
+.modern-position-modal {
+  .ant-modal {
+    animation: modalSlideIn 0.3s ease-out;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+// Additional comprehensive border-radius overrides
+:host ::ng-deep {
+  .modern-position-modal {
+    .ant-modal {
+      border-radius: 24px !important;
+      overflow: hidden !important;
+      
+      .ant-modal-content {
+        border-radius: 24px !important;
+        overflow: hidden !important;
+        
+        .ant-modal-body {
+          border-radius: 24px !important;
+          overflow: hidden !important;
+        }
+      }
+    }
+  }
+  
+  // Override any Ant Design default styles that might interfere
+  .ant-modal-content {
+    border-radius: 24px !important;
+    overflow: hidden !important;
+  }
+  
+  .ant-modal-body {
+    border-radius: 24px !important;
+    overflow: hidden !important;
+  }
+}
+
+// Additional override for perfect border radius
+:host ::ng-deep {
+  .modern-position-modal {
+    .ant-modal-content {
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+    
+    .ant-modal-body {
+      background: transparent !important;
+    }
+  }
+}
+
+// ...existing code...
+
+// Final safety override for any remaining border-radius issues
+::ng-deep .modern-position-modal .ant-modal-content,
+::ng-deep .modern-position-modal .ant-modal-body,
+::ng-deep .modern-position-modal .ant-modal {
+  border-radius: 24px !important;
+  overflow: hidden !important;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .modern-position-modal {
+    .ant-modal {
+      width: 95% !important;
+      margin: 0 auto;
+    }
+  }
+
+  .position-modal {
+    &__header {
+      padding: 1.5rem;
+    }
+
+    &__body {
+      padding: 1.5rem;
+    }
+
+    &__footer {
+      padding: 1rem 1.5rem;
+      flex-direction: column;
+      gap: 0.75rem;
+
+      .position-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    &__icon-bg {
+      width: 48px;
+      height: 48px;
+
+      i {
+        font-size: 20px;
+      }
+    }
+
+    &__title-main {
+      font-size: 20px;
+    }
+  }
+
+  .position-form {
+    &__input,
+    &__textarea,
+    &__select {
+      padding: 14px 14px 14px 40px;
+    }
+
+    &__input-icon,
+    &__select-icon {
+      left: 12px;
+    }
+
+    &__select-arrow {
+      right: 12px;
+    }
+  }
+}

@@ -1,152 +1,163 @@
 <nz-modal 
-    nzWidth="550px" 
+    nzWidth="650px" 
     [(nzVisible)]="isVisiblePopUpAddLevelManagement" 
     nzCentered 
-    [nzTitle]="modalTitle"
     [nzContent]="modalContent"
     [nzFooter]="null" 
     (nzOnCancel)="handleCancel()"
-    [nzBodyStyle]="{ padding: '0' }"
-    [nzMaskStyle]="{ background: 'rgba(0, 0, 0, 0.45)' }"
-    class="custom-modal"
+    [nzBodyStyle]="{ padding: '0', borderRadius: '24px', overflow: 'hidden', background: 'white' }"
+    [nzMaskStyle]="{ background: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(8px)' }"
+    class="modern-position-modal"
 >
-    <!-- Custom title template -->
-    <ng-template #modalTitle>
-        <div class="flex items-center text-primary">
-            <i class="fas {{ edit ? 'fa-edit' : 'fa-plus-circle' }} text-xl mr-2"></i>
-            <span class="font-bold">{{edit ? ('PositionManagementAdd.editTitle' | translate) : ('PositionManagementAdd.addTitle' | translate)}}</span>
-        </div>
-    </ng-template>
 
     <ng-template #modalContent>
-        <div class="modal-container">
-            <!-- Header -->
-            <div class="bg-primary p-6">
-                <div class="flex items-center text-white">
-                    <div class="bg-white bg-opacity-20 rounded-full p-3 mr-4">
-                        <i class="fas {{ edit ? 'fa-edit' : 'fa-plus-circle' }} text-xl"></i>
+        <div class="position-modal">
+            <!-- Gradient Header -->
+            <div class="position-modal__header">
+                <div class="position-modal__header-content">
+                    <div class="position-modal__icon-wrapper">
+                        <div class="position-modal__icon-bg">
+                            <i class="fa-solid" [ngClass]="edit ? 'fa-pen-to-square' : 'fa-plus'"></i>
+                        </div>
                     </div>
-                    <div>                        <h3 class="text-xl font-bold">{{edit ? ('PositionManagementAdd.editTitle' | translate) : ('PositionManagementAdd.addTitle' | translate)}}</h3>
-                        <p class="text-white text-opacity-80 mt-1 text-sm">
+                    <div class="position-modal__header-text">
+                        <h3 class="position-modal__title-main">
+                            {{edit ? ('PositionManagementAdd.editTitle' | translate) : ('PositionManagementAdd.addTitle' | translate)}}
+                        </h3>
+                        <p class="position-modal__subtitle">
                             {{edit ? ('PositionManagementAdd.editSubtitle' | translate) : ('PositionManagementAdd.addSubtitle' | translate)}}
                         </p>
                     </div>
                 </div>
+                <!-- Decorative elements -->
+                <div class="position-modal__decoration">
+                    <div class="position-modal__decoration-circle position-modal__decoration-circle--1"></div>
+                    <div class="position-modal__decoration-circle position-modal__decoration-circle--2"></div>
+                    <div class="position-modal__decoration-circle position-modal__decoration-circle--3"></div>
+                </div>
             </div>
             
             <!-- Form Body -->
-            <div class="p-6">
-                <form [formGroup]="form" class="space-y-5">
+            <div class="position-modal__body">
+                <form [formGroup]="form" class="position-form">
                     <!-- Position Name Field -->
-                    <div class="form-group">
-                        <label class="form-label">
-                            <span class="flex items-center">
-                                <i class="fas fa-briefcase text-primary mr-2"></i>
-                                {{ 'PositionManagementAdd.positionName' | translate }}<span class="text-red-500 ml-1">*</span>
+                    <div class="position-form__group">
+                        <label class="position-form__label">
+                            <span class="position-form__label-content">
+                                <i class="fa-solid fa-briefcase position-form__label-icon"></i>
+                                {{ 'PositionManagementAdd.positionName' | translate }}
+                                <span class="position-form__required">*</span>
                             </span>
                         </label>
-                        <div class="mt-1 relative rounded-md shadow-sm">
-                            <input 
-                                type="text" 
-                                formControlName="levelName" 
-                                class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary bg-white"
-                                [placeholder]="'PositionManagementAdd.positionNamePlaceholder' | translate" 
-                            />
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-user-tie text-gray-400"></i>
+                        <div class="position-form__input-wrapper">
+                            <div class="position-form__input-container">
+                                <input 
+                                    type="text" 
+                                    formControlName="levelName" 
+                                    class="position-form__input"
+                                    [placeholder]="'PositionManagementAdd.positionNamePlaceholder' | translate" 
+                                />
+                                <div class="position-form__input-icon">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
                             </div>
-                        </div>
-                        <div *ngIf="form.get('levelName')?.errors?.['required'] && (form.get('levelName')?.dirty || form.get('levelName')?.touched)" 
-                            class="mt-2 text-sm text-red-600 flex items-center">
-                            <i class="fas fa-exclamation-circle mr-1"></i>
-                            <span>{{'PopUpRegister.noEmty'|translate}}</span>
+                            <div *ngIf="form.get('levelName')?.errors?.['required'] && (form.get('levelName')?.dirty || form.get('levelName')?.touched)" 
+                                class="position-form__error">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                                <span>{{'PopUpRegister.noEmty'|translate}}</span>
+                            </div>
                         </div>
                     </div>
                     
                     <!-- Description Field -->
-                    <div class="form-group">
-                        <label class="form-label">
-                            <span class="flex items-center">
-                                <i class="fas fa-align-left text-primary mr-2"></i>
+                    <div class="position-form__group">
+                        <label class="position-form__label">
+                            <span class="position-form__label-content">
+                                <i class="fa-solid fa-align-left position-form__label-icon"></i>
                                 {{ 'PositionManagementAdd.description' | translate }}
                             </span>
                         </label>
-                        <div class="mt-1 relative rounded-md shadow-sm">
-                            <textarea 
-                                formControlName="description" 
-                                rows="4" 
-                                class="block w-full px-4 py-3 pl-10 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary bg-white"
-                                [placeholder]="'PositionManagementAdd.descriptionPlaceholder' | translate"
-                            ></textarea>
-                            <div class="absolute top-3 left-3 pointer-events-none">
-                                <i class="fas fa-file-alt text-gray-400"></i>
+                        <div class="position-form__input-wrapper">
+                            <div class="position-form__input-container position-form__input-container--textarea">
+                                <textarea 
+                                    formControlName="description" 
+                                    rows="4" 
+                                    class="position-form__textarea"
+                                    [placeholder]="'PositionManagementAdd.descriptionPlaceholder' | translate"
+                                ></textarea>
+                                <div class="position-form__textarea-icon">
+                                    <i class="fa-solid fa-file-lines"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
                     <!-- Status Field -->
-                    <div class="form-group">
-                        <label class="form-label">
-                            <span class="flex items-center">
-                                <i class="fas fa-toggle-on text-primary mr-2"></i>
-                                {{ 'PositionManagementAdd.status' | translate }}<span class="text-red-500 ml-1">*</span>
+                    <div class="position-form__group">
+                        <label class="position-form__label">
+                            <span class="position-form__label-content">
+                                <i class="fa-solid fa-toggle-on position-form__label-icon"></i>
+                                {{ 'PositionManagementAdd.status' | translate }}
+                                <span class="position-form__required">*</span>
                             </span>
                         </label>
-                        <div class="mt-1 relative rounded-md shadow-sm">
-                            <select 
-                                formControlName="status"
-                                class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary bg-white appearance-none"
-                            >
-                                <option [ngValue]="null" disabled selected>{{ 'PositionManagementAdd.selectStatus' | translate }}</option>
-                                <option *ngFor="let status of listStatus" [ngValue]="status.value">
-                                    {{ status.label }}
-                                </option>
-                            </select>
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-check-circle text-gray-400"></i>
+                        <div class="position-form__input-wrapper">
+                            <div class="position-form__select-container">
+                                <select 
+                                    formControlName="status"
+                                    class="position-form__select"
+                                >
+                                    <option [ngValue]="null" disabled selected>{{ 'PositionManagementAdd.selectStatus' | translate }}</option>
+                                    <option *ngFor="let status of listStatus" [ngValue]="status.value">
+                                        {{ status.label }}
+                                    </option>
+                                </select>
+                                <div class="position-form__select-icon">
+                                    <i class="fa-solid fa-check-circle"></i>
+                                </div>
+                                <div class="position-form__select-arrow">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </div>
                             </div>
-                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                <i class="fas fa-chevron-down text-gray-400"></i>
+                            <div *ngIf="form.get('status')?.errors?.['required'] && (form.get('status')?.dirty || form.get('status')?.touched)" 
+                                class="position-form__error">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                                <span>{{'PopUpRegister.noEmty'|translate}}</span>
                             </div>
-                        </div>
-                        <div *ngIf="form.get('status')?.errors?.['required'] && (form.get('status')?.dirty || form.get('status')?.touched)" 
-                            class="mt-2 text-sm text-red-600 flex items-center">
-                            <i class="fas fa-exclamation-circle mr-1"></i>
-                            <span>{{'PopUpRegister.noEmty'|translate}}</span>
                         </div>
                     </div>
                 </form>
             </div>
             
             <!-- Footer with Actions -->
-            <div class="p-6 border-t border-gray-200 bg-gray-50 flex justify-end space-x-4">
+            <div class="position-modal__footer">
                 <button 
-                    class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors duration-200 flex items-center"
+                    class="position-btn position-btn--cancel"
                     (click)="handleCancel()"
                 >
-                    <i class="fas fa-times mr-2"></i>
+                    <i class="fa-solid fa-xmark"></i>
                     <span>{{ 'PositionManagementAdd.cancel' | translate }}</span>
                 </button>
                 
                 <button 
                     *ngIf="!edit" 
-                    class="px-4 py-2 bg-primary text-white rounded-lg hover:shadow-lg transition-all duration-200 flex items-center"
+                    class="position-btn position-btn--primary"
                     [disabled]="form.invalid"
-                    [class.opacity-60]="form.invalid"
+                    [class.position-btn--disabled]="form.invalid"
                     (click)="handleOk()"
                 >
-                    <i class="fas fa-plus-circle mr-2"></i>
+                    <i class="fa-solid fa-plus"></i>
                     <span>{{ 'PositionManagementAdd.add' | translate }}</span>
                 </button>
                 
                 <button 
                     *ngIf="edit" 
-                    class="px-4 py-2 bg-primary text-white rounded-lg hover:shadow-lg transition-all duration-200 flex items-center"
+                    class="position-btn position-btn--primary"
                     [disabled]="form.invalid"
-                    [class.opacity-60]="form.invalid"
+                    [class.position-btn--disabled]="form.invalid"
                     (click)="handleEdit()"
                 >
-                    <i class="fas fa-save mr-2"></i>
+                    <i class="fa-solid fa-floppy-disk"></i>
                     <span>{{ 'PositionManagementAdd.update' | translate }}</span>
                 </button>
             </div>
