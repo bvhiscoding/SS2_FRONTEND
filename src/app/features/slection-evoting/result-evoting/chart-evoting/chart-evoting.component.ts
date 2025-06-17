@@ -1,4 +1,11 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -10,8 +17,8 @@ import {
   ApexXAxis,
   ApexFill,
   NgApexchartsModule,
-  ApexStroke
-} from "ng-apexcharts";
+  ApexStroke,
+} from 'ng-apexcharts';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -28,119 +35,125 @@ export type ChartOptions = {
 @Component({
   selector: 'app-chart-evoting',
   standalone: true,
-  imports: [
-    NgApexchartsModule
-  ],
+  imports: [NgApexchartsModule],
   templateUrl: './chart-evoting.component.html',
-  styleUrl: './chart-evoting.component.scss'
+  styleUrl: './chart-evoting.component.scss',
 })
 export class ChartEvotingComponent implements OnChanges {
-  @ViewChild("chart") chart: ChartComponent;
-  @Input() listCandidate: any = [];
+  @ViewChild('chart') chart: ChartComponent;
+  @Input() listDetailVote: any = [];
   public chartOptions: Partial<ChartOptions>;
 
   constructor() {
     this.chartOptions = {
       series: [
         {
-          name: "Số lượng phiếu bầu",
-          data: []
-        }
+          name: 'Số lượng phiếu bầu',
+          data: [],
+        },
       ],
       chart: {
         height: 350,
-        type: "bar",
+        type: 'bar',
         toolbar: {
-          show: false 
-        }
+          show: false,
+        },
       },
       plotOptions: {
         bar: {
           borderRadius: 10,
           dataLabels: {
-            position: "top" 
-          }
-        }
+            position: 'top',
+          },
+        },
       },
       dataLabels: {
         enabled: true,
-        formatter: function(val) {
+        formatter: function (val) {
           return val.toString();
         },
         offsetY: -20,
         style: {
-          fontSize: "14px",
-          colors: ["#304758"]
-        }
+          fontSize: '14px',
+          colors: ['#304758'],
+        },
       },
 
       xaxis: {
         categories: [],
-        position: "top",
+        position: 'top',
         labels: {
-          offsetY: -2
+          offsetY: -2,
         },
         axisBorder: {
-          show: true
+          show: true,
         },
         axisTicks: {
-          show: false
+          show: false,
         },
         crosshairs: {
           fill: {
-            type: "gradient",
+            type: 'gradient',
             gradient: {
-              colorFrom: "#D8E3F0",
-              colorTo: "#BED1E6",
+              colorFrom: '#D8E3F0',
+              colorTo: '#BED1E6',
               stops: [0, 100],
               opacityFrom: 0.4,
-              opacityTo: 0.5
-            }
-          }
+              opacityTo: 0.5,
+            },
+          },
         },
         tooltip: {
           enabled: true,
-          offsetY: -35
-        }
+          offsetY: -35,
+        },
       },
       fill: {
-        colors: ["#01579B"],
-        type: "solid"
+        colors: ['#01579B'],
+        type: 'solid',
       },
       yaxis: {
-        max: 12,
         axisBorder: {
-          show: false
+          show: false,
         },
         axisTicks: {
-          show: false
+          show: false,
         },
         labels: {
           show: true,
-          formatter: function(val) {
-            return val.toString();
-          }
-        }
+          formatter: function (val) {
+            return val ? val.toString() : '0';
+          },
+        },
       },
       title: {
-        text: "Biểu đồ cột thống kê số lượng phiếu bầu cử",
+        text: 'Biểu đồ cột thống kê số lượng phiếu bầu cử',
         floating: true,
         offsetY: 330,
-        align: "center",
+        align: 'center',
         style: {
-          color: "#444"
-        }
-      }
+          color: '#444',
+        },
+      },
     };
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['listCandidate'] && this.listCandidate) {
-      // Lấy danh sách fullName từ listCandidate
-      const candidateNames = this.listCandidate.map((candidate: any) => candidate.fullName);
-  
-      // Lấy danh sách totalBallot từ listCandidate
-      const totalBallots = this.listCandidate.map((candidate: any) => candidate.totalBallot);
-  
+    if (changes['listDetailVote'] && this.listDetailVote) {
+      console.log('Chart data received:', this.listDetailVote);
+
+      // Lấy danh sách fullName từ listDetailVote
+      const candidateNames = this.listDetailVote.map(
+        (candidate: any) => candidate.fullName,
+      );
+
+      // Lấy danh sách totalBallot từ listDetailVote
+      const totalBallots = this.listDetailVote.map(
+        (candidate: any) => candidate.totalBallot,
+      );
+
+      console.log('Candidate names:', candidateNames);
+      console.log('Total ballots:', totalBallots);
+
       // Cập nhật categories và series trong chartOptions
       this.chartOptions = {
         ...this.chartOptions,
@@ -150,12 +163,13 @@ export class ChartEvotingComponent implements OnChanges {
         },
         series: [
           {
-            ...this.chartOptions?.series,
+            name: 'Số lượng phiếu bầu',
             data: totalBallots,
           },
         ],
       };
+
+      console.log('Updated chart options:', this.chartOptions);
     }
   }
-  
-} 
+}

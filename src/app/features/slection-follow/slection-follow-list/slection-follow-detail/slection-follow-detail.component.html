@@ -1,247 +1,499 @@
-<div class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen w-full p-8">
-    <div class="mb-10 flex justify-between items-center">
-        <div class="flex items-center space-x-4">
-            <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg">
-                <i class="fa-solid fa-chart-line text-white text-xl"></i>
-            </div>            <h3 class="uppercase text-primary text-2xl font-bold tracking-wide">{{ 'ElectionFollow.electionDetails' | translate }}</h3>
-        </div>
-        <button [routerLink]="['/slection-follow/list']" 
-                class="text-white px-6 py-3 rounded-xl bg-gradient-to-r from-primary to-blue-500 hover:from-blue-500 hover:to-primary 
-                       font-bold cursor-pointer transform hover:scale-105 shadow-lg hover:shadow-xl transition-all duration-300 
-                       flex items-center space-x-3">
-            <i class="fa-solid fa-arrow-left text-white"></i>  
-            <span>{{ 'ElectionFollow.backToList' | translate }}</span>
-        </button>
-    </div>    <div class="w-full flex gap-8">
-        <div class="w-2/5 flex flex-col gap-6">
-            <div class="w-full bg-white p-6 shadow-xl rounded-2xl border border-gray-100">
-                <div class="flex items-center mb-6">
-                    <div class="w-10 h-10 bg-gradient-to-r from-primary to-blue-500 rounded-xl flex items-center justify-center mr-4">
-                        <i class="fa-solid fa-info-circle text-white"></i>
-                    </div>                    <h4 class="text-xl font-bold text-gray-800">{{ 'ElectionFollow.electionInfo' | translate }}</h4>
-                </div>
-                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 mb-4">
-                    <div class="text-lg font-bold text-primary mb-2">{{infoVote.voteName}}</div>
-                </div>
-                <ul class="text-base space-y-4">
-                    <li class="flex items-center space-x-3">
-                        <i class="fa-solid fa-calendar-start text-green-500 w-5"></i>
-                        <span class="text-gray-700">{{ 'ElectionFollow.electionStartTime' | translate }}: <span class="font-semibold">{{infoVote.startDate | date: 'dd/MM/yyyy'}}</span></span>
-                    </li>
-                    <li class="flex items-center space-x-3">
-                        <i class="fa-solid fa-calendar-xmark text-red-500 w-5"></i>
-                        <span class="text-gray-700">{{ 'ElectionFollow.electionEndTime' | translate }}: <span class="font-semibold">{{infoVote.expiredDate | date: 'dd/MM/yyyy'}}</span></span>
-                    </li>
-                    <li class="flex items-center space-x-3">
-                        <i class="fa-solid fa-user-tie text-blue-500 w-5"></i>
-                        <span class="text-gray-700">{{ 'ElectionFollow.position' | translate }}: <span class="font-semibold">{{infoVote.positionName}}</span></span>
-                    </li>                    <li class="flex items-center space-x-3">
-                        <i class="fa-solid fa-flag text-orange-500 w-5"></i>
-                        <span class="text-gray-700">{{ 'ElectionFollow.status' | translate }}:</span>
-                        <span class="px-3 py-1 rounded-full text-sm font-bold shadow-md" 
-                              [ngClass]="{'bg-green-100 text-green-800': infoVote.status === '1', 
-                                         'bg-red-100 text-red-800': infoVote.status === '2', 
-                                         'bg-orange-100 text-orange-800': infoVote.status === '0'}">
-                            {{infoVote.status === '0' ? ('ElectionFollow.notStarted' | translate) : infoVote.status === '1' ? ('ElectionFollow.ongoing' | translate) : infoVote.status === '2' ? ('ElectionFollow.completed' | translate) : ''}}
-                        </span>
-                    </li>
-                </ul>
-            </div>            <div class="w-full bg-white p-6 shadow-xl rounded-2xl border border-gray-100">
-                <div class="flex items-center mb-6">
-                    <div class="w-10 h-10 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center mr-4">
-                        <i class="fa-solid fa-crown text-white"></i>
-                    </div>                    <h4 class="text-xl font-bold text-gray-800">{{ 'ElectionFollow.leadingCandidate' | translate }}</h4>
-                </div>
-                <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-6">
-                    <div class="flex items-center justify-between">                        <div class="flex flex-col items-center">
-                            <div class="relative">                                <app-user-avatar 
-                                    [imageUrl]="leadingCandidate?.imageUrl"
-                                    [fullName]="leadingCandidate?.fullName"
-                                    size="xl"
-                                    customClass="border-4 border-yellow-400 shadow-lg">
-                                </app-user-avatar>
-                                <div class="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
-                                    <i class="fa-solid fa-trophy text-white text-sm"></i>
-                                </div>
-                            </div>
-                            <div class="text-lg font-bold text-gray-900 mt-3 text-center">{{ leadingCandidate.fullName }}</div>
-                        </div>
-                        <div class="flex flex-col items-center justify-center">
-                            <div class="text-3xl font-bold text-red-600 mb-1">{{ leadingCandidate.totalBallot }}</div>
-                            <div class="text-sm font-medium text-gray-600">{{ 'ElectionFollow.totalVotes' | translate }}</div>
-                            <div class="mt-2 px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-bold">
-                                LEADING
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>            <div class="flex gap-4 justify-between">
-                <div class="w-full bg-white p-6 shadow-xl rounded-2xl border border-gray-100 hover:shadow-2xl transition-all duration-300">                    <div class="flex items-center justify-between">
-                        <div class="flex flex-col">
-                            <div class="text-sm font-medium text-gray-600 mb-2">{{ 'ElectionFollow.totalCandidates' | translate }}</div>
-                            <div class="text-3xl font-bold text-red-600">{{infoVote.totalCandidate}}</div>
-                        </div>
-                        <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-                            <i class="fa-solid fa-user-tie text-white text-2xl"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-full bg-white p-6 shadow-xl rounded-2xl border border-gray-100 hover:shadow-2xl transition-all duration-300">
-                    <div class="flex items-center justify-between">
-                        <div class="flex flex-col">
-                            <div class="text-sm font-medium text-gray-600 mb-2">{{ 'ElectionFollow.totalVoters' | translate }}</div>
-                            <div class="text-3xl font-bold text-red-600">{{infoVote.totalVoter}}</div>
-                        </div>
-                        <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg">
-                            <i class="fa-solid fa-users text-white text-2xl"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>        <div class="flex-1 flex flex-col bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
-            <div class="flex justify-between items-center mb-6">
-                <div class="flex items-center">
-                    <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mr-4">
-                        <i class="fa-solid fa-chart-pie text-white"></i>
-                    </div>                    <h4 class="text-xl font-bold text-gray-800">{{ 'ElectionFollow.chartStatistics' | translate }}</h4>
-                </div>
-                <div class="flex gap-3 bg-gray-100 rounded-xl p-2">
-                    <button (click)="handleChangeChart('columns')"  
-                            [ngClass]="chartType === 'columns' ? 'bg-white text-primary shadow-md' : 'text-gray-600 hover:text-primary'"
-                            class="p-3 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2">
-                        <i class="fa-solid fa-chart-simple text-xl"></i>
-                        <span class="hidden sm:inline">{{ 'ElectionFollow.chartType' | translate }}</span>
-                    </button>
-                    <button (click)="handleChangeChart('circle')"  
-                            [ngClass]="chartType === 'circle' ? 'bg-white text-primary shadow-md' : 'text-gray-600 hover:text-primary'"
-                            class="p-3 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2">
-                        <i class="fa-solid fa-chart-pie text-xl"></i>
-                        <span class="hidden sm:inline">{{ 'ElectionFollow.chartType' | translate }}</span>
-                    </button>
-                </div>
-            </div>
-            <div class="flex-1 bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl p-4">
-                <div *ngIf="chartType === 'columns'" class="h-full">
-                    <app-chart-evoting *ngIf="isCandidateDataReady" [listCandidate]='listCandidate'></app-chart-evoting>
-                </div>
-                <div *ngIf="chartType === 'circle'" class="w-full h-full flex justify-center items-center">
-                    <app-chart-circle-evoting *ngIf="isCandidateDataReady" [listCandidate]='listCandidate'></app-chart-circle-evoting>
-                </div>
-            </div>
-        </div>
+<div
+  class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen w-full p-8"
+>
+  <div class="mb-10 flex justify-between items-center">
+    <div class="flex items-center space-x-4">
+      <div
+        class="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg"
+      >
+        <i class="fa-solid fa-chart-line text-white text-xl"></i>
+      </div>
+      <h3 class="uppercase text-primary text-2xl font-bold tracking-wide">
+        {{ "ElectionFollow.electionDetails" | translate }}
+      </h3>
     </div>
-    <div class="w-full px-4 my-5 pb-5 flex flex-col gap-3 bg-white rounded-lg shadow-shadow-timeword">        <div class="flex py-2 w-full">
-            <div (click)="handleChangeTable('candidate')" 
-                [ngClass]="type === 'candidate' ? 'border-b-2 border-green-500 text-green-500 font-medium' : 'text-primary'"
-                class="flex-1 py-2 text-center font-medium cursor-pointer hover:scale-105">{{ 'ElectionFollow.candidateList' | translate }}</div>
-            <div (click)="handleChangeTable('voters')" 
-                [ngClass]="type === 'voters' ? 'border-b-2 border-green-500 text-green-500 font-medium' : 'text-primary'"
-                class="flex-1 py-2 text-center font-medium cursor-pointer hover:scale-105">{{ 'ResultVoting.voterList' | translate }}</div>
+    <button
+      [routerLink]="['/slection-follow/list']"
+      class="text-white px-6 py-3 rounded-xl bg-gradient-to-r from-primary to-blue-500 hover:from-blue-500 hover:to-primary font-bold cursor-pointer transform hover:scale-105 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-3"
+    >
+      <i class="fa-solid fa-arrow-left text-white"></i>
+      <span>{{ "ElectionFollow.backToList" | translate }}</span>
+    </button>
+  </div>
+  <div class="w-full flex gap-8">
+    <div class="w-2/5 flex flex-col gap-6">
+      <div
+        class="w-full bg-white p-6 shadow-xl rounded-2xl border border-gray-100"
+      >
+        <div class="flex items-center mb-6">
+          <div
+            class="w-10 h-10 bg-gradient-to-r from-primary to-blue-500 rounded-xl flex items-center justify-center mr-4"
+          >
+            <i class="fa-solid fa-info-circle text-white"></i>
+          </div>
+          <h4 class="text-xl font-bold text-gray-800">
+            {{ "ElectionFollow.electionInfo" | translate }}
+          </h4>
         </div>
-        <div  *ngIf="type === 'candidate'">
-            <div [style.height]=" maxheight ? maxheight:'450px'"
-            class="mt-[27px] w-full min-w-full overflow-x-auto overflow-y-auto">                <table class="text-[13px] font-normal w-full relative">
-                    <thead class="bg-primary *:py-4 *:text-center *:text-white font-medium sticky top-0 ">
-                        <th class="px-2">{{ 'ResultVoting.serialNumber' | translate }}</th>
-                        <th class="">{{ 'ResultVoting.fullName' | translate }}</th>
-                        <th class="">{{ 'ResultVoting.email' | translate }}</th>
-                        <th class="">{{ 'ResultVoting.phoneNumber' | translate }}</th>
-                        <th class="">{{ 'ResultVoting.dateOfBirth' | translate }}</th>
-                        <th class="">{{ 'ResultVoting.voteCount' | translate }}</th>
-                    </thead>
-                    <div class="w-full" *ngIf="isLoading; else data">
-                      <div class="flex items-center justify-center absolute mt-[100px] !w-[100%]">
-                        <nz-spin class="inline-block w-full text-center" nzSize="large" ></nz-spin>
-                      </div>
-                    </div>                    <div class="!w-full flex justify-center absolute" *ngIf="listCandidate.length == 0">
-                      <div class="flex flex-col items-center justify-center mt-[50px] !w-[100%]">
-                        <span nz-icon nzType="exclamation-circle" nzTheme="outline" class="text-[20px]"></span>
-                        <div class="text-textColor font-[500] text-[14px] mt-[10px]">{{ 'ResultVoting.emptyList' | translate }}</div>
-                      </div>
-                    </div>
-                    <ng-template #data>
-                      <tbody> 
-                        <tr class="*:py-4 *:text-center border-b border-myBorder px-2" *ngFor="let item of listCandidate; let index = index">
-                          <td class="px-2">
-                            {{((currentPage - 1) * itemsPerPage + (index + 1))}}
-                          </td>
-                          <td class="text-start">
-                            {{item?.fullName}}
-                          </td>
-                          <td class="text-start">
-                            {{item?.newEmail === null ? item?.email : item?.newEmail}}
-                          </td>
-                          <td >
-                            {{item?.cellPhone}}
-                          </td>
-                          <td >
-                            {{item?.birthday | date: 'dd/MM/yyyy'}}
-                          </td>
-                          <td class="text-myRed font-semibold">
-                            {{item?.totalBallot}}
-                          </td>
-                        </tr>
-                      </tbody> 
-                    </ng-template>                   
-                   
-                </table>
-            </div>
-            <div class="float-right w-fit pb-6">
-                <app-pagi [totalCount]="totalCount" [page]="currentPage" [pageSize]="itemsPerPage"
-                  (PageEvent)="changePage($event)" (PageSizeEvent)="changePageSize($event)"></app-pagi>
+        <div
+          class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 mb-4"
+        >
+          <div class="text-lg font-bold text-primary mb-2">
+            {{ infoVote.voteName }}
+          </div>
+        </div>
+        <ul class="text-base space-y-4">
+          <li class="flex items-center space-x-3">
+            <i class="fa-solid fa-calendar-start text-green-500 w-5"></i>
+            <span class="text-gray-700"
+              >{{ "ElectionFollow.electionStartTime" | translate }}:
+              <span class="font-semibold">{{
+                infoVote.startDate | date: "dd/MM/yyyy"
+              }}</span></span
+            >
+          </li>
+          <li class="flex items-center space-x-3">
+            <i class="fa-solid fa-calendar-xmark text-red-500 w-5"></i>
+            <span class="text-gray-700"
+              >{{ "ElectionFollow.electionEndTime" | translate }}:
+              <span class="font-semibold">{{
+                infoVote.expiredDate | date: "dd/MM/yyyy"
+              }}</span></span
+            >
+          </li>
+          <li class="flex items-center space-x-3">
+            <i class="fa-solid fa-user-tie text-blue-500 w-5"></i>
+            <span class="text-gray-700"
+              >{{ "ElectionFollow.position" | translate }}:
+              <span class="font-semibold">{{
+                infoVote.positionName
+              }}</span></span
+            >
+          </li>
+          <li class="flex items-center space-x-3">
+            <i class="fa-solid fa-flag text-orange-500 w-5"></i>
+            <span class="text-gray-700"
+              >{{ "ElectionFollow.status" | translate }}:</span
+            >
+            <span
+              class="px-3 py-1 rounded-full text-sm font-bold shadow-md"
+              [ngClass]="{
+                'bg-green-100 text-green-800': infoVote.status === '1',
+                'bg-red-100 text-red-800': infoVote.status === '2',
+                'bg-orange-100 text-orange-800': infoVote.status === '0'
+              }"
+            >
+              {{
+                infoVote.status === "0"
+                  ? ("ElectionFollow.notStarted" | translate)
+                  : infoVote.status === "1"
+                    ? ("ElectionFollow.ongoing" | translate)
+                    : infoVote.status === "2"
+                      ? ("ElectionFollow.completed" | translate)
+                      : ""
+              }}
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="w-full bg-white p-6 shadow-xl rounded-2xl border border-gray-100"
+      >
+        <div class="flex items-center mb-6">
+          <div
+            class="w-10 h-10 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center mr-4"
+          >
+            <i class="fa-solid fa-crown text-white"></i>
+          </div>
+          <h4 class="text-xl font-bold text-gray-800">
+            {{ "ElectionFollow.leadingCandidate" | translate }}
+          </h4>
+        </div>
+        <div
+          class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-6"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex flex-col items-center">
+              <div class="relative">
+                <app-user-avatar
+                  [imageUrl]="leadingCandidate?.imageUrl"
+                  [fullName]="leadingCandidate?.fullName"
+                  size="xl"
+                  customClass="border-4 border-yellow-400 shadow-lg"
+                >
+                </app-user-avatar>
+                <div
+                  class="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center"
+                >
+                  <i class="fa-solid fa-trophy text-white text-sm"></i>
+                </div>
               </div>
-        </div>
-        <div  *ngIf="type === 'voters'">
-            <div [style.height]=" maxheight ? maxheight:'450px'"
-            class="mt-[27px] w-full min-w-full overflow-x-auto overflow-y-auto">                <table class="text-[13px] font-normal w-full relative">
-                    <thead class="bg-primary *:py-4 *:text-center *:text-white font-medium sticky top-0 ">
-                        <th class="px-2">{{ 'ResultVoting.serialNumber' | translate }}</th>
-                        <th class="">{{ 'ResultVoting.fullName' | translate }}</th>
-                        <th class="">{{ 'ResultVoting.email' | translate }}</th>
-                        <th class="">{{ 'ResultVoting.phoneNumber' | translate }}</th>
-                        <th class="">{{ 'ResultVoting.dateOfBirth' | translate }}</th>
-                        <th class="">{{ 'ResultVoting.voting' | translate }}</th>
-                    </thead>
-                    <div class="w-full" *ngIf="isLoading; else dataVoters">
-                      <div class="flex items-center justify-center absolute mt-[100px] !w-[100%]">
-                        <nz-spin class="inline-block w-full text-center" nzSize="large" ></nz-spin>
-                      </div>
-                    </div>                    <div class="!w-full flex justify-center absolute" *ngIf="listVoters.length == 0">
-                      <div class="flex flex-col items-center justify-center mt-[50px] !w-[100%]">
-                        <span nz-icon nzType="exclamation-circle" nzTheme="outline" class="text-[20px]"></span>
-                        <div class="text-textColor font-[500] text-[14px] mt-[10px]">{{ 'ResultVoting.emptyList' | translate }}</div>
-                      </div>
-                    </div>
-                    <ng-template #dataVoters>
-                      <tbody> 
-                        <tr class="*:py-4 *:text-center border-b border-myBorder px-2" *ngFor="let item of listVoters; let index = index">
-                          <td class="px-2">
-                            {{((currentPage - 1) * itemsPerPage + (index + 1))}}
-                          </td>
-                          <td >
-                            {{item?.fullname}}
-                          </td>
-                          <td >
-                            {{item?.newEmail === null ? item?.email : item?.newEmail}}
-                          </td>
-                          <td >
-                            {{item?.cellPhone}}
-                          </td>
-                          <td >
-                            {{item?.birthday | date: 'dd/MM/yyyy'}}
-                          </td>                          <td [ngClass]="item?.status === true ? 'font-medium text-green-500' : 'font-medium text-myRed'">
-                            {{item?.status === true ? ('ResultVoting.voted' | translate) : ('ResultVoting.notVoted' | translate)}}
-                          </td>
-                        </tr>
-                      </tbody> 
-                    </ng-template>                   
-                   
-                </table>
-            </div>
-            <div class="float-right w-fit pb-6">
-                <app-pagi [totalCount]="totalCount" [page]="currentPage" [pageSize]="itemsPerPage"
-                  (PageEvent)="changePage($event)" (PageSizeEvent)="changePageSize($event)"></app-pagi>
+              <div class="text-lg font-bold text-gray-900 mt-3 text-center">
+                {{ leadingCandidate.fullName }}
               </div>
+            </div>
+            <div class="flex flex-col items-center justify-center">
+              <div class="text-3xl font-bold text-red-600 mb-1">
+                {{ leadingCandidate.totalBallot }}
+              </div>
+              <div class="text-sm font-medium text-gray-600">
+                {{ "ElectionFollow.totalVotes" | translate }}
+              </div>
+              <div
+                class="mt-2 px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-bold"
+              >
+                LEADING
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="flex gap-4 justify-between">
+        <div
+          class="w-full bg-white p-6 shadow-xl rounded-2xl border border-gray-100 hover:shadow-2xl transition-all duration-300"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex flex-col">
+              <div class="text-sm font-medium text-gray-600 mb-2">
+                {{ "ElectionFollow.totalCandidates" | translate }}
+              </div>
+              <div class="text-3xl font-bold text-red-600">
+                {{ infoVote.totalCandidate }}
+              </div>
+            </div>
+            <div
+              class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg"
+            >
+              <i class="fa-solid fa-user-tie text-white text-2xl"></i>
+            </div>
+          </div>
+        </div>
+        <div
+          class="w-full bg-white p-6 shadow-xl rounded-2xl border border-gray-100 hover:shadow-2xl transition-all duration-300"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex flex-col">
+              <div class="text-sm font-medium text-gray-600 mb-2">
+                {{ "ElectionFollow.totalVoters" | translate }}
+              </div>
+              <div class="text-3xl font-bold text-red-600">
+                {{ infoVote.totalVoter }}
+              </div>
+            </div>
+            <div
+              class="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg"
+            >
+              <i class="fa-solid fa-users text-white text-2xl"></i>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <div
+      class="flex-1 flex flex-col bg-white p-6 rounded-2xl shadow-xl border border-gray-100"
+    >
+      <div class="flex justify-between items-center mb-6">
+        <div class="flex items-center">
+          <div
+            class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mr-4"
+          >
+            <i class="fa-solid fa-chart-pie text-white"></i>
+          </div>
+          <h4 class="text-xl font-bold text-gray-800">
+            {{ "ElectionFollow.chartStatistics" | translate }}
+          </h4>
+        </div>
+        <div class="flex gap-3 bg-gray-100 rounded-xl p-2">
+          <button
+            (click)="handleChangeChart('columns')"
+            [ngClass]="
+              chartType === 'columns'
+                ? 'bg-white text-primary shadow-md'
+                : 'text-gray-600 hover:text-primary'
+            "
+            class="p-3 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2"
+          >
+            <i class="fa-solid fa-chart-simple text-xl"></i>
+            <span class="hidden sm:inline">{{
+              "ElectionFollow.chartType" | translate
+            }}</span>
+          </button>
+          <button
+            (click)="handleChangeChart('circle')"
+            [ngClass]="
+              chartType === 'circle'
+                ? 'bg-white text-primary shadow-md'
+                : 'text-gray-600 hover:text-primary'
+            "
+            class="p-3 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2"
+          >
+            <i class="fa-solid fa-chart-pie text-xl"></i>
+            <span class="hidden sm:inline">{{
+              "ElectionFollow.chartType" | translate
+            }}</span>
+          </button>
+        </div>
+      </div>
+      <div
+        class="flex-1 bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl p-4"
+      >
+        <div *ngIf="chartType === 'columns'" class="h-full">
+          <div
+            *ngIf="
+              isCandidateDataReady && listCandidate && listCandidate.length > 0;
+              else noChartData
+            "
+          >
+            <app-chart-columns
+              [listDetailVote]="listCandidate"
+            ></app-chart-columns>
+          </div>
+        </div>
+        <div
+          *ngIf="chartType === 'circle'"
+          class="w-full h-full flex justify-center items-center"
+        >
+          <div
+            *ngIf="
+              isCandidateDataReady && listCandidate && listCandidate.length > 0;
+              else noChartData
+            "
+          >
+            <app-chart-circle
+              [listDetailVote]="listCandidate"
+            ></app-chart-circle>
+          </div>
+        </div>
+
+        <!-- No Chart Data Template -->
+        <ng-template #noChartData>
+          <div
+            class="flex flex-col items-center justify-center py-12 text-gray-400 h-full"
+          >
+            <i class="fas fa-chart-bar text-5xl mb-4 opacity-30"></i>
+            <p *ngIf="!isCandidateDataReady">Đang tải dữ liệu...</p>
+            <p
+              *ngIf="
+                isCandidateDataReady &&
+                (!listCandidate || listCandidate.length === 0)
+              "
+            >
+              Không có dữ liệu ứng viên để hiển thị biểu đồ
+            </p>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div
+    class="w-full px-4 my-5 pb-5 flex flex-col gap-3 bg-white rounded-lg shadow-shadow-timeword"
+  >
+    <div class="flex py-2 w-full">
+      <div
+        (click)="handleChangeTable('candidate')"
+        [ngClass]="
+          type === 'candidate'
+            ? 'border-b-2 border-green-500 text-green-500 font-medium'
+            : 'text-primary'
+        "
+        class="flex-1 py-2 text-center font-medium cursor-pointer hover:scale-105"
+      >
+        {{ "ElectionFollow.candidateList" | translate }}
+      </div>
+      <div
+        (click)="handleChangeTable('voters')"
+        [ngClass]="
+          type === 'voters'
+            ? 'border-b-2 border-green-500 text-green-500 font-medium'
+            : 'text-primary'
+        "
+        class="flex-1 py-2 text-center font-medium cursor-pointer hover:scale-105"
+      >
+        {{ "ResultVoting.voterList" | translate }}
+      </div>
+    </div>
+    <div *ngIf="type === 'candidate'">
+      <div
+        [style.height]="maxheight ? maxheight : '450px'"
+        class="mt-[27px] w-full min-w-full overflow-x-auto overflow-y-auto"
+      >
+        <table class="text-[13px] font-normal w-full relative">
+          <thead
+            class="bg-primary *:py-4 *:text-center *:text-white font-medium sticky top-0"
+          >
+            <th class="px-2">{{ "ResultVoting.serialNumber" | translate }}</th>
+            <th class="">{{ "ResultVoting.fullName" | translate }}</th>
+            <th class="">{{ "ResultVoting.email" | translate }}</th>
+            <th class="">{{ "ResultVoting.phoneNumber" | translate }}</th>
+            <th class="">{{ "ResultVoting.dateOfBirth" | translate }}</th>
+            <th class="">{{ "ResultVoting.voteCount" | translate }}</th>
+          </thead>
+          <div class="w-full" *ngIf="isLoading; else data">
+            <div
+              class="flex items-center justify-center absolute mt-[100px] !w-[100%]"
+            >
+              <nz-spin
+                class="inline-block w-full text-center"
+                nzSize="large"
+              ></nz-spin>
+            </div>
+          </div>
+          <div
+            class="!w-full flex justify-center absolute"
+            *ngIf="listCandidate.length == 0"
+          >
+            <div
+              class="flex flex-col items-center justify-center mt-[50px] !w-[100%]"
+            >
+              <span
+                nz-icon
+                nzType="exclamation-circle"
+                nzTheme="outline"
+                class="text-[20px]"
+              ></span>
+              <div class="text-textColor font-[500] text-[14px] mt-[10px]">
+                {{ "ResultVoting.emptyList" | translate }}
+              </div>
+            </div>
+          </div>
+          <ng-template #data>
+            <tbody>
+              <tr
+                class="*:py-4 *:text-center border-b border-myBorder px-2"
+                *ngFor="let item of listCandidate; let index = index"
+              >
+                <td class="px-2">
+                  {{ (currentPage - 1) * itemsPerPage + (index + 1) }}
+                </td>
+                <td class="text-start">
+                  {{ item?.fullName }}
+                </td>
+                <td class="text-start">
+                  {{ item?.newEmail === null ? item?.email : item?.newEmail }}
+                </td>
+                <td>
+                  {{ item?.cellPhone }}
+                </td>
+                <td>
+                  {{ item?.birthday | date: "dd/MM/yyyy" }}
+                </td>
+                <td class="text-myRed font-semibold">
+                  {{ item?.totalBallot }}
+                </td>
+              </tr>
+            </tbody>
+          </ng-template>
+        </table>
+      </div>
+      <div class="float-right w-fit pb-6">
+        <app-pagi
+          [totalCount]="totalCount"
+          [page]="currentPage"
+          [pageSize]="itemsPerPage"
+          (PageEvent)="changePage($event)"
+          (PageSizeEvent)="changePageSize($event)"
+        ></app-pagi>
+      </div>
+    </div>
+    <div *ngIf="type === 'voters'">
+      <div
+        [style.height]="maxheight ? maxheight : '450px'"
+        class="mt-[27px] w-full min-w-full overflow-x-auto overflow-y-auto"
+      >
+        <table class="text-[13px] font-normal w-full relative">
+          <thead
+            class="bg-primary *:py-4 *:text-center *:text-white font-medium sticky top-0"
+          >
+            <th class="px-2">{{ "ResultVoting.serialNumber" | translate }}</th>
+            <th class="">{{ "ResultVoting.fullName" | translate }}</th>
+            <th class="">{{ "ResultVoting.email" | translate }}</th>
+            <th class="">{{ "ResultVoting.phoneNumber" | translate }}</th>
+            <th class="">{{ "ResultVoting.dateOfBirth" | translate }}</th>
+            <th class="">{{ "ResultVoting.voting" | translate }}</th>
+          </thead>
+          <div class="w-full" *ngIf="isLoading; else dataVoters">
+            <div
+              class="flex items-center justify-center absolute mt-[100px] !w-[100%]"
+            >
+              <nz-spin
+                class="inline-block w-full text-center"
+                nzSize="large"
+              ></nz-spin>
+            </div>
+          </div>
+          <div
+            class="!w-full flex justify-center absolute"
+            *ngIf="listVoters.length == 0"
+          >
+            <div
+              class="flex flex-col items-center justify-center mt-[50px] !w-[100%]"
+            >
+              <span
+                nz-icon
+                nzType="exclamation-circle"
+                nzTheme="outline"
+                class="text-[20px]"
+              ></span>
+              <div class="text-textColor font-[500] text-[14px] mt-[10px]">
+                {{ "ResultVoting.emptyList" | translate }}
+              </div>
+            </div>
+          </div>
+          <ng-template #dataVoters>
+            <tbody>
+              <tr
+                class="*:py-4 *:text-center border-b border-myBorder px-2"
+                *ngFor="let item of listVoters; let index = index"
+              >
+                <td class="px-2">
+                  {{ (currentPage - 1) * itemsPerPage + (index + 1) }}
+                </td>
+                <td>
+                  {{ item?.fullname }}
+                </td>
+                <td>
+                  {{ item?.newEmail === null ? item?.email : item?.newEmail }}
+                </td>
+                <td>
+                  {{ item?.cellPhone }}
+                </td>
+                <td>
+                  {{ item?.birthday | date: "dd/MM/yyyy" }}
+                </td>
+                <td
+                  [ngClass]="
+                    item?.status === true
+                      ? 'font-medium text-green-500'
+                      : 'font-medium text-myRed'
+                  "
+                >
+                  {{
+                    item?.status === true
+                      ? ("ResultVoting.voted" | translate)
+                      : ("ResultVoting.notVoted" | translate)
+                  }}
+                </td>
+              </tr>
+            </tbody>
+          </ng-template>
+        </table>
+      </div>
+      <div class="float-right w-fit pb-6">
+        <app-pagi
+          [totalCount]="totalCount"
+          [page]="currentPage"
+          [pageSize]="itemsPerPage"
+          (PageEvent)="changePage($event)"
+          (PageSizeEvent)="changePageSize($event)"
+        ></app-pagi>
+      </div>
+    </div>
+  </div>
+
+  <!-- Debug Info -->
+  <div class="text-xs text-gray-500 mb-4 p-2 bg-gray-50 rounded">
+    Debug: Chart Type: {{ chartType }} | Candidate Data Ready:
+    {{ isCandidateDataReady }} | Candidates Count:
+    {{ listCandidate?.length || 0 }}
+  </div>
 </div>
