@@ -23,13 +23,13 @@ import { TranslateModule } from '@ngx-translate/core';
     SheducerComponent,
     PagiComponent,
     NzSpinModule,
-    TranslateModule
+    TranslateModule,
   ],
   templateUrl: './statistical-list.component.html',
-  styleUrl: './statistical-list.component.scss'
+  styleUrl: './statistical-list.component.scss',
 })
 export class StatisticalListComponent implements OnInit {
-  public chartType: any = 'columns'
+  public chartType: any = 'columns';
   public isLoading: boolean = false;
   public totalCount: number = 0;
   public totalUser: number = 0;
@@ -55,7 +55,7 @@ export class StatisticalListComponent implements OnInit {
     private router: Router,
     private managermentService: ManagermentService,
     private positionService: PositionService,
-  ){}
+  ) {}
   ngOnInit(): void {
     this.idOwner = JSON.parse(
       localStorage.getItem('id_token_claims_obj') || '{}',
@@ -66,16 +66,16 @@ export class StatisticalListComponent implements OnInit {
     this.role = JSON.parse(
       localStorage.getItem('id_token_claims_obj') || '{}',
     )?.role;
-    
+
     console.log('User role:', this.role);
-    
-    if(this.role[0] === 'Administrator'){
+
+    if (this.role[0] === 'Administrator') {
       this.canActive = true;
       this.viewVoteforAdmin();
       this.viewListUser();
       this.viewListPosition();
       this.viewListVote();
-    } else if(this.role[0] === 'User') {
+    } else if (this.role[0] === 'User') {
       this.canActive = false;
       this.viewVoteHistory();
     }
@@ -90,53 +90,46 @@ export class StatisticalListComponent implements OnInit {
       error: (err) => {
         console.error('Error loading elections:', err);
         this.message.error('Lỗi hệ thống');
-      }
-    })
+      },
+    });
   }
   viewVoteHistory() {
-    this.voteService.viewListVoteHistory(this.param.pageNumber, this.param.pageSize).subscribe({
-      next: (res) => {
-        console.log('Vote history response:', res);
-        this.slectionArray = res.data.data;
-        this.totalCount = res.data.totalItems;
-        console.log('Vote history loaded:', this.slectionArray);
-      },
-      error: (err) => {
-        console.error('Error loading vote history:', err);
-        this.message.error('Lỗi hệ thống');
-      }
-    })
-  }  selectVote(voteId: string): void {
+    this.voteService
+      .viewListVoteHistory(this.param.pageNumber, this.param.pageSize)
+      .subscribe({
+        next: (res) => {
+          console.log('Vote history response:', res);
+          this.slectionArray = res.data.data;
+          this.totalCount = res.data.totalItems;
+          console.log('Vote history loaded:', this.slectionArray);
+        },
+        error: (err) => {
+          console.error('Error loading vote history:', err);
+          this.message.error('Lỗi hệ thống');
+        },
+      });
+  }
+  selectVote(voteId: string): void {
     this.selectedVoteId = voteId;
     this.chartAnimationComplete = false;
-    this.listDetailVote = []; // Clear previous data
-    
-    console.log('Selecting vote with ID:', voteId);
-    
+
     this.voteService.listViewCandidate(voteId).subscribe({
       next: (candidateRes) => {
         console.log('API Response:', candidateRes);
-        if (candidateRes && candidateRes.data) {
-          this.listDetailVote = candidateRes.data;
-          console.log('List Detail Vote:', this.listDetailVote);
-        } else {
-          console.warn('No data received from API');
-          this.listDetailVote = [];
-        }
-        setTimeout(() => this.chartAnimationComplete = true, 300);
+        this.listDetailVote = candidateRes.data;
+        console.log('List Detail Vote:', this.listDetailVote);
+        setTimeout(() => (this.chartAnimationComplete = true), 300);
         this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error loading candidate data:', err);
-        this.listDetailVote = [];
         this.message.error('Không thể tải dữ liệu ứng viên');
-        this.cdr.detectChanges();
-      }
+      },
     });
   }
 
   infoVote(voteId: string, role: string): void {
-    if(role === 'Voter') {
+    if (role === 'Voter') {
       this.router.navigate([`/slection-ticket/result/${voteId}`]);
     } else if (role === 'Candidate') {
       this.router.navigate([`/slection-follow/detail/${voteId}`]);
@@ -144,17 +137,17 @@ export class StatisticalListComponent implements OnInit {
   }
 
   viewListUser() {
-    this.managermentService.getAllManagement(1, 99).subscribe(res => {
+    this.managermentService.getAllManagement(1, 99).subscribe((res) => {
       this.totalUser = res.totalItems;
-    })
+    });
   }
 
   viewListPosition() {
     this.positionService.getAllPosition(1, 99).subscribe({
       next: (res) => {
         this.totalPosition = res.totalItems;
-      }
-    })
+      },
+    });
   }
 
   viewListVote() {
@@ -162,10 +155,10 @@ export class StatisticalListComponent implements OnInit {
     this.voteService.viewListVote().subscribe({
       next: (res) => {
         this.totalListVote = res.data.length;
-      }
-    })
+      },
+    });
   }
-  
+
   handleChangeChart(name: string) {
     this.chartType = name;
   }

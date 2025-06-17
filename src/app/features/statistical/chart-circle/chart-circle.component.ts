@@ -1,11 +1,22 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewChild } from "@angular/core";
-import { ApexLegend, ApexStroke, ChartComponent, NgApexchartsModule } from "ng-apexcharts";
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
+import {
+  ApexLegend,
+  ApexStroke,
+  ChartComponent,
+  NgApexchartsModule,
+} from 'ng-apexcharts';
 
 import {
   ApexNonAxisChartSeries,
   ApexResponsive,
-  ApexChart
-} from "ng-apexcharts";
+  ApexChart,
+} from 'ng-apexcharts';
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -17,18 +28,15 @@ export type ChartOptions = {
   stroke: ApexStroke;
 };
 
-
 @Component({
   selector: 'app-chart-circle',
   standalone: true,
-  imports: [
-    NgApexchartsModule
-  ],
+  imports: [NgApexchartsModule],
   templateUrl: './chart-circle.component.html',
-  styleUrl: './chart-circle.component.scss'
+  styleUrl: './chart-circle.component.scss',
 })
 export class ChartCircleComponent implements OnChanges {
-  @ViewChild("chart") chart: ChartComponent;
+  @ViewChild('chart') chart: ChartComponent;
   @Input() listDetailVote: any;
   public chartOptions: Partial<ChartOptions>;
 
@@ -37,54 +45,58 @@ export class ChartCircleComponent implements OnChanges {
       series: [],
       chart: {
         width: 380,
-        type: "pie",
+        type: 'pie',
         dropShadow: {
-          enabled: true,            
-          top: 3,                 
-          left: 3,                 
-          blur: 5,                 
-          opacity: 0.5           
-        }
+          enabled: true,
+          top: 3,
+          left: 3,
+          blur: 5,
+          opacity: 0.5,
+        },
       },
       labels: [],
       colors: [],
       legend: {
-        position: "bottom",       // Đặt chú thích ở dưới biểu đồ
-        horizontalAlign: "left",  // Căn chỉnh chú thích về bên trái
-        floating: false,          // Chú thích không nổi
+        position: 'bottom', // Đặt chú thích ở dưới biểu đồ
+        horizontalAlign: 'left', // Căn chỉnh chú thích về bên trái
+        floating: false, // Chú thích không nổi
         fontSize: '14px',
         itemMargin: {
-          vertical: 5            // Khoảng cách dọc giữa các phần tử
-        }
+          vertical: 5, // Khoảng cách dọc giữa các phần tử
+        },
       },
       stroke: {
-        show: false // Tắt viền giữa các phần của biểu đồ
+        show: false, // Tắt viền giữa các phần của biểu đồ
       },
       responsive: [
         {
           breakpoint: 480,
           options: {
             chart: {
-              width: 200
+              width: 200,
             },
             legend: {
-              position: "bottom"
-            }
-          }
-        }
-      ]
+              position: 'bottom',
+            },
+          },
+        },
+      ],
     };
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['listDetailVote']) {
       console.log('Circle chart data received:', this.listDetailVote);
-      
+
       if (this.listDetailVote && this.listDetailVote.length > 0) {
         // Truy xuất danh sách fullName và thiết lập labels
-        const labels = this.listDetailVote.map((candidate: any) => candidate.fullName || 'Unknown');
+        const labels = this.listDetailVote.map(
+          (candidate: any) => candidate.fullName || 'Unknown',
+        );
 
         // Tạo series giả định (ví dụ: số phiếu bầu)
-        const series = this.listDetailVote.map((candidate: any) => candidate.totalBallot || 0);
+        const series = this.listDetailVote.map(
+          (candidate: any) => candidate.totalBallot || 0,
+        );
 
         // Tạo mảng màu sắc ngẫu nhiên tương ứng
         const colors = labels.map(() => this.getRandomColor());
@@ -98,7 +110,7 @@ export class ChartCircleComponent implements OnChanges {
           ...this.chartOptions,
           labels,
           series,
-          colors
+          colors,
         };
       } else {
         // Display empty chart when no data
@@ -106,7 +118,7 @@ export class ChartCircleComponent implements OnChanges {
           ...this.chartOptions,
           labels: [],
           series: [],
-          colors: []
+          colors: [],
         };
       }
     }

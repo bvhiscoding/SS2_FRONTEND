@@ -1,173 +1,238 @@
 <div class="bg-gradient-to-br from-teal-50 to-blue-50 min-h-screen p-6 md:p-10">
   <!-- Dashboard Header -->
   <div class="flex items-center mb-8 gap-4">
-      <div class="bg-primary rounded-xl p-3 shadow-lg">
-          <i class="fas fa-chart-line text-white text-xl"></i>
-      </div>
-      <div>
-          <h2 class="text-2xl font-bold text-gray-800">{{'Statistics.title'| translate }}</h2>
-          <p class="text-gray-500">{{'Statistics.overview'| translate }}</p>
-      </div>
+    <div class="bg-primary rounded-xl p-3 shadow-lg">
+      <i class="fas fa-chart-line text-white text-xl"></i>
+    </div>
+    <div>
+      <h2 class="text-2xl font-bold text-gray-800">
+        {{ "Statistics.title" | translate }}
+      </h2>
+      <p class="text-gray-500">{{ "Statistics.overview" | translate }}</p>
+    </div>
   </div>
-  
+
   <!-- Main Dashboard Content -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <!-- Left Column - Election List -->
-      <div class="lg:col-span-1">
-          <div class="bg-white rounded-xl shadow-lg p-6 h-full">
-              <h3 class="text-lg font-semibold flex items-center mb-4 text-primary">
-                  <i class="fas fa-list-ul mr-2"></i>
-                  <span>{{'Statistics.latestElections'| translate }}</span>
-              </h3>
-                <div class="divide-y divide-gray-100 max-h-[500px] overflow-auto pr-2">
-                  <div *ngFor="let election of slectionArray" 
-                       (click)="selectVote(election.id)"
-                       class="py-3 px-2 rounded-lg transition-all cursor-pointer hover:bg-teal-50"
-                       [class.bg-teal-50]="selectedVoteId === election.id"
-                       [class.border-l-4]="selectedVoteId === election.id"
-                       [class.border-primary]="selectedVoteId === election.id">
-                       
-                      <div class="font-medium text-gray-800 mb-1">{{election.voteName}}</div>
-                      <div class="flex justify-between items-center text-sm">
-                          <div class="text-gray-500">
-                              <i class="far fa-calendar-alt mr-1"></i>
-                              {{election.startDate | date: 'dd/MM/yyyy'}}
-                          </div>
-                          
-                          <div [ngClass]="{
-                              'bg-green-100 text-green-800': election.status === '1',
-                              'bg-yellow-100 text-yellow-800': election.status === '0',
-                              'bg-red-100 text-red-800': election.status === '2'
-                          }" class="px-3 py-1 rounded-full text-xs font-medium">
-                              {{election.status === '1' ? ('Statistics.ongoing'| translate) : 
-                                 election.status === '2' ? ('Statistics.completed'| translate) : 
-                                 election.status === '0' ? ('Statistics.notStarted'| translate) : ''}}
-                          </div>
-                      </div>
-                  </div>
-                  
-                  <!-- Debug info -->
-                  <div *ngIf="slectionArray.length === 0" class="py-4 text-center text-gray-500">
-                      Không có cuộc bầu cử nào
-                  </div>
+    <!-- Left Column - Election List -->
+    <div class="lg:col-span-1">
+      <div class="bg-white rounded-xl shadow-lg p-6 h-full">
+        <h3 class="text-lg font-semibold flex items-center mb-4 text-primary">
+          <i class="fas fa-list-ul mr-2"></i>
+          <span>{{ "Statistics.latestElections" | translate }}</span>
+        </h3>
+        <div class="divide-y divide-gray-100 max-h-[500px] overflow-auto pr-2">
+          <div
+            *ngFor="let election of slectionArray"
+            (click)="selectVote(election.id)"
+            class="py-3 px-2 rounded-lg transition-all cursor-pointer hover:bg-teal-50"
+            [class.bg-teal-50]="selectedVoteId === election.id"
+            [class.border-l-4]="selectedVoteId === election.id"
+            [class.border-primary]="selectedVoteId === election.id"
+          >
+            <div class="font-medium text-gray-800 mb-1">
+              {{ election.voteName }}
+            </div>
+            <div class="flex justify-between items-center text-sm">
+              <div class="text-gray-500">
+                <i class="far fa-calendar-alt mr-1"></i>
+                {{ election.startDate | date: "dd/MM/yyyy" }}
               </div>
+
+              <div
+                [ngClass]="{
+                  'bg-green-100 text-green-800': election.status === '1',
+                  'bg-yellow-100 text-yellow-800': election.status === '0',
+                  'bg-red-100 text-red-800': election.status === '2'
+                }"
+                class="px-3 py-1 rounded-full text-xs font-medium"
+              >
+                {{
+                  election.status === "1"
+                    ? ("Statistics.ongoing" | translate)
+                    : election.status === "2"
+                      ? ("Statistics.completed" | translate)
+                      : election.status === "0"
+                        ? ("Statistics.notStarted" | translate)
+                        : ""
+                }}
+              </div>
+            </div>
           </div>
+
+          <!-- Debug info -->
+          <div
+            *ngIf="slectionArray.length === 0"
+            class="py-4 text-center text-gray-500"
+          >
+            Không có cuộc bầu cử nào
+          </div>
+        </div>
       </div>
-      
-      <!-- Middle/Right Columns - Chart + Calendar -->
-      <div class="lg:col-span-2">
-          <!-- Charts Section -->
-          <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
-              <!-- Chart Controls -->
-              <div class="flex justify-between items-center mb-6">
-                  <h3 class="text-lg font-semibold text-primary flex items-center">
-                      <i class="fas fa-chart-pie mr-2"></i>
-                      <span>{{'Statistics.chartStatistics'| translate }}</span>
-                  </h3>
-                  
-                  <div class="flex gap-3">
-                      <button (click)="handleChangeChart('columns')" 
-                              [ngClass]="{'bg-primary text-white': chartType === 'columns', 'bg-gray-100 text-gray-700': chartType !== 'columns'}"
-                              class="p-2 rounded-lg transition-all">
-                          <i class="fas fa-chart-column"></i>
-                      </button>
-                      <button (click)="handleChangeChart('circle')" 
-                              [ngClass]="{'bg-primary text-white': chartType === 'circle', 'bg-gray-100 text-gray-700': chartType !== 'circle'}"
-                              class="p-2 rounded-lg transition-all">
-                          <i class="fas fa-chart-pie"></i>
-                      </button>
-                  </div>
-              </div>
-              
-              <!-- Debug Info -->
-              <div class="text-xs text-gray-500 mb-4 p-2 bg-gray-50 rounded">
-                  Debug: Selected Vote ID: {{selectedVoteId || 'None'}} | 
-                  Chart Type: {{chartType}} | 
-                  Data Length: {{listDetailVote?.length || 0}} |
-                  Elections Count: {{slectionArray?.length || 0}}
-              </div>
-              
-                <!-- Chart Display -->
-              <div *ngIf="chartType === 'columns'" class="animate-fadeIn">
-                  <div *ngIf="listDetailVote && listDetailVote.length > 0; else noData">
-                      <app-chart-columns [listDetailVote]="listDetailVote"></app-chart-columns>
-                  </div>
-              </div>
-              <div *ngIf="chartType === 'circle'" class="flex justify-center animate-fadeIn">
-                  <div *ngIf="listDetailVote && listDetailVote.length > 0; else noData">
-                      <app-chart-circle [listDetailVote]="listDetailVote"></app-chart-circle>
-                  </div>
-              </div>
-              
-              <!-- Empty State -->
-              <ng-template #noData>
-                  <div class="flex flex-col items-center justify-center py-12 text-gray-400">
-                      <i class="fas fa-chart-bar text-5xl mb-4 opacity-30"></i>
-                      <p *ngIf="!selectedVoteId">{{'Statistics.selectElectionToView'| translate }}</p>
-                      <p *ngIf="selectedVoteId && (!listDetailVote || listDetailVote.length === 0)">Không có dữ liệu ứng viên cho cuộc bầu cử này</p>
-                  </div>
-              </ng-template>
+    </div>
+
+    <!-- Middle/Right Columns - Chart + Calendar -->
+    <div class="lg:col-span-2">
+      <!-- Charts Section -->
+      <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+        <!-- Chart Controls -->
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-lg font-semibold text-primary flex items-center">
+            <i class="fas fa-chart-pie mr-2"></i>
+            <span>{{ "Statistics.chartStatistics" | translate }}</span>
+          </h3>
+
+          <div class="flex gap-3">
+            <button
+              (click)="handleChangeChart('columns')"
+              [ngClass]="{
+                'bg-primary text-white': chartType === 'columns',
+                'bg-gray-100 text-gray-700': chartType !== 'columns'
+              }"
+              class="p-2 rounded-lg transition-all"
+            >
+              <i class="fas fa-chart-column"></i>
+            </button>
+            <button
+              (click)="handleChangeChart('circle')"
+              [ngClass]="{
+                'bg-primary text-white': chartType === 'circle',
+                'bg-gray-100 text-gray-700': chartType !== 'circle'
+              }"
+              class="p-2 rounded-lg transition-all"
+            >
+              <i class="fas fa-chart-pie"></i>
+            </button>
           </div>
-          
-          <!-- Stats Cards - Admin Only -->
-          <div *ngIf="canActive" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-              <!-- Users Card -->
-              <div class="bg-white rounded-xl shadow-lg overflow-hidden flex hover:shadow-xl transition-all hover:-translate-y-1">
-                  <div class="bg-blue-500 flex items-center justify-center w-16">
-                      <i class="fas fa-users text-white text-xl"></i>
-                  </div>
-                  <div class="p-4 flex-1">
-                      <h4 class="text-sm text-gray-500 font-medium">{{'Statistics.users'| translate }}</h4>
-                      <div class="flex items-center">
-                          <span class="text-xl font-bold">{{totalUser}}</span>
-                          <a [routerLink]="['/user-management/list']" class="ml-2 text-xs text-blue-600 hover:underline">
-                              ({{'Statistics.details'| translate }})
-                          </a>
-                      </div>
-                  </div>
-              </div>
-              
-              <!-- Positions Card -->
-              <div class="bg-white rounded-xl shadow-lg overflow-hidden flex hover:shadow-xl transition-all hover:-translate-y-1">
-                  <div class="bg-green-500 flex items-center justify-center w-16">
-                      <i class="fas fa-book-open-reader text-white text-xl"></i>
-                  </div>
-                  <div class="p-4 flex-1">
-                      <h4 class="text-sm text-gray-500 font-medium">{{'Statistics.positions'| translate }}</h4>
-                      <div class="flex items-center">
-                          <span class="text-xl font-bold">{{totalPosition}}</span>
-                          <a [routerLink]="['/level-management/list']" class="ml-2 text-xs text-green-600 hover:underline">
-                              ({{'Statistics.details'| translate }})
-                          </a>
-                      </div>
-                  </div>
-              </div>
-              
-              <!-- Elections Card -->
-              <div class="bg-white rounded-xl shadow-lg overflow-hidden flex hover:shadow-xl transition-all hover:-translate-y-1">
-                  <div class="bg-yellow-500 flex items-center justify-center w-16">
-                      <i class="fas fa-sitemap text-white text-xl"></i>
-                  </div>
-                  <div class="p-4 flex-1">
-                      <h4 class="text-sm text-gray-500 font-medium">{{'Statistics.elections'| translate }}</h4>
-                      <div class="flex items-center">
-                          <span class="text-xl font-bold">{{totalListVote}}</span>
-                          <a [routerLink]="['/slection-management/list']" class="ml-2 text-xs text-yellow-600 hover:underline">
-                              ({{'Statistics.details'| translate }})
-                          </a>
-                      </div>
-                  </div>
-              </div>
+        </div>
+
+        <!-- Debug Info -->
+        <div class="text-xs text-gray-500 mb-4 p-2 bg-gray-50 rounded">
+          Debug: Selected Vote ID: {{ selectedVoteId || "None" }} | Chart Type:
+          {{ chartType }} | Data Length: {{ listDetailVote?.length || 0 }} |
+          Elections Count: {{ slectionArray?.length || 0 }}
+        </div>
+
+        <!-- Chart Display -->
+        <div *ngIf="chartType === 'columns'" class="animate-fadeIn">
+          <div *ngIf="listDetailVote && listDetailVote.length > 0; else noData">
+            <app-chart-columns
+              [listDetailVote]="listDetailVote"
+            ></app-chart-columns>
           </div>
-          
-          <!-- Calendar Section -->
-          <div class="bg-white rounded-xl shadow-lg p-6">
-              <h3 class="text-lg font-semibold text-primary flex items-center mb-4">
-                  <i class="far fa-calendar-alt mr-2"></i>
-                  <span>{{'Statistics.electionCalendar'| translate }}</span>
-              </h3>
-              <app-sheducer [slectionArray]="slectionArray"></app-sheducer>
+        </div>
+        <div
+          *ngIf="chartType === 'circle'"
+          class="flex justify-center animate-fadeIn"
+        >
+          <div *ngIf="listDetailVote && listDetailVote.length > 0; else noData">
+            <app-chart-circle
+              [listDetailVote]="listDetailVote"
+            ></app-chart-circle>
           </div>
+        </div>
+
+        <!-- Empty State -->
+        <ng-template #noData>
+          <div
+            class="flex flex-col items-center justify-center py-12 text-gray-400"
+          >
+            <i class="fas fa-chart-bar text-5xl mb-4 opacity-30"></i>
+            <p *ngIf="!selectedVoteId">
+              {{ "Statistics.selectElectionToView" | translate }}
+            </p>
+            <p
+              *ngIf="
+                selectedVoteId &&
+                (!listDetailVote || listDetailVote.length === 0)
+              "
+            >
+              Không có dữ liệu ứng viên cho cuộc bầu cử này
+            </p>
+          </div>
+        </ng-template>
       </div>
+
+      <!-- Stats Cards - Admin Only -->
+      <div *ngIf="canActive" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <!-- Users Card -->
+        <div
+          class="bg-white rounded-xl shadow-lg overflow-hidden flex hover:shadow-xl transition-all hover:-translate-y-1"
+        >
+          <div class="bg-blue-500 flex items-center justify-center w-16">
+            <i class="fas fa-users text-white text-xl"></i>
+          </div>
+          <div class="p-4 flex-1">
+            <h4 class="text-sm text-gray-500 font-medium">
+              {{ "Statistics.users" | translate }}
+            </h4>
+            <div class="flex items-center">
+              <span class="text-xl font-bold">{{ totalUser }}</span>
+              <a
+                [routerLink]="['/user-management/list']"
+                class="ml-2 text-xs text-blue-600 hover:underline"
+              >
+                ({{ "Statistics.details" | translate }})
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Positions Card -->
+        <div
+          class="bg-white rounded-xl shadow-lg overflow-hidden flex hover:shadow-xl transition-all hover:-translate-y-1"
+        >
+          <div class="bg-green-500 flex items-center justify-center w-16">
+            <i class="fas fa-book-open-reader text-white text-xl"></i>
+          </div>
+          <div class="p-4 flex-1">
+            <h4 class="text-sm text-gray-500 font-medium">
+              {{ "Statistics.positions" | translate }}
+            </h4>
+            <div class="flex items-center">
+              <span class="text-xl font-bold">{{ totalPosition }}</span>
+              <a
+                [routerLink]="['/level-management/list']"
+                class="ml-2 text-xs text-green-600 hover:underline"
+              >
+                ({{ "Statistics.details" | translate }})
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Elections Card -->
+        <div
+          class="bg-white rounded-xl shadow-lg overflow-hidden flex hover:shadow-xl transition-all hover:-translate-y-1"
+        >
+          <div class="bg-yellow-500 flex items-center justify-center w-16">
+            <i class="fas fa-sitemap text-white text-xl"></i>
+          </div>
+          <div class="p-4 flex-1">
+            <h4 class="text-sm text-gray-500 font-medium">
+              {{ "Statistics.elections" | translate }}
+            </h4>
+            <div class="flex items-center">
+              <span class="text-xl font-bold">{{ totalListVote }}</span>
+              <a
+                [routerLink]="['/slection-management/list']"
+                class="ml-2 text-xs text-yellow-600 hover:underline"
+              >
+                ({{ "Statistics.details" | translate }})
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calendar Section -->
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <h3 class="text-lg font-semibold text-primary flex items-center mb-4">
+          <i class="far fa-calendar-alt mr-2"></i>
+          <span>{{ "Statistics.electionCalendar" | translate }}</span>
+        </h3>
+        <app-sheducer [slectionArray]="slectionArray"></app-sheducer>
+      </div>
+    </div>
   </div>
 </div>

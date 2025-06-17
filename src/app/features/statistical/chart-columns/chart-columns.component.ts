@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewChild } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -10,8 +16,8 @@ import {
   ApexXAxis,
   ApexFill,
   NgApexchartsModule,
-  ApexStroke
-} from "ng-apexcharts";
+  ApexStroke,
+} from 'ng-apexcharts';
 import { TranslateService } from '@ngx-translate/core';
 
 export type ChartOptions = {
@@ -29,117 +35,121 @@ export type ChartOptions = {
 @Component({
   selector: 'app-chart-columns',
   standalone: true,
-  imports: [
-    NgApexchartsModule
-  ],
+  imports: [NgApexchartsModule],
   templateUrl: './chart-columns.component.html',
-  styleUrl: './chart-columns.component.scss'
+  styleUrl: './chart-columns.component.scss',
 })
 export class ChartColumnsComponent implements OnChanges {
-  @ViewChild("chart") chart: ChartComponent;
+  @ViewChild('chart') chart: ChartComponent;
   @Input() listDetailVote: any;
   public chartOptions: Partial<ChartOptions>;
   constructor(private translate: TranslateService) {
     this.chartOptions = {
       series: [
         {
-          name: "Số phiếu bầu",
-          data: []
-        }
+          name: 'Số phiếu bầu',
+          data: [],
+        },
       ],
       chart: {
         height: 350,
-        type: "bar",
+        type: 'bar',
         toolbar: {
-          show: false 
-        }
+          show: false,
+        },
       },
       plotOptions: {
         bar: {
           borderRadius: 10,
           dataLabels: {
-            position: "top" 
-          }
-        }
+            position: 'top',
+          },
+        },
       },
       dataLabels: {
         enabled: true,
-        formatter: function(val) {
-          return val ? val.toString() : "0";
+        formatter: function (val) {
+          return val ? val.toString() : '0';
         },
         offsetY: -20,
         style: {
-          fontSize: "14px",
-          colors: ["#304758"]
-        }
+          fontSize: '14px',
+          colors: ['#304758'],
+        },
       },
       xaxis: {
         categories: [],
-        position: "top",
+        position: 'top',
         labels: {
-          offsetY: -2
+          offsetY: -2,
         },
         axisBorder: {
-          show: true
+          show: true,
         },
         axisTicks: {
-          show: false
+          show: false,
         },
         crosshairs: {
           fill: {
-            type: "gradient",
+            type: 'gradient',
             gradient: {
-              colorFrom: "#D8E3F0",
-              colorTo: "#BED1E6",
+              colorFrom: '#D8E3F0',
+              colorTo: '#BED1E6',
               stops: [0, 100],
               opacityFrom: 0.4,
-              opacityTo: 0.5
-            }
-          }
+              opacityTo: 0.5,
+            },
+          },
         },
         tooltip: {
           enabled: true,
-          offsetY: -35
-        }
+          offsetY: -35,
+        },
       },
       fill: {
-        colors: ["#01579B"],
-        type: "solid"
+        colors: ['#01579B'],
+        type: 'solid',
       },
       yaxis: {
         axisBorder: {
-          show: false
+          show: false,
         },
         axisTicks: {
-          show: false
+          show: false,
         },
         labels: {
           show: true,
-          formatter: function(val) {
-            return val ? val.toString() : "0";
-          }
-        }
-      },      title: {
-        text: "Thống kê số phiếu bầu",
+          formatter: function (val) {
+            return val ? val.toString() : '0';
+          },
+        },
+      },
+      title: {
+        text: 'Thống kê số phiếu bầu',
         floating: true,
         offsetY: 330,
-        align: "center",
+        align: 'center',
         style: {
-          color: "#444"
-        }
-      }
+          color: '#444',
+        },
+      },
     };
-  }  ngOnChanges(changes: SimpleChanges): void {
+  }
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['listDetailVote']) {
       console.log('Chart data received:', this.listDetailVote);
-      
+
       if (this.listDetailVote && this.listDetailVote.length > 0) {
-        const candidateNames = this.listDetailVote.map((candidate: any) => candidate.fullName || 'Unknown');
-        const totalBallots = this.listDetailVote.map((candidate: any) => candidate.totalBallot || 0);
-        
+        const candidateNames = this.listDetailVote.map(
+          (candidate: any) => candidate.fullName || 'Unknown',
+        );
+        const totalBallots = this.listDetailVote.map(
+          (candidate: any) => candidate.totalBallot || 0,
+        );
+
         console.log('Candidate names:', candidateNames);
         console.log('Total ballots:', totalBallots);
-        
+
         this.chartOptions = {
           ...this.chartOptions,
           xaxis: {
@@ -148,21 +158,21 @@ export class ChartColumnsComponent implements OnChanges {
           },
           series: [
             {
-              name: "Số phiếu bầu",
+              name: 'Số phiếu bầu',
               data: totalBallots,
             },
           ],
           title: {
-            text: "Thống kê số phiếu bầu",
+            text: 'Thống kê số phiếu bầu',
             floating: true,
             offsetY: 330,
-            align: "center",
+            align: 'center',
             style: {
-              color: "#444"
-            }
-          }
+              color: '#444',
+            },
+          },
         };
-        
+
         console.log('Updated chart options:', this.chartOptions);
       } else {
         // Display empty chart when no data
@@ -174,10 +184,10 @@ export class ChartColumnsComponent implements OnChanges {
           },
           series: [
             {
-              name: "Số phiếu bầu",
+              name: 'Số phiếu bầu',
               data: [],
             },
-          ]
+          ],
         };
       }
     }
